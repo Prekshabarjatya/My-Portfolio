@@ -7,19 +7,13 @@
     }
 
     function updateThemeIcons() {
-      const sunIcon = document.getElementById('sun-icon');
-      const moonIcon = document.getElementById('moon-icon');
       const sunIconMobile = document.getElementById('sun-icon-mobile');
       const moonIconMobile = document.getElementById('moon-icon-mobile');
-      
+
       if (isDark) {
-        sunIcon.style.display = 'block';
-        moonIcon.style.display = 'none';
         sunIconMobile.style.display = 'block';
         moonIconMobile.style.display = 'none';
       } else {
-        sunIcon.style.display = 'none';
-        moonIcon.style.display = 'block';
         sunIconMobile.style.display = 'none';
         moonIconMobile.style.display = 'block';
       }
@@ -95,8 +89,15 @@
         }
       });
       
-      document.querySelectorAll('.also-familiar').forEach(el => {
+      document.querySelectorAll('.skill-categories').forEach(el => {
         if (isElementInView(el)) el.classList.add('animate');
+      });
+
+      // Experience section
+      document.querySelectorAll('.experience-item').forEach((el, i) => {
+        if (isElementInView(el)) {
+          setTimeout(() => el.classList.add('animate'), i * 150);
+        }
       });
 
       // Projects section
@@ -134,6 +135,55 @@
         icon.style.top = y + 'px';
       });
     });
+
+    // ========== Hero Parallax Tilt (z-axis depth on mouse move) ==========
+    const heroParallax = document.getElementById('hero-parallax');
+    const heroTiltTarget = document.getElementById('hero-tilt-target');
+
+    if (heroParallax && heroTiltTarget) {
+      heroParallax.addEventListener('mousemove', function(e) {
+        const rect = heroParallax.getBoundingClientRect();
+        const px = (e.clientX - rect.left) / rect.width - 0.5;
+        const py = (e.clientY - rect.top) / rect.height - 0.5;
+        const rotateY = px * 16;
+        const rotateX = py * -16;
+        heroTiltTarget.style.transform =
+          'perspective(900px) rotateX(' + rotateX + 'deg) rotateY(' + rotateY + 'deg) scale(1.02)';
+      });
+
+      heroParallax.addEventListener('mouseleave', function() {
+        heroTiltTarget.style.transform = 'perspective(900px) rotateX(0deg) rotateY(0deg) scale(1)';
+      });
+    }
+
+    // Scroll parallax: hero image + badge drift at different depths than the page
+    function updateHeroScrollParallax() {
+      if (!heroParallax) return;
+      const scrollY = window.scrollY;
+      if (scrollY > window.innerHeight) return;
+      heroParallax.style.transform = 'translateY(' + (scrollY * 0.12) + 'px)';
+    }
+
+    window.addEventListener('scroll', updateHeroScrollParallax, { passive: true });
+
+    // ========== Hero Tagline Carousel ==========
+    const heroTaglines = [
+      "AI Engineer · RAG & Agentic Workflows",
+      "Building with LangChain, LangGraph & FastAPI",
+      "Turning LLMs into reliable, shippable products"
+    ];
+    let heroTaglineIndex = 0;
+
+    function cycleTagline(direction) {
+      const el = document.getElementById('hero-tagline');
+      if (!el) return;
+      el.classList.add('swap');
+      setTimeout(function() {
+        heroTaglineIndex = (heroTaglineIndex + direction + heroTaglines.length) % heroTaglines.length;
+        el.textContent = heroTaglines[heroTaglineIndex];
+        el.classList.remove('swap');
+      }, 280);
+    }
 
     // Initialize theme icons
     updateThemeIcons();

@@ -3,11 +3,11 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Preksha Barjatya | Frontend Developer</title>
-  <meta name="description" content="Portfolio of Preksha Barjatya - Frontend Developer specializing in React, JavaScript, and modern web technologies">
+  <title>Preksha Barjatya | AI Engineer</title>
+  <meta name="description" content="Portfolio of Preksha Barjatya - AI Engineer specializing in Retrieval-Augmented Generation (RAG), LangChain/LangGraph agentic workflows, and FastAPI backend systems">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -15,7 +15,7 @@
   <div id="loading-screen">
     <div class="loading-content">
       <h1 class="text-display">Preksha</h1>
-      <p>Frontend Developer</p>
+      <p>AI Engineer</p>
       <div class="line"></div>
     </div>
   </div>
@@ -24,10 +24,11 @@
   <nav id="navbar">
     <div class="nav-inner">
       <a href="#" class="nav-logo">P.</a>
-      
+
       <div class="nav-links">
         <a href="#about" class="nav-link">About</a>
         <a href="#skills" class="nav-link">Skills</a>
+        <a href="#experience" class="nav-link">Experience</a>
         <a href="#projects" class="nav-link">Projects</a>
         <a href="#contact" class="nav-link">Contact</a>
       </div>
@@ -49,6 +50,7 @@
   <div id="mobile-menu">
     <a href="#about" class="mobile-nav-link" onclick="closeMobileMenu()">About</a>
     <a href="#skills" class="mobile-nav-link" onclick="closeMobileMenu()">Skills</a>
+    <a href="#experience" class="mobile-nav-link" onclick="closeMobileMenu()">Experience</a>
     <a href="#projects" class="mobile-nav-link" onclick="closeMobileMenu()">Projects</a>
     <a href="#contact" class="mobile-nav-link" onclick="closeMobileMenu()">Contact</a>
   </div>
@@ -59,12 +61,22 @@
     <section id="hero">
       <div class="hero-grid">
         <div class="hero-content">
-          <h1 class="text-display hero-title">
-            I create<br>
-            <span class="italic">digital</span><br>
-            experiences
+          <p class="hero-greeting">Hi, I'm <span>Preksha</span> <span class="hero-wave">👋</span></p>
+
+          <h1 class="hero-title">
+            I build <span class="weight-black">intelligent systems</span> that actually work.
           </h1>
-          
+
+          <div class="hero-tagline-row">
+            <button class="carousel-arrow" aria-label="Previous tagline" onclick="cycleTagline(-1)">
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></svg>
+            </button>
+            <p class="hero-tagline" id="hero-tagline">AI Engineer &middot; RAG &amp; Agentic Workflows</p>
+            <button class="carousel-arrow" aria-label="Next tagline" onclick="cycleTagline(1)">
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg>
+            </button>
+          </div>
+
           <div class="hero-meta">
             <div class="hero-meta-item">
               <p>Based in</p>
@@ -76,19 +88,19 @@
             </div>
           </div>
 
-          <a href="#contact" class="hero-cta">
-            Let's Talk
+          <a href="#projects" class="hero-cta">
+            See my work
             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 7h10v10"/><path d="M7 17 17 7"/></svg>
           </a>
         </div>
 
-        <div class="hero-image-container">
-          <div class="hero-image">
-            <img src="https://media.licdn.com/dms/image/v2/D4D03AQEi-cskL5eyBA/profile-displayphoto-scale_400_400/B4DZsXmRQLL0Ag-/0/1765627469101?e=1769040000&v=beta&t=AK1qaK4EaY9bZX9-EWYtMZutKoiGYMrvgyyCR5qaAX4" alt="Developer workspace">
+        <div class="hero-image-container" id="hero-parallax">
+          <div class="hero-image" id="hero-tilt-target">
+            <img src="preksha-illustration.jpg" alt="Illustrated portrait of Preksha Barjatya wearing round sunglasses">
           </div>
           <div class="hero-badge">
-            <p>Fresh Graduate</p>
-            <p>2024</p>
+            <p>B.Tech CSE (AI &amp; ML)</p>
+            <p>2023–27</p>
           </div>
         </div>
       </div>
@@ -104,31 +116,31 @@
 
         <div class="about-grid">
           <div class="about-text">
-            <p>I'm <span>Preksha Barjatya</span>, a B.Tech CSE student at AITR, Indore specializing in AI & ML. My passion lies in creating beautiful, performant web experiences.</p>
-            <p>Graduate of <span>Infosys Springboard's Pragati: Path to Future (2024)</span> — a program empowering women with digital skills. Also completed <span>Full Stack Web Development (Cohort 2.0)</span> from Sheriyans Coding School.</p>
-            <p>Winner of <span>First Prize at Skiech Innothon 2.0</span> — National Level Hackathon.</p>
+            <p>I'm <span>Preksha Barjatya</span>, a B.Tech CSE (AI &amp; ML) student at Acropolis Institute of Technology and Research, Indore (affiliated to RGPV Bhopal), graduating in 2027.</p>
+            <p>I build <span>Retrieval-Augmented Generation (RAG)</span> applications, <span>FastAPI</span>-based AI solutions, data pipelines, and SQL-driven analytics systems — turning language models into dependable, production-ready tools.</p>
+            <p>Currently interning as an <span>AI Engineer</span> at Santerra Hygiene Pvt. Ltd., building agentic automation workflows, after previously working as a Data Analyst Intern at Think AI Corporation.</p>
           </div>
 
           <div class="stats-grid">
             <div class="stat-card">
-              <p class="label">Education</p>
+              <p class="label">Degree</p>
               <p class="value">B.Tech CSE</p>
-              <p class="sub">AI & ML</p>
+              <p class="sub">AI &amp; ML</p>
             </div>
             <div class="stat-card">
-              <p class="label">Batch</p>
-              <p class="value">2023-27</p>
-              <p class="sub">AITR, Indore</p>
+              <p class="label">CGPA</p>
+              <p class="value">8.0 / 10</p>
+              <p class="sub">2023 – 2027</p>
             </div>
             <div class="stat-card">
-              <p class="label">Projects</p>
-              <p class="value">2+</p>
-              <p class="sub">Personal</p>
+              <p class="label">Internships</p>
+              <p class="value">2</p>
+              <p class="sub">AI &amp; Data</p>
             </div>
             <div class="stat-card">
-              <p class="label">Hackathon</p>
-              <p class="value">1st Prize</p>
-              <p class="sub">National</p>
+              <p class="label">Focus</p>
+              <p class="value">Agentic AI</p>
+              <p class="sub">RAG · LLMs</p>
             </div>
           </div>
         </div>
@@ -144,66 +156,167 @@
         </div>
 
         <div class="skills-list" style="border-top: 1px solid var(--border);">
-          <div class="skill-row" data-icon="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/javascript/javascript-original.svg">
+          <div class="skill-row" data-icon="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg">
             <div class="skill-content">
               <span class="skill-number">01</span>
-              <h3 class="skill-name">JAVASCRIPT</h3>
+              <h3 class="skill-name">PYTHON</h3>
             </div>
-            <div class="skill-icon"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/javascript/javascript-original.svg" alt="JavaScript"></div>
+            <div class="skill-icon"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg" alt="Python"></div>
           </div>
-          <div class="skill-row" data-icon="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/react/react-original.svg">
+          <div class="skill-row" data-icon="https://cdn.simpleicons.org/fastapi/009688">
             <div class="skill-content">
               <span class="skill-number">02</span>
-              <h3 class="skill-name">REACT</h3>
+              <h3 class="skill-name">FASTAPI</h3>
             </div>
-            <div class="skill-icon"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/react/react-original.svg" alt="React"></div>
+            <div class="skill-icon"><img src="https://cdn.simpleicons.org/fastapi/009688" alt="FastAPI"></div>
           </div>
-          <div class="skill-row" data-icon="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/redux/redux-original.svg">
+          <div class="skill-row" data-icon="https://cdn.simpleicons.org/langchain/1C3C3C">
             <div class="skill-content">
               <span class="skill-number">03</span>
-              <h3 class="skill-name">REDUX</h3>
+              <h3 class="skill-name">LANGCHAIN</h3>
             </div>
-            <div class="skill-icon"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/redux/redux-original.svg" alt="Redux"></div>
+            <div class="skill-icon"><img src="https://cdn.simpleicons.org/langchain/1C3C3C" alt="LangChain"></div>
           </div>
-          <div class="skill-row" data-icon="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/tailwindcss/tailwindcss-original.svg">
+          <div class="skill-row" data-icon="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/docker/docker-plain.svg">
             <div class="skill-content">
               <span class="skill-number">04</span>
-              <h3 class="skill-name">TAILWIND</h3>
+              <h3 class="skill-name">DOCKER</h3>
             </div>
-            <div class="skill-icon"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/tailwindcss/tailwindcss-original.svg" alt="Tailwind"></div>
+            <div class="skill-icon"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/docker/docker-plain.svg" alt="Docker"></div>
           </div>
-          <div class="skill-row" data-icon="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/framermotion/framermotion-original.svg">
+          <div class="skill-row" data-icon="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/kubernetes/kubernetes-plain.svg">
             <div class="skill-content">
               <span class="skill-number">05</span>
-              <h3 class="skill-name">FRAMER MOTION</h3>
+              <h3 class="skill-name">KUBERNETES</h3>
             </div>
-            <div class="skill-icon"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/framermotion/framermotion-original.svg" alt="Framer Motion"></div>
+            <div class="skill-icon"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/kubernetes/kubernetes-plain.svg" alt="Kubernetes"></div>
           </div>
-          <div class="skill-row" data-icon="https://cdn.simpleicons.org/greensock/88CE02">
+          <div class="skill-row" data-icon="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/amazonwebservices/amazonwebservices-original-wordmark.svg">
             <div class="skill-content">
               <span class="skill-number">06</span>
-              <h3 class="skill-name">GSAP</h3>
+              <h3 class="skill-name">AWS</h3>
             </div>
-            <div class="skill-icon"><img src="https://cdn.simpleicons.org/greensock/88CE02" alt="GSAP"></div>
+            <div class="skill-icon"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/amazonwebservices/amazonwebservices-original-wordmark.svg" alt="AWS"></div>
           </div>
-          <div class="skill-row" data-icon="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/sass/sass-original.svg">
+          <div class="skill-row" data-icon="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/pandas/pandas-original.svg">
             <div class="skill-content">
               <span class="skill-number">07</span>
-              <h3 class="skill-name">SASS</h3>
+              <h3 class="skill-name">PANDAS</h3>
             </div>
-            <div class="skill-icon"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/sass/sass-original.svg" alt="Sass"></div>
+            <div class="skill-icon"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/pandas/pandas-original.svg" alt="Pandas"></div>
           </div>
         </div>
 
-        <div class="also-familiar">
-          <p>Also familiar with</p>
-          <div class="tool-tags">
-            <span class="tool-tag">TypeScript</span>
-            <span class="tool-tag">Next.js</span>
-            <span class="tool-tag">Git</span>
-            <span class="tool-tag">Figma</span>
-            <span class="tool-tag">Vite</span>
-            <span class="tool-tag">Node.js</span>
+        <div class="skill-categories">
+          <div class="skill-category">
+            <p class="skill-category-title">Programming</p>
+            <div class="tool-tags">
+              <span class="tool-tag">Python</span>
+              <span class="tool-tag">JavaScript</span>
+              <span class="tool-tag">SQL</span>
+            </div>
+          </div>
+
+          <div class="skill-category">
+            <p class="skill-category-title">Python Concepts</p>
+            <div class="tool-tags">
+              <span class="tool-tag">OOP</span>
+              <span class="tool-tag">Functions</span>
+              <span class="tool-tag">Modules &amp; Packages</span>
+              <span class="tool-tag">File Handling</span>
+              <span class="tool-tag">Exception Handling</span>
+              <span class="tool-tag">Decorators</span>
+              <span class="tool-tag">Generators</span>
+              <span class="tool-tag">Context Managers</span>
+              <span class="tool-tag">Type Hinting</span>
+            </div>
+          </div>
+
+          <div class="skill-category">
+            <p class="skill-category-title">AI/ML &amp; Generative AI</p>
+            <div class="tool-tags">
+              <span class="tool-tag">LangChain</span>
+              <span class="tool-tag">LangGraph</span>
+              <span class="tool-tag">RAG</span>
+              <span class="tool-tag">Document Embeddings</span>
+              <span class="tool-tag">Vector Search</span>
+              <span class="tool-tag">Prompt Engineering</span>
+              <span class="tool-tag">Generative AI</span>
+              <span class="tool-tag">Groq API</span>
+            </div>
+          </div>
+
+          <div class="skill-category">
+            <p class="skill-category-title">Backend Engineering</p>
+            <div class="tool-tags">
+              <span class="tool-tag">FastAPI</span>
+              <span class="tool-tag">REST APIs</span>
+              <span class="tool-tag">API Design</span>
+              <span class="tool-tag">Pydantic</span>
+            </div>
+          </div>
+
+          <div class="skill-category">
+            <p class="skill-category-title">Cloud &amp; DevOps</p>
+            <div class="tool-tags">
+              <span class="tool-tag">Git</span>
+              <span class="tool-tag">Docker</span>
+              <span class="tool-tag">Docker Compose</span>
+              <span class="tool-tag">Kubernetes</span>
+              <span class="tool-tag">AWS (ECR)</span>
+              <span class="tool-tag">AWS (ECS)</span>
+            </div>
+          </div>
+
+          <div class="skill-category">
+            <p class="skill-category-title">Data &amp; BI</p>
+            <div class="tool-tags">
+              <span class="tool-tag">Pandas</span>
+              <span class="tool-tag">NumPy</span>
+              <span class="tool-tag">Matplotlib</span>
+              <span class="tool-tag">Power BI</span>
+              <span class="tool-tag">Tableau</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Experience Section -->
+    <section id="experience" class="section">
+      <div class="container">
+        <div class="section-header">
+          <span class="section-number">03.</span>
+          <h2 class="text-display section-title">Experience</h2>
+        </div>
+
+        <div class="experience-list">
+          <div class="experience-item">
+            <div class="experience-item-header">
+              <div>
+                <h3 class="experience-role font-serif">AI Engineer Intern</h3>
+                <p class="experience-company">Santerra Hygiene Pvt. Ltd.</p>
+              </div>
+              <span class="experience-date">Jul 2026 – Sep 2026</span>
+            </div>
+            <ul class="experience-bullets">
+              <li>Build AI-powered automation workflows and practical AI applications using Python, prompt engineering, and model integration to streamline a startup's business operations.</li>
+              <li>Support business data and finance-related processes, applying automation to improve efficiency and scalability of daily operational workflows.</li>
+            </ul>
+          </div>
+
+          <div class="experience-item">
+            <div class="experience-item-header">
+              <div>
+                <h3 class="experience-role font-serif">Data Analyst Intern</h3>
+                <p class="experience-company">Think AI Corporation</p>
+              </div>
+              <span class="experience-date">Apr 2026 – Jul 2026</span>
+            </div>
+            <ul class="experience-bullets">
+              <li>Migrated legacy reports to Power BI and Tableau, building interactive dashboards to visualize key business metrics and support decision-making.</li>
+              <li>Performed data analysis/EDA using Python and SQL, and designed data pipelines to clean and transform multi-source data into BI-ready formats while gathering requirements with cross-functional teams.</li>
+            </ul>
           </div>
         </div>
       </div>
@@ -213,7 +326,7 @@
     <section id="projects" class="section">
       <div class="container">
         <div class="section-header">
-          <span class="section-number">03.</span>
+          <span class="section-number">04.</span>
           <h2 class="text-display section-title">Selected Work</h2>
         </div>
 
@@ -224,21 +337,21 @@
                 <span>01</span>
                 <div class="line"></div>
               </div>
-              <h3 class="project-title font-serif">Creative Agency Website</h3>
-              <p class="project-desc">Built a responsive, interaction-focused website with performance-conscious animations and structured layouts.</p>
+              <h3 class="project-title font-serif">AI E-Commerce Listing Optimizer</h3>
+              <p class="project-desc">Built a knowledge-base-grounded AI listing optimizer for e-commerce using RAG and multi-agent workflows — combining knowledge retrieval, attribute-aware content generation, keyword optimization, and critic-based quality scoring with deterministic fact-validation and a human review workflow.</p>
               <div class="project-tags">
-                <span class="project-tag">React.js</span>
-                <span class="project-tag">GSAP</span>
-                <span class="project-tag">Framer Motion</span>
-                <span class="project-tag">Tailwind CSS</span>
+                <span class="project-tag">Agentic AI</span>
+                <span class="project-tag">RAG</span>
+                <span class="project-tag">LLM</span>
+                <span class="project-tag">Automation</span>
               </div>
-              <a href="#" class="project-link">
+              <a href="https://github.com/Prekshabarjatya" target="_blank" rel="noopener noreferrer" class="project-link">
                 View Project
                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 7h10v10"/><path d="M7 17 17 7"/></svg>
               </a>
             </div>
             <div class="project-image">
-              <img src="https://images.unsplash.com/photo-1559028012-481c04fa702d?w=800&h=600&fit=crop" alt="Creative Agency Website">
+              <img src="https://images.unsplash.com/photo-1555066931-4365d14bab8c?w=800&h=600&fit=crop" alt="AI E-Commerce Listing Optimizer">
             </div>
           </div>
 
@@ -248,20 +361,45 @@
                 <span>02</span>
                 <div class="line"></div>
               </div>
-              <h3 class="project-title font-serif">Movie Dashboard</h3>
-              <p class="project-desc">Designed a scalable SPA with centralized state management, emphasizing clean component composition.</p>
+              <h3 class="project-title font-serif">Multi-Agent Resume Optimizer</h3>
+              <p class="project-desc">Built a LangGraph-orchestrated multi-agent pipeline that validates, extracts, and scores resumes against job descriptions (PDF/DOCX/text) using specialized agents with tool calling and Pydantic-structured LLM outputs — backed by a hybrid scoring engine combining deterministic ATS checks with grounded LLM judgment.</p>
               <div class="project-tags">
-                <span class="project-tag">React.js</span>
-                <span class="project-tag">Redux Toolkit</span>
-                <span class="project-tag">Tailwind CSS</span>
+                <span class="project-tag">LangGraph</span>
+                <span class="project-tag">Tool Calling</span>
+                <span class="project-tag">Pydantic</span>
+                <span class="project-tag">Agentic AI</span>
               </div>
-              <a href="#" class="project-link">
+              <a href="https://github.com/Prekshabarjatya" target="_blank" rel="noopener noreferrer" class="project-link">
                 View Project
                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 7h10v10"/><path d="M7 17 17 7"/></svg>
               </a>
             </div>
             <div class="project-image">
-              <img src="https://images.unsplash.com/photo-1489599849927-2ee91cede3ba?w=800&h=600&fit=crop" alt="Movie Dashboard">
+              <img src="https://images.unsplash.com/photo-1518770660439-4636190af475?w=800&h=600&fit=crop" alt="Multi-Agent Resume Optimizer">
+            </div>
+          </div>
+
+          <div class="project-card">
+            <div class="project-info">
+              <div class="project-header">
+                <span>03</span>
+                <div class="line"></div>
+              </div>
+              <h3 class="project-title font-serif">AI Research Assistant</h3>
+              <p class="project-desc">Engineered a Retrieval-Augmented Generation (RAG) application using FastAPI and LangChain for intelligent document querying — implementing ingestion, chunking, embeddings generation, vector retrieval, and response synthesis pipelines.</p>
+              <div class="project-tags">
+                <span class="project-tag">FastAPI</span>
+                <span class="project-tag">LangChain</span>
+                <span class="project-tag">RAG</span>
+                <span class="project-tag">Vector Search</span>
+              </div>
+              <a href="https://github.com/Prekshabarjatya" target="_blank" rel="noopener noreferrer" class="project-link">
+                View Project
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 7h10v10"/><path d="M7 17 17 7"/></svg>
+              </a>
+            </div>
+            <div class="project-image">
+              <img src="https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?w=800&h=600&fit=crop" alt="AI Research Assistant">
             </div>
           </div>
         </div>
@@ -272,7 +410,7 @@
     <section id="contact" class="section">
       <div class="container">
         <div class="section-header">
-          <span class="section-number">04.</span>
+          <span class="section-number">05.</span>
           <h2 class="text-display contact-title">
             Let's work<br>
             <span class="italic">together</span>
@@ -281,18 +419,19 @@
 
         <div class="contact-grid">
           <div>
-            <p class="contact-text">I'm actively looking for opportunities to grow as a frontend developer. If you have a position or project in mind, let's connect!</p>
-            <a href="mailto:prekshabarjatya230480@acropolis.in" class="contact-email">
-              prekshabarjatya230480@acropolis.in
+            <p class="contact-text">I'm actively looking for opportunities to grow as an AI engineer. If you have a role or project in mind, let's connect!</p>
+            <a href="mailto:prekshabarjatya2105@gmail.com" class="contact-email">
+              prekshabarjatya2105@gmail.com
               <svg class="arrow" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 7h10v10"/><path d="M7 17 17 7"/></svg>
             </a>
-            <p class="contact-phone">(+91) 9098098023</p>
+            <p class="contact-phone">(+91) 9993098023</p>
+            <p class="contact-phone">New Palasiya, Indore, India, 452001</p>
           </div>
 
           <div class="social-section">
             <p>Connect</p>
             <div class="social-links">
-              <a href="mailto:prekshabarjatya230480@acropolis.in" class="social-link">
+              <a href="mailto:prekshabarjatya2105@gmail.com" class="social-link">
                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="16" x="2" y="4" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
               </a>
               <a href="https://github.com/Prekshabarjatya" target="_blank" rel="noopener noreferrer" class="social-link">
@@ -312,7 +451,7 @@
       <div class="container">
         <div class="resume-grid">
           <div class="resume-left">
-            <span class="section-number">05.</span>
+            <span class="section-number">06.</span>
             <h2 class="text-display resume-title">
               Resume &<br>
               <span class="italic">Certifications</span>
@@ -325,37 +464,14 @@
           </div>
 
           <div class="certs-list">
-            <p>Certifications</p>
-            <div class="cert-card">
-              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="6"/><path d="M15.477 12.89 17 22l-5-3-5 3 1.523-9.11"/></svg>
-              <div class="cert-info">
-                <p class="cert-title">Pragati: Path to Future</p>
-                <p class="cert-org">Infosys Springboard</p>
-              </div>
-              <span class="cert-year">2024</span>
-            </div>
-            <div class="cert-card">
-              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="6"/><path d="M15.477 12.89 17 22l-5-3-5 3 1.523-9.11"/></svg>
-              <div class="cert-info">
-                <p class="cert-title">Frontend Web Developer</p>
-                <p class="cert-org">Infosys Springboard</p>
-              </div>
-              <span class="cert-year">2024</span>
-            </div>
-            <div class="cert-card">
-              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="6"/><path d="M15.477 12.89 17 22l-5-3-5 3 1.523-9.11"/></svg>
-              <div class="cert-info">
-                <p class="cert-title">Full Stack Web Development</p>
-                <p class="cert-org">Sheriyans Coding School</p>
-              </div>
-              <span class="cert-year">Cohort 2.0</span>
-            </div>
+            <p>Training &amp; Certifications</p>
             <div class="cert-card highlight">
               <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="6"/><path d="M15.477 12.89 17 22l-5-3-5 3 1.523-9.11"/></svg>
               <div class="cert-info">
-                <p class="cert-title">Skiech Innothon 2.0</p>
-                <p class="cert-org">First Prize - National Level Hackathon</p>
+                <p class="cert-title">Generative AI, RAG, Multimodal &amp; Agentic AI</p>
+                <p class="cert-org">CSE (AI &amp; ML) Dept., Acropolis Institute of Technology and Research, with Navigate Labs</p>
               </div>
+              <span class="cert-year">Ongoing</span>
             </div>
           </div>
         </div>
@@ -366,7 +482,7 @@
   <!-- Footer -->
   <footer>
     <div class="footer-inner">
-      <p>© 2024 Preksha Barjatya. All rights reserved.</p>
+      <p>© 2026 Preksha Barjatya. All rights reserved.</p>
       <button class="back-to-top" onclick="scrollToTop()">
         Back to top
         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m18 15-6-6-6 6"/></svg>
