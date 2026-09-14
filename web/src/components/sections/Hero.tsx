@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 const TAGLINES = [
   "AI Engineer · RAG & Agentic Workflows",
@@ -13,6 +13,9 @@ export function Hero() {
   const [taglineIndex, setTaglineIndex] = useState(0);
   const [swap, setSwap] = useState(false);
   const tiltRef = useRef<HTMLDivElement>(null);
+  const sectionRef = useRef<HTMLElement>(null);
+  const parallaxBoxRef = useRef<HTMLDivElement>(null);
+  const pinRef = useRef<HTMLDivElement>(null);
 
   function cycleTagline(dir: number) {
     setSwap(true);
@@ -41,12 +44,71 @@ export function Hero() {
     el.style.transform = "perspective(900px) rotateX(0deg) rotateY(0deg) scale(1)";
   }
 
+  // Scroll parallax: the whole hero box drifts slower than the page, and the
+  // rose location pin drifts at its own (faster) rate + a slight swing, so
+  // the section reads as layered depth as you scroll past it.
+  useEffect(() => {
+    let ticking = false;
+
+    function apply() {
+      ticking = false;
+      const section = sectionRef.current;
+      if (!section) return;
+      const rect = section.getBoundingClientRect();
+      // Only animate while the hero is anywhere near the viewport.
+      if (rect.bottom < -200 || rect.top > window.innerHeight + 200) return;
+
+      const y = window.scrollY;
+      if (parallaxBoxRef.current) {
+        // Content drifts noticeably slower than the page — the core parallax.
+        parallaxBoxRef.current.style.transform = `translateY(${y * 0.35}px)`;
+      }
+      if (pinRef.current) {
+        // The pin lags almost entirely behind the scroll, like a distant
+        // background layer — it barely moves while everything else does.
+        pinRef.current.style.transform = `translateY(${y * 0.85}px) rotate(${
+          y * 0.04
+        }deg)`;
+      }
+    }
+
+    function onScroll() {
+      if (!ticking) {
+        ticking = true;
+        window.requestAnimationFrame(apply);
+      }
+    }
+
+    apply();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
+
   return (
     <section
       id="hero"
-      className="flex min-h-screen items-center px-6 pt-20"
+      ref={sectionRef}
+      className="relative flex min-h-screen items-center overflow-hidden bg-white px-6 pt-20 dark:bg-background"
     >
-      <div className="mx-auto grid w-full max-w-6xl items-center gap-16 lg:grid-cols-2">
+      {/* Rose location pin — its own parallax layer */}
+      <div
+        ref={pinRef}
+        className="pointer-events-none absolute right-[8%] top-36 z-10 hidden select-none md:block lg:right-[6%]"
+        aria-hidden="true"
+      >
+        <svg width="34" height="34" viewBox="0 0 24 24" fill="none">
+          <path
+            d="M12 2C7.58 2 4 5.58 4 10c0 5.25 6.5 11.34 7.16 11.94a1.2 1.2 0 0 0 1.68 0C13.5 21.34 20 15.25 20 10c0-4.42-3.58-8-8-8Z"
+            fill="hsl(350, 70%, 55%)"
+          />
+          <circle cx="12" cy="10" r="3.2" fill="white" />
+        </svg>
+      </div>
+
+      <div
+        ref={parallaxBoxRef}
+        className="mx-auto grid w-full max-w-6xl items-center gap-16 lg:grid-cols-2"
+      >
         <div className="text-center lg:text-left">
           <p className="mb-4 text-lg font-semibold">
             Hi, I&apos;m <span className="text-accent">Preksha</span>{" "}
