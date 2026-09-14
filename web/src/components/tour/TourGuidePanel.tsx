@@ -8,9 +8,9 @@ import { HighlightedOutput } from "./HighlightedOutput";
 import { StackModal } from "./StackModal";
 
 const EXAMPLE_PROMPTS = [
-  "Show me his production-ready AI architecture work",
+  "Show me her production-ready AI architecture work",
   "What does her infrastructure stack look like?",
-  "Walk me through a real agentic system she built",
+  "What are her hobbies and long-term goals?",
 ];
 
 export function TourGuidePanel() {
@@ -92,7 +92,7 @@ export function TourGuidePanel() {
           <input
             value={query}
             onChange={(e) => setQuery(e.target.value)}
-            placeholder="e.g. Show me his production-ready AI work"
+            placeholder="e.g. Show me her production-ready AI work"
             className="flex-1 rounded-full border border-border bg-card px-4 py-2 text-sm outline-none focus:border-accent"
           />
           <button

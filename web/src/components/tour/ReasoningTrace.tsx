@@ -7,6 +7,7 @@ const STEP_META: Record<string, { icon: string; label: string }> = {
   route_recruiter: { icon: "🧭", label: "Reading your intent" },
   scroll_projects: { icon: "📂", label: "Finding the right project" },
   highlight_stack: { icon: "🧰", label: "Finding the right skills" },
+  answer_personal: { icon: "💬", label: "Checking what she'd say" },
   evaluate_pitch: { icon: "✅", label: "Checking if that's enough" },
   terminal_output: { icon: "✨", label: "Writing the pitch" },
 };

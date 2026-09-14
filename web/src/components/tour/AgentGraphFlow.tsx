@@ -15,16 +15,18 @@ const NODE_LABELS: Record<string, string> = {
   route_recruiter: "1. route_recruiter",
   scroll_projects: "2A. scroll_projects",
   highlight_stack: "2B. highlight_stack",
+  answer_personal: "2C. answer_personal",
   evaluate_pitch: "3. evaluate_pitch",
   terminal_output: "4. terminal_output",
 };
 
 const BASE_POSITIONS: Record<string, { x: number; y: number }> = {
   route_recruiter: { x: 210, y: 0 },
-  scroll_projects: { x: 20, y: 130 },
-  highlight_stack: { x: 400, y: 130 },
-  evaluate_pitch: { x: 210, y: 260 },
-  terminal_output: { x: 210, y: 390 },
+  scroll_projects: { x: -30, y: 140 },
+  highlight_stack: { x: 210, y: 140 },
+  answer_personal: { x: 450, y: 140 },
+  evaluate_pitch: { x: 210, y: 280 },
+  terminal_output: { x: 210, y: 420 },
 };
 
 export function AgentGraphFlow({
@@ -97,6 +99,15 @@ export function AgentGraphFlow({
         markerEnd: { type: MarkerType.ArrowClosed },
       },
       {
+        id: "e-route-personal",
+        source: "route_recruiter",
+        target: "answer_personal",
+        style: isEdgeActive("route_recruiter", "answer_personal")
+          ? activeEdgeStyle
+          : edgeStyle,
+        markerEnd: { type: MarkerType.ArrowClosed },
+      },
+      {
         id: "e-route-self",
         source: "route_recruiter",
         target: "route_recruiter",
@@ -119,6 +130,15 @@ export function AgentGraphFlow({
         source: "highlight_stack",
         target: "evaluate_pitch",
         style: isEdgeActive("highlight_stack", "evaluate_pitch")
+          ? activeEdgeStyle
+          : edgeStyle,
+        markerEnd: { type: MarkerType.ArrowClosed },
+      },
+      {
+        id: "e-personal-evaluate",
+        source: "answer_personal",
+        target: "evaluate_pitch",
+        style: isEdgeActive("answer_personal", "evaluate_pitch")
           ? activeEdgeStyle
           : edgeStyle,
         markerEnd: { type: MarkerType.ArrowClosed },
@@ -147,7 +167,7 @@ export function AgentGraphFlow({
   );
 
   return (
-    <div className="h-[360px] w-full rounded-xl border border-border bg-card overflow-hidden">
+    <div className="h-[400px] w-full rounded-xl border border-border bg-card overflow-hidden">
       <ReactFlow
         nodes={nodes}
         edges={edges}
