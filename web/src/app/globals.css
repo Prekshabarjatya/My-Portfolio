@@ -1,5 +1,10 @@
 @import "tailwindcss";
 
+/* ThemeProvider toggles a `.dark` class on <html> — make Tailwind's `dark:`
+   variant follow that class instead of the OS prefers-color-scheme media
+   query (Tailwind v4's default), so the in-app toggle actually controls it. */
+@custom-variant dark (&:where(.dark, .dark *));
+
 :root {
   --background: hsl(350, 30%, 97%);
   --foreground: hsl(350, 20%, 10%);

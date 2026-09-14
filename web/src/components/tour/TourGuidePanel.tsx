@@ -3,7 +3,8 @@
 import { useEffect, useState } from "react";
 import { useAgentTour } from "@/hooks/useAgentTour";
 import { AgentGraphFlow } from "./AgentGraphFlow";
-import { TerminalOutput } from "./TerminalOutput";
+import { ReasoningTrace } from "./ReasoningTrace";
+import { HighlightedOutput } from "./HighlightedOutput";
 import { StackModal } from "./StackModal";
 
 const EXAMPLE_PROMPTS = [
@@ -18,6 +19,7 @@ export function TourGuidePanel() {
     activeNode,
     visitedNodes,
     lastEvent,
+    steps,
     pitchText,
     isPitching,
     errorMessage,
@@ -73,7 +75,7 @@ export function TourGuidePanel() {
 
       {/* Panel */}
       <div
-        className={`fixed bottom-24 right-6 z-[90] w-[min(420px,calc(100vw-3rem))] origin-bottom-right rounded-2xl border border-border bg-background p-4 shadow-2xl transition-all ${
+        className={`fixed bottom-24 right-6 z-[90] max-h-[85vh] w-[min(440px,calc(100vw-3rem))] origin-bottom-right overflow-y-auto rounded-2xl border border-border bg-background p-4 shadow-2xl transition-all ${
           open
             ? "scale-100 opacity-100"
             : "pointer-events-none scale-90 opacity-0"
@@ -83,7 +85,7 @@ export function TourGuidePanel() {
         <p className="font-serif text-xl">Live Tour Guide</p>
         <p className="mt-1 text-xs text-muted-foreground">
           A LangGraph agent (running on Groq) reads your intent and drives this
-          page for you — watch the graph light up as it decides.
+          page for you — every reasoning step below is real, not scripted.
         </p>
 
         <form onSubmit={handleSubmit} className="mt-4 flex gap-2">
@@ -128,8 +130,13 @@ export function TourGuidePanel() {
           <AgentGraphFlow activeNode={activeNode} visitedNodes={visitedNodes} />
         </div>
 
+        <p className="mb-2 mt-4 text-[11px] font-semibold uppercase tracking-wider text-muted-foreground">
+          Live reasoning
+        </p>
+        <ReasoningTrace steps={steps} activeNode={activeNode} />
+
         <div className="mt-3">
-          <TerminalOutput text={pitchText} isPitching={isPitching} />
+          <HighlightedOutput text={pitchText} isPitching={isPitching} />
         </div>
       </div>
     </>

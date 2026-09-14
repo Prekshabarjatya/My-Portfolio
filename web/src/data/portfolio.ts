@@ -1,6 +1,8 @@
 // Content mirrors backend/portfolio_data.py — element ids here MUST match
 // the `target_element` ids the LangGraph agent sends over the WebSocket.
 
+// Icon keys resolve in ProjectTechStack.tsx — either a real brand icon URL
+// or a generic concept glyph for things that aren't a single branded tool.
 export const projects = [
   {
     id: "project-resume-optimizer",
@@ -11,6 +13,12 @@ export const projects = [
       "A LangGraph-orchestrated multi-agent pipeline that validates, extracts, and scores resumes against job descriptions (PDF/DOCX/text) using specialized agents with tool calling and Pydantic-structured LLM outputs — backed by a hybrid scoring engine combining deterministic ATS checks with grounded LLM judgment.",
     image:
       "https://images.unsplash.com/photo-1518770660439-4636190af475?w=800&h=600&fit=crop",
+    github: "https://github.com/Prekshabarjatya",
+    techStack: {
+      Languages: ["Python"],
+      "AI/ML": ["LangGraph", "Agentic AI", "Tool Calling"],
+      Backend: ["Pydantic"],
+    },
   },
   {
     id: "project-ecommerce-optimizer",
@@ -21,6 +29,11 @@ export const projects = [
       "Built a knowledge-base-grounded AI listing optimizer for e-commerce using RAG and multi-agent workflows — combining knowledge retrieval, attribute-aware content generation, keyword optimization, and critic-based quality scoring with deterministic fact-validation and a human review workflow.",
     image:
       "https://images.unsplash.com/photo-1555066931-4365d14bab8c?w=800&h=600&fit=crop",
+    github: "https://github.com/Prekshabarjatya",
+    techStack: {
+      Languages: ["Python"],
+      "AI/ML": ["Agentic AI", "RAG", "LLM", "Automation"],
+    },
   },
   {
     id: "project-research-assistant",
@@ -31,9 +44,17 @@ export const projects = [
       "Engineered a Retrieval-Augmented Generation (RAG) application using FastAPI and LangChain for intelligent document querying — implementing ingestion, chunking, embeddings generation, vector retrieval, and response synthesis pipelines.",
     image:
       "https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?w=800&h=600&fit=crop",
+    github: "https://github.com/Prekshabarjatya",
+    techStack: {
+      Languages: ["Python"],
+      Backend: ["FastAPI"],
+      "AI/ML": ["LangChain", "RAG", "Vector Search"],
+    },
   },
 ] as const;
 
+// Core skills for an AI engineer, ordered from foundational to the most
+// AI-engineer-defining category (AI/ML & Generative AI is the capstone).
 export const skillCategories = [
   {
     id: "skill-programming",
@@ -56,20 +77,6 @@ export const skillCategories = [
     ],
   },
   {
-    id: "skill-ai-ml",
-    title: "AI/ML & Generative AI",
-    items: [
-      "LangChain",
-      "LangGraph",
-      "RAG",
-      "Document Embeddings",
-      "Vector Search",
-      "Prompt Engineering",
-      "Generative AI",
-      "Groq API",
-    ],
-  },
-  {
     id: "skill-backend",
     title: "Backend Engineering",
     items: ["FastAPI", "REST APIs", "API Design", "Pydantic"],
@@ -83,6 +90,21 @@ export const skillCategories = [
     id: "skill-data-bi",
     title: "Data & BI",
     items: ["Pandas", "NumPy", "Matplotlib", "Power BI", "Tableau"],
+  },
+  {
+    id: "skill-ai-ml",
+    title: "AI/ML & Generative AI",
+    items: [
+      "LangChain",
+      "LangGraph",
+      "RAG",
+      "Document Embeddings",
+      "Vector Search",
+      "Prompt Engineering",
+      "Generative AI",
+      "Groq API",
+    ],
+    core: true,
   },
 ] as const;
 

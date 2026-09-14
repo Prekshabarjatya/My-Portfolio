@@ -1,3 +1,4 @@
+import asyncio
 import os
 
 from dotenv import load_dotenv
@@ -67,8 +68,12 @@ async def run_agent_tour(websocket: WebSocket):
                             "action": node_output.get("ui_action", "idle"),
                             "target": node_output.get("ui_target_element", ""),
                             "context": node_output.get("pitch_context"),
+                            "thought": node_output.get("thought", ""),
                         }
                     )
+                    # Small pacing delay so each reasoning step is actually
+                    # perceptible on screen instead of flashing by instantly.
+                    await asyncio.sleep(0.55)
 
             # Stream the final pitch token-by-token straight from Groq so the
             # frontend terminal panel can show a live "typing" effect.

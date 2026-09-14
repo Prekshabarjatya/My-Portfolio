@@ -33,6 +33,7 @@ class AgentState(TypedDict, total=False):
     route_decision: str
     loop_count: int
     final_pitch: str
+    thought: str
 
 
 def _llm():
@@ -62,10 +63,13 @@ def route_recruiter(state: AgentState) -> AgentState:
 
     if "STACK" in result:
         decision = "stack"
+        thought = f'Read "{query}" — this is asking about the engineering stack, not a specific project. Routing to highlight_stack.'
     elif "UNCLEAR" in result and loop_count < MAX_LOOPS:
         decision = "unclear"
+        thought = f'Read "{query}" — intent isn\'t clear enough to route confidently yet. Looping back to re-evaluate.'
     else:
         decision = "projects"
+        thought = f'Read "{query}" — this is asking about real work / architecture. Routing to scroll_projects.'
 
     return {
         "active_node": "route_recruiter",
@@ -73,6 +77,7 @@ def route_recruiter(state: AgentState) -> AgentState:
         "ui_target_element": "",
         "route_decision": decision,
         "loop_count": loop_count + (1 if decision == "unclear" else 0),
+        "thought": thought,
     }
 
 
@@ -98,6 +103,7 @@ def scroll_projects(state: AgentState) -> AgentState:
         "ui_action": "scroll_to",
         "ui_target_element": project["target_element"],
         "pitch_context": context,
+        "thought": f"Best match: \"{project['title']}\" ({', '.join(project['tags'])}). Scrolling the page there now.",
     }
 
 
@@ -112,11 +118,24 @@ def highlight_stack(state: AgentState) -> AgentState:
         "ui_action": "open_modal",
         "ui_target_element": category["target_element"],
         "pitch_context": context,
+        "thought": f"Best match: \"{category['title']}\" — {', '.join(category['items'])}. Opening that on screen now.",
     }
 
 
 def evaluate_pitch(state: AgentState) -> AgentState:
-    return {"active_node": "evaluate_pitch", "ui_action": "idle", "ui_target_element": ""}
+    context = state.get("pitch_context", [])
+    loop_count = state.get("loop_count", 0)
+    enough = len(context) >= 2 or loop_count >= MAX_LOOPS
+    if enough:
+        thought = f"Gathered {len(context)} grounded data point(s) — that's enough to write a confident pitch."
+    else:
+        thought = f"Only {len(context)} data point so far — going back to gather more before writing the pitch."
+    return {
+        "active_node": "evaluate_pitch",
+        "ui_action": "idle",
+        "ui_target_element": "",
+        "thought": thought,
+    }
 
 
 def route_after_evaluate(state: AgentState) -> Literal["terminal_output", "route_recruiter"]:
@@ -148,6 +167,7 @@ def terminal_output(state: AgentState) -> AgentState:
         "active_node": "terminal_output",
         "ui_action": "stream_pitch",
         "ui_target_element": "",
+        "thought": "Writing a pitch grounded only in what was just found — streaming it now.",
     }
 
 
