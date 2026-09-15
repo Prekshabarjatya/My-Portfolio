@@ -1,0 +1,21 @@
+name: Keep backend warm
+
+# Render's free tier spins a web service down after ~15 minutes of
+# inactivity, so the next real visitor pays a 30-60s cold-start. This
+# workflow pings /health every 10 minutes, well under that threshold, so
+# the tour-guide agent stays responsive for anyone using the live site.
+
+on:
+  schedule:
+    - cron: "*/10 * * * *"
+  workflow_dispatch: {}
+
+jobs:
+  ping:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Ping backend health endpoint
+        run: |
+          curl -sS -o /dev/null -w "HTTP %{http_code} in %{time_total}s\n" \
+            --max-time 60 \
+            https://preksha-portfolio-tour-agent.onrender.com/health

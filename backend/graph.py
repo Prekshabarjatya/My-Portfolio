@@ -176,11 +176,13 @@ def build_pitch_prompt(state: AgentState) -> str:
     context = "\n".join(state.get("pitch_context", []))
     return (
         "You are answering a visitor's question about Preksha Barjatya on her "
-        "portfolio, in second person, grounded ONLY in the facts below. If the "
-        "facts are about her work, write it as a tight, confident pitch. If the "
-        "facts are personal (hobbies, goals, values, motivations), answer warmly "
-        "and naturally in first person as if she's speaking for herself — not as a "
-        "sales pitch. 3-5 sentences, no fluff, no generic buzzwords, be specific.\n\n"
+        "portfolio. Always write in THIRD PERSON — refer to her as \"she\"/\"her\"/"
+        "\"Preksha\", never as \"I\"/\"me\"/\"my\" and never as \"you\"/\"your\". "
+        "Ground the answer ONLY in the facts below. If the facts are about her "
+        "work, write it as a tight, confident pitch. If the facts are personal "
+        "(hobbies, goals, values, motivations), answer warmly and naturally, "
+        "still in third person — not as a sales pitch. 3-5 sentences, no fluff, "
+        "no generic buzzwords, be specific.\n\n"
         f"Candidate summary: {CANDIDATE_SUMMARY}\n\n"
         f"What was just found for this question:\n{context}\n\n"
         f'Original visitor request: "{state["recruiter_query"]}"'
