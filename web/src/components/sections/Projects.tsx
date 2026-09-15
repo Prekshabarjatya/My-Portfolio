@@ -51,7 +51,7 @@ export function Projects() {
                       ))}
                     </div>
                     <div className="flex flex-wrap gap-3">
-                      <ProjectLinkButton label="GitHub" href={"https://github.com/Prekshabarjatya/resume-intelligence-ai/tree/main"} />
+                      <ProjectLinkButton label="GitHub" href={project.github} />
                       <ProjectLinkButton
                         label="Tech Stack"
                         expanded={isTechStackOpen}
