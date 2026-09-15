@@ -52,6 +52,9 @@ export function Projects() {
                     </div>
                     <div className="flex flex-wrap gap-3">
                       <ProjectLinkButton label="GitHub" href={project.github} />
+                      {project.liveUrl && (
+                        <ProjectLinkButton label="Live Site" href={project.liveUrl} />
+                      )}
                       <ProjectLinkButton
                         label="Tech Stack"
                         expanded={isTechStackOpen}

@@ -8,12 +8,13 @@ export const projects = [
     id: "project-resume-optimizer",
     number: "01",
     title: "Multi-Agent Resume Optimizer",
+    github: "https://github.com/Prekshabarjatya/resume-intelligence-ai",
+    liveUrl: "https://resume-intelligence-platform-pmdw.onrender.com/",
     tags: ["LangGraph", "Tool Calling", "Pydantic", "Agentic AI"],
     description:
       "A LangGraph-orchestrated multi-agent pipeline that validates, extracts, and scores resumes against job descriptions (PDF/DOCX/text) using specialized agents with tool calling and Pydantic-structured LLM outputs — backed by a hybrid scoring engine combining deterministic ATS checks with grounded LLM judgment.",
     image:
       "https://images.unsplash.com/photo-1518770660439-4636190af475?w=800&h=600&fit=crop",
-    github: "https://github.com/Prekshabarjatya",
     techStack: {
       Languages: ["Python"],
       "AI/ML": ["LangGraph", "Agentic AI", "Tool Calling"],
@@ -30,6 +31,7 @@ export const projects = [
     image:
       "https://images.unsplash.com/photo-1555066931-4365d14bab8c?w=800&h=600&fit=crop",
     github: "https://github.com/Prekshabarjatya",
+    liveUrl: "",
     techStack: {
       Languages: ["Python"],
       "AI/ML": ["Agentic AI", "RAG", "LLM", "Automation"],
@@ -45,6 +47,7 @@ export const projects = [
     image:
       "https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?w=800&h=600&fit=crop",
     github: "https://github.com/Prekshabarjatya",
+    liveUrl: "",
     techStack: {
       Languages: ["Python"],
       Backend: ["FastAPI"],
