@@ -41,13 +41,13 @@ export const projects = [
     id: "project-research-assistant",
     number: "03",
     title: "AI Research Assistant",
+    github: "https://github.com/Prekshabarjatya/ai-research-assistant",
+    liveUrl: "https://ai-research-assistant-nidu.onrender.com/#notes",
     tags: ["FastAPI", "LangChain", "RAG", "Vector Search"],
     description:
       "Engineered a Retrieval-Augmented Generation (RAG) application using FastAPI and LangChain for intelligent document querying — implementing ingestion, chunking, embeddings generation, vector retrieval, and response synthesis pipelines.",
     image:
       "https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?w=800&h=600&fit=crop",
-    github: "https://github.com/Prekshabarjatya",
-    liveUrl: "",
     techStack: {
       Languages: ["Python"],
       Backend: ["FastAPI"],
