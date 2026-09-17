@@ -15,12 +15,13 @@ type RevealProps = {
 };
 
 // Sections are position: sticky and slide over one another as you scroll
-// (see globals.css's z-index scale). Triggering a reveal as soon as a
-// section merely peeks into view would make its fade-in run WHILE it's
-// still sliding into its stuck position, fighting with the scroll motion.
-// Waiting until it's substantially in view (well after it's settled at
-// top: 0) keeps every section's reveal as smooth as the first one.
-const VIEWPORT = { once: true, margin: "-30% 0px -30% 0px" } as const;
+// (see globals.css's z-index scale). A symmetric center-band margin here
+// is a trap: content near the top of a section that's already stuck at
+// top: 0 (e.g. its heading) can sit permanently above that band and
+// never reveal. Only shrinking from the bottom delays the trigger a
+// little (content must be within the top 80% of the viewport, not just
+// barely peeking in) without ever excluding content pinned at the top.
+const VIEWPORT = { once: true, margin: "0px 0px -20% 0px" } as const;
 
 export function Reveal({ children, delay = 0, className, id, y = 20 }: RevealProps) {
   return (
