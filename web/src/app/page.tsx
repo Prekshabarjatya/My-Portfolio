@@ -21,8 +21,8 @@ export default function Home() {
         <Skills />
         <Experience />
         <Projects />
-        <Contact />
         <ResumeCerts />
+        <Contact />
       </main>
       <Footer />
       <TourGuidePanel />
