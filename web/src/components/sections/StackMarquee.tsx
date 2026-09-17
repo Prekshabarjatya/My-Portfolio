@@ -18,7 +18,7 @@ export function StackMarquee() {
   const track = [...ITEMS, ...ITEMS];
 
   return (
-    <div className="flex h-24 items-center overflow-hidden border-y border-border bg-foreground">
+    <div className="sticky top-16 z-0 flex h-24 items-center overflow-hidden border-y border-border bg-foreground">
       <div className="marquee-track flex w-max items-center gap-8">
         {[0, 1].map((copy) => (
           <div key={copy} className="flex shrink-0 items-center gap-8">

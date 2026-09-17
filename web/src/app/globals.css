@@ -46,9 +46,11 @@
 }
 
 /* z-index scale (Section 6.F) — nothing outside this list uses z-*.
-   Sections use z-[1] through z-[6] (About → Contact, ascending) so each
-   sticky section slides over the one before it as you scroll; all stay
-   well under --z-nav so the nav bar is never covered. */
+   The stack marquee sits sticky at z-0 right below the nav, pinned in
+   place until About (z-[1]) slides up and covers it. Sections then use
+   z-[1] through z-[6] (About → Contact, ascending) so each sticky
+   section slides over the one before it as you scroll; all stay well
+   under --z-nav so the nav bar is never covered. */
 :root {
   --z-nav: 50;
   --z-mobile-menu: 40;
