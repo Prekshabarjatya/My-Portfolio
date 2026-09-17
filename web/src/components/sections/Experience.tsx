@@ -6,7 +6,7 @@ export function Experience() {
   return (
     <section
       id="experience"
-      className="sticky top-0 z-[3] bg-card px-6 py-20 shadow-[0_-12px_30px_-12px_rgba(0,0,0,0.18)]"
+      className="relative -mt-8 rounded-t-[2.5rem] bg-card px-6 py-20 shadow-[0_-12px_30px_-12px_rgba(0,0,0,0.18)]"
     >
       <div className="mx-auto max-w-[1400px]">
         <Reveal>
