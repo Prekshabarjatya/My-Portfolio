@@ -26,7 +26,7 @@ export function StackModal({
         <p className="text-xs uppercase tracking-wider text-muted-foreground">
           Highlighted by the tour agent
         </p>
-        <h3 className="mt-1 font-serif text-2xl">{category.title}</h3>
+        <h3 className="mt-1 font-display text-2xl">{category.title}</h3>
         <div className="mt-4 flex flex-wrap gap-2">
           {category.items.map((item) => (
             <span

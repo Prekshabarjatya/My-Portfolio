@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { ChatCircleDots } from "@phosphor-icons/react";
 import { useAgentTour } from "@/hooks/useAgentTour";
 import { AgentGraphFlow } from "./AgentGraphFlow";
 import { ReasoningTrace } from "./ReasoningTrace";
@@ -65,12 +66,14 @@ export function TourGuidePanel() {
         className="fixed bottom-6 right-6 z-[90] flex items-center gap-2 rounded-full bg-foreground px-5 py-3.5 text-sm font-medium text-background shadow-xl transition-transform hover:scale-105 active:scale-95"
         style={{ transitionTimingFunction: "var(--spring)" }}
       >
+        <ChatCircleDots size={16} weight="bold" />
+        {open ? "Close tour guide" : "Ask the AI tour guide"}
         <span
           className={`h-2 w-2 rounded-full ${
             status === "open" ? "bg-green-400" : "bg-amber-400"
           }`}
+          aria-hidden="true"
         />
-        {open ? "Close tour guide" : "Ask the AI tour guide"}
       </button>
 
       {/* Panel */}
@@ -82,10 +85,10 @@ export function TourGuidePanel() {
         }`}
         style={{ transitionTimingFunction: "var(--spring-soft)", transitionDuration: "0.35s" }}
       >
-        <p className="font-serif text-xl">Live Tour Guide</p>
+        <p className="font-display text-xl">Live Tour Guide</p>
         <p className="mt-1 text-xs text-muted-foreground">
           A LangGraph agent (running on Groq) reads your intent and drives this
-          page for you — every reasoning step below is real, not scripted.
+          page for you. Every reasoning step below is real, not scripted.
         </p>
 
         <form onSubmit={handleSubmit} className="mt-4 flex gap-2">

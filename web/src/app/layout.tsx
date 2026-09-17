@@ -1,35 +1,49 @@
 import type { Metadata } from "next";
-import { Inter, Instrument_Serif } from "next/font/google";
+import { Space_Grotesk, Inter_Tight, JetBrains_Mono } from "next/font/google";
 import "./globals.css";
 import { ThemeProvider } from "@/components/ThemeProvider";
 
-const inter = Inter({
-  variable: "--font-inter",
+const spaceGrotesk = Space_Grotesk({
+  variable: "--font-display",
   subsets: ["latin"],
-  weight: ["300", "400", "500", "600", "700", "800"],
+  weight: ["500", "600", "700"],
 });
 
-const instrumentSerif = Instrument_Serif({
-  variable: "--font-instrument-serif",
+const interTight = Inter_Tight({
+  variable: "--font-body",
   subsets: ["latin"],
-  style: ["normal", "italic"],
-  weight: "400",
+  weight: ["400", "500", "600", "700"],
+});
+
+const jetbrainsMono = JetBrains_Mono({
+  variable: "--font-mono",
+  subsets: ["latin"],
+  weight: ["400", "500", "600"],
 });
 
 export const metadata: Metadata = {
   title: "Preksha Barjatya | AI Engineer",
   description:
     "Portfolio of Preksha Barjatya - AI Engineer specializing in Retrieval-Augmented Generation (RAG), LangChain/LangGraph agentic workflows, and FastAPI backend systems. Featuring a live LangGraph agent that tours the site for you.",
+  openGraph: {
+    title: "Preksha Barjatya | AI Engineer",
+    description:
+      "AI Engineer building RAG applications, LangGraph agents, and FastAPI backends.",
+    url: "https://www.prekshaa.tech",
+    siteName: "Preksha Barjatya",
+    type: "website",
+  },
 };
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
     <html
       lang="en"
-      className={`${inter.variable} ${instrumentSerif.variable} antialiased`}
+      className={`${spaceGrotesk.variable} ${interTight.variable} ${jetbrainsMono.variable} antialiased`}
       suppressHydrationWarning
     >
-      <body className="min-h-screen bg-background text-foreground font-sans">
+      <body className="min-h-screen bg-background text-foreground font-body">
+        <div className="grain-overlay" aria-hidden="true" />
         <ThemeProvider>{children}</ThemeProvider>
       </body>
     </html>

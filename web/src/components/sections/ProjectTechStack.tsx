@@ -1,6 +1,7 @@
 "use client";
 
 import { useRef, useState } from "react";
+import { CaretRight } from "@phosphor-icons/react";
 
 // Real brand icons for actual named tools/libraries.
 const BRAND_ICON_SRC: Record<string, string> = {
@@ -131,11 +132,11 @@ function TechRow({ name }: { name: string }) {
 }
 
 const CATEGORY_ACCENTS: Record<string, string> = {
-  Languages: "hsl(350, 60%, 55%)",
-  "AI/ML": "hsl(265, 55%, 58%)",
-  Backend: "hsl(150, 45%, 42%)",
-  "Cloud & DevOps": "hsl(25, 80%, 52%)",
-  "Data & BI": "hsl(210, 60%, 50%)",
+  Languages: "hsl(350, 65%, 50%)",
+  "AI/ML": "hsl(280, 35%, 48%)",
+  Backend: "hsl(150, 40%, 38%)",
+  "Cloud & DevOps": "hsl(28, 75%, 48%)",
+  "Data & BI": "hsl(200, 45%, 42%)",
 };
 
 export function ProjectTechStack({
@@ -173,12 +174,12 @@ export function ProjectTechStack({
                     ({items.length})
                   </span>
                 </span>
-                <span
-                  className="text-sm text-muted-foreground transition-transform duration-300"
+                <CaretRight
+                  size={14}
+                  weight="bold"
+                  className="text-muted-foreground transition-transform duration-300"
                   style={{ transform: isOpen ? "rotate(90deg)" : "rotate(0deg)" }}
-                >
-                  ›
-                </span>
+                />
               </button>
               <div
                 className="grid transition-all duration-300 ease-out"

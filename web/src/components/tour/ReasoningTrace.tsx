@@ -1,15 +1,24 @@
 "use client";
 
 import { useEffect, useRef } from "react";
+import {
+  Compass,
+  FolderOpen,
+  Wrench,
+  ChatCircle,
+  CheckCircle,
+  Sparkle,
+  type Icon,
+} from "@phosphor-icons/react";
 import type { NodeEvent } from "@/hooks/useAgentTour";
 
-const STEP_META: Record<string, { icon: string; label: string }> = {
-  route_recruiter: { icon: "🧭", label: "Reading your intent" },
-  scroll_projects: { icon: "📂", label: "Finding the right project" },
-  highlight_stack: { icon: "🧰", label: "Finding the right skills" },
-  answer_personal: { icon: "💬", label: "Checking what she'd say" },
-  evaluate_pitch: { icon: "✅", label: "Checking if that's enough" },
-  terminal_output: { icon: "✨", label: "Writing the pitch" },
+const STEP_META: Record<string, { icon: Icon; label: string }> = {
+  route_recruiter: { icon: Compass, label: "Reading your intent" },
+  scroll_projects: { icon: FolderOpen, label: "Finding the right project" },
+  highlight_stack: { icon: Wrench, label: "Finding the right skills" },
+  answer_personal: { icon: ChatCircle, label: "Checking what she'd say" },
+  evaluate_pitch: { icon: CheckCircle, label: "Checking if that's enough" },
+  terminal_output: { icon: Sparkle, label: "Writing the pitch" },
 };
 
 export function ReasoningTrace({
@@ -36,7 +45,8 @@ export function ReasoningTrace({
   return (
     <div className="max-h-48 space-y-0 overflow-y-auto rounded-xl border border-border bg-card p-3">
       {steps.map((step, i) => {
-        const meta = STEP_META[step.node] ?? { icon: "•", label: step.node };
+        const meta = STEP_META[step.node] ?? { icon: Sparkle, label: step.node };
+        const StepIcon = meta.icon;
         const isLast = i === steps.length - 1;
         const isActive = step.node === activeNode && isLast;
         return (
@@ -49,15 +59,15 @@ export function ReasoningTrace({
           >
             <div className="flex flex-col items-center">
               <span
-                className={`flex h-6 w-6 flex-shrink-0 items-center justify-center rounded-full text-xs ${
-                  isActive ? "bg-accent text-white" : "bg-background"
+                className={`flex h-6 w-6 flex-shrink-0 items-center justify-center rounded-full ${
+                  isActive ? "bg-accent text-accent-foreground" : "bg-background text-muted-foreground"
                 }`}
                 style={{
                   border: "1px solid var(--border)",
                   animation: isActive ? "trace-pulse 1.2s ease-in-out infinite" : "none",
                 }}
               >
-                {meta.icon}
+                <StepIcon size={13} weight="bold" />
               </span>
               {!isLast && <span className="mt-1 h-full w-px flex-1 bg-border" />}
             </div>
@@ -89,10 +99,10 @@ export function ReasoningTrace({
         @keyframes trace-pulse {
           0%,
           100% {
-            box-shadow: 0 0 0 0 hsla(350, 60%, 55%, 0.5);
+            box-shadow: 0 0 0 0 color-mix(in srgb, var(--accent) 50%, transparent);
           }
           50% {
-            box-shadow: 0 0 0 5px hsla(350, 60%, 55%, 0);
+            box-shadow: 0 0 0 5px color-mix(in srgb, var(--accent) 0%, transparent);
           }
         }
       `}</style>

@@ -2,6 +2,8 @@
 
 import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
+import { CaretLeft, CaretRight, ArrowRight } from "@phosphor-icons/react";
+import { Reveal } from "@/components/Reveal";
 
 const TAGLINES = [
   "AI Engineer · RAG & Agentic Workflows",
@@ -15,7 +17,6 @@ export function Hero() {
   const tiltRef = useRef<HTMLDivElement>(null);
   const sectionRef = useRef<HTMLElement>(null);
   const parallaxBoxRef = useRef<HTMLDivElement>(null);
-  const pinRef = useRef<HTMLDivElement>(null);
 
   function cycleTagline(dir: number) {
     setSwap(true);
@@ -44,9 +45,8 @@ export function Hero() {
     el.style.transform = "perspective(900px) rotateX(0deg) rotateY(0deg) scale(1)";
   }
 
-  // Scroll parallax: the whole hero box drifts slower than the page, and the
-  // rose location pin drifts at its own (faster) rate + a slight swing, so
-  // the section reads as layered depth as you scroll past it.
+  // Scroll parallax: the whole hero box drifts slower than the page, so the
+  // section reads as layered depth as you scroll past it.
   useEffect(() => {
     let ticking = false;
 
@@ -55,20 +55,11 @@ export function Hero() {
       const section = sectionRef.current;
       if (!section) return;
       const rect = section.getBoundingClientRect();
-      // Only animate while the hero is anywhere near the viewport.
       if (rect.bottom < -200 || rect.top > window.innerHeight + 200) return;
 
       const y = window.scrollY;
       if (parallaxBoxRef.current) {
-        // Content drifts noticeably slower than the page — the core parallax.
         parallaxBoxRef.current.style.transform = `translateY(${y * 0.35}px)`;
-      }
-      if (pinRef.current) {
-        // The pin lags almost entirely behind the scroll, like a distant
-        // background layer — it barely moves while everything else does.
-        pinRef.current.style.transform = `translateY(${y * 0.85}px) rotate(${
-          y * 0.04
-        }deg)`;
       }
     }
 
@@ -88,46 +79,30 @@ export function Hero() {
     <section
       id="hero"
       ref={sectionRef}
-      className="relative flex min-h-screen items-center overflow-hidden bg-white px-6 pt-20 dark:bg-background"
+      className="relative flex min-h-[100dvh] items-center overflow-hidden px-6 pb-20 pt-16"
     >
-      {/* Rose location pin — its own parallax layer */}
-      <div
-        ref={pinRef}
-        className="pointer-events-none absolute right-[8%] top-36 z-10 hidden select-none md:block lg:right-[6%]"
-        aria-hidden="true"
-      >
-        <svg width="34" height="34" viewBox="0 0 24 24" fill="none">
-          <path
-            d="M12 2C7.58 2 4 5.58 4 10c0 5.25 6.5 11.34 7.16 11.94a1.2 1.2 0 0 0 1.68 0C13.5 21.34 20 15.25 20 10c0-4.42-3.58-8-8-8Z"
-            fill="hsl(350, 70%, 55%)"
-          />
-          <circle cx="12" cy="10" r="3.2" fill="white" />
-        </svg>
-      </div>
-
       <div
         ref={parallaxBoxRef}
-        className="mx-auto grid w-full max-w-6xl items-center gap-16 lg:grid-cols-2"
+        className="mx-auto grid w-full max-w-[1400px] items-center gap-16 lg:grid-cols-2"
       >
-        <div className="text-center lg:text-left">
-          <p className="mb-4 text-lg font-semibold">
+        <Reveal className="text-center lg:text-left">
+          <p className="mb-4 text-2xl font-semibold md:text-3xl">
             Hi, I&apos;m <span className="text-accent">Preksha</span>{" "}
-            <span className="inline-block">👋</span>
+            <span className="inline-block" aria-hidden="true">👋</span>
           </p>
 
-          <h1 className="mb-7 text-4xl leading-tight tracking-tight md:text-5xl lg:text-[3.25rem]">
-            I build <span className="font-extrabold">intelligent systems</span>{" "}
-            that actually work.
+          <h1 className="mb-7 font-display text-5xl leading-[1.15] tracking-tight md:text-6xl">
+            I build <span className="italic pb-1 inline-block">intelligent systems</span> that
+            actually work.
           </h1>
 
           <div className="mb-6 inline-flex items-center gap-3">
             <button
               onClick={() => cycleTagline(-1)}
-              className="flex h-9 w-9 items-center justify-center rounded-full border border-border transition-transform hover:scale-110 hover:bg-foreground hover:text-background active:scale-90"
-              style={{ transitionTimingFunction: "var(--spring)" }}
+              className="transition-spring flex h-9 w-9 items-center justify-center rounded-full border border-border hover:scale-110 hover:bg-foreground hover:text-background active:scale-90"
               aria-label="Previous tagline"
             >
-              ‹
+              <CaretLeft size={14} weight="bold" />
             </button>
             <p
               className="min-w-60 text-left text-sm font-semibold text-muted-foreground transition-all duration-300"
@@ -140,11 +115,10 @@ export function Hero() {
             </p>
             <button
               onClick={() => cycleTagline(1)}
-              className="flex h-9 w-9 items-center justify-center rounded-full border border-border transition-transform hover:scale-110 hover:bg-foreground hover:text-background active:scale-90"
-              style={{ transitionTimingFunction: "var(--spring)" }}
+              className="transition-spring flex h-9 w-9 items-center justify-center rounded-full border border-border hover:scale-110 hover:bg-foreground hover:text-background active:scale-90"
               aria-label="Next tagline"
             >
-              ›
+              <CaretRight size={14} weight="bold" />
             </button>
           </div>
 
@@ -164,42 +138,64 @@ export function Hero() {
 
           <a
             href="#projects"
-            className="inline-flex items-center gap-2 rounded-full bg-foreground px-7 py-3.5 text-sm font-medium text-background transition-transform hover:scale-105 active:scale-95"
-            style={{ transitionTimingFunction: "var(--spring)" }}
+            className="transition-spring inline-flex items-center gap-2 rounded-full bg-foreground px-7 py-3.5 text-sm font-medium text-background hover:scale-105 active:scale-95"
           >
-            See my work →
+            See my work
+            <ArrowRight size={16} weight="bold" />
           </a>
-        </div>
+        </Reveal>
 
-        <div
-          className="relative [perspective:800px]"
-          onMouseMove={handleMouseMove}
-          onMouseLeave={handleMouseLeave}
+        <Reveal
+          delay={0.15}
+          y={28}
+          className="relative mx-auto w-full max-w-sm [perspective:800px] lg:mx-0"
         >
           <div
-            ref={tiltRef}
-            className="aspect-[4/5] overflow-hidden rounded-[1.75rem] shadow-2xl transition-transform duration-500"
-            style={{
-              background: "hsl(30, 20%, 97%)",
-              transformStyle: "preserve-3d",
-              transitionTimingFunction: "var(--spring-soft)",
-            }}
+            onMouseMove={handleMouseMove}
+            onMouseLeave={handleMouseLeave}
           >
-            <Image
-              src="/preksha-illustration.jpg"
-              alt="Illustrated portrait of Preksha Barjatya wearing round sunglasses"
-              width={736}
-              height={736}
-              className="h-full w-full object-cover"
-              style={{ objectPosition: "center 30%" }}
-              priority
-            />
+            <div
+              ref={tiltRef}
+              className="dotted-grid corner-brackets rounded-[1.75rem] border border-border p-6 shadow-2xl transition-transform duration-500"
+              style={{
+                transformStyle: "preserve-3d",
+                transitionTimingFunction: "var(--spring-soft)",
+                background: "var(--card)",
+              }}
+            >
+              <p className="mb-5 font-mono text-[10px] uppercase tracking-[0.2em] text-muted-foreground">
+                AI Engineer · Indore
+              </p>
+
+              <div className="relative">
+                <span
+                  aria-hidden="true"
+                  className="tape absolute -top-2.5 left-8 h-5 w-14 rounded-sm"
+                  style={{ transform: "rotate(-3deg)" }}
+                />
+                <div
+                  className="aspect-[4/5] overflow-hidden rounded-xl shadow-xl"
+                  style={{ transform: "rotate(-1deg)" }}
+                >
+                  <Image
+                    src="/preksha-illustration.jpg"
+                    alt="Illustrated portrait of Preksha Barjatya wearing round sunglasses"
+                    width={736}
+                    height={920}
+                    className="h-full w-full object-cover"
+                    style={{ objectPosition: "center 30%" }}
+                    priority
+                  />
+                </div>
+              </div>
+
+              <div className="mt-6 flex items-center justify-between border-t border-border pt-4">
+                <p className="text-sm text-muted-foreground">B.Tech CSE (AI &amp; ML)</p>
+                <p className="font-display text-lg">2023-27</p>
+              </div>
+            </div>
           </div>
-          <div className="absolute -bottom-6 -left-6 rounded-xl border border-border bg-background p-4 shadow-lg">
-            <p className="text-sm text-muted-foreground">B.Tech CSE (AI &amp; ML)</p>
-            <p className="font-serif text-2xl">2023–27</p>
-          </div>
-        </div>
+        </Reveal>
       </div>
     </section>
   );

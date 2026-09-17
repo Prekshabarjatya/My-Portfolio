@@ -1,5 +1,7 @@
 "use client";
 
+import { Sparkle } from "@phosphor-icons/react";
+
 export function HighlightedOutput({
   text,
   isPitching,
@@ -15,7 +17,7 @@ export function HighlightedOutput({
       style={{ borderColor: "var(--accent)" }}
     >
       <p className="mb-1.5 flex items-center gap-1.5 text-[11px] font-semibold uppercase tracking-wider text-accent">
-        <span>✨</span> Highlighted by the tour agent
+        <Sparkle size={12} weight="bold" /> Highlighted by the tour agent
       </p>
       <p className="text-sm leading-relaxed">
         {text}

@@ -1,47 +1,48 @@
 "use client";
 
+import type { Icon } from "@phosphor-icons/react";
+import { CaretRight } from "@phosphor-icons/react";
+
 type Props = {
   label: string;
+  icon: Icon;
   onClick?: () => void;
   href?: string;
   expanded?: boolean;
 };
 
-export function ProjectLinkButton({ label, onClick, href, expanded }: Props) {
+export function ProjectLinkButton({ label, icon: ItemIcon, onClick, href, expanded }: Props) {
   const className =
-    "group flex items-center justify-between gap-3 rounded-md border border-accent px-4 py-2.5 text-xs font-medium uppercase tracking-[0.15em] text-accent transition-all duration-300 hover:bg-accent hover:text-white active:scale-95";
-  const style = {
-    transitionTimingFunction: "var(--spring)",
-  };
+    "transition-spring group flex items-center gap-2 rounded-full bg-foreground py-2 pl-2 pr-4 text-xs font-medium uppercase tracking-[0.1em] text-background hover:scale-105 active:scale-95";
 
-  const chevron = (
-    <span
-      className="transition-transform duration-300 group-hover:translate-x-1"
-      style={{ transform: expanded ? "rotate(90deg)" : "none" }}
-    >
-      ›
-    </span>
+  const content = (
+    <>
+      <span className="flex h-6 w-6 flex-shrink-0 items-center justify-center rounded-full bg-background text-foreground">
+        <ItemIcon size={13} weight="bold" />
+      </span>
+      {label}
+      {onClick && (
+        <CaretRight
+          size={11}
+          weight="bold"
+          className="transition-spring"
+          style={{ transform: expanded ? "rotate(90deg)" : "none" }}
+        />
+      )}
+    </>
   );
 
   if (href) {
     return (
-      <a
-        href={href}
-        target="_blank"
-        rel="noopener noreferrer"
-        className={className}
-        style={style}
-      >
-        {label}
-        {chevron}
+      <a href={href} target="_blank" rel="noopener noreferrer" className={className}>
+        {content}
       </a>
     );
   }
 
   return (
-    <button type="button" onClick={onClick} className={className} style={style}>
-      {label}
-      {chevron}
+    <button type="button" onClick={onClick} className={className}>
+      {content}
     </button>
   );
 }

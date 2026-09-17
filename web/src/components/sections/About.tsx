@@ -1,18 +1,16 @@
 import { stats } from "@/data/portfolio";
+import { Reveal, RevealGroup, RevealItem } from "@/components/Reveal";
 
 export function About() {
   return (
     <section id="about" className="px-6 py-32">
-      <div className="mx-auto max-w-6xl">
-        <div className="mb-12">
-          <span className="text-sm font-medium tracking-wider text-muted-foreground">
-            01.
-          </span>
-          <h2 className="mt-2 font-serif text-4xl md:text-6xl">About Me</h2>
-        </div>
+      <div className="mx-auto max-w-[1400px]">
+        <Reveal>
+          <h2 className="mb-12 font-display text-4xl md:text-5xl">About Me</h2>
+        </Reveal>
 
         <div className="grid gap-16 lg:grid-cols-2">
-          <div className="space-y-6 text-muted-foreground">
+          <Reveal delay={0.1} className="space-y-6 text-muted-foreground">
             <p className="text-xl">
               I&apos;m <span className="font-medium text-foreground">Preksha Barjatya</span>, a
               B.Tech CSE (AI &amp; ML) student at Acropolis Institute of Technology and
@@ -24,7 +22,7 @@ export function About() {
                 Retrieval-Augmented Generation (RAG)
               </span>{" "}
               applications, <span className="font-medium text-foreground">FastAPI</span>-based
-              AI solutions, data pipelines, and SQL-driven analytics systems — turning
+              AI solutions, data pipelines, and SQL-driven analytics systems, turning
               language models into dependable, production-ready tools.
             </p>
             <p className="text-lg">
@@ -33,23 +31,21 @@ export function About() {
               Hygiene Pvt. Ltd., building agentic automation workflows, after previously
               working as a Data Analyst Intern at Think AI Corporation.
             </p>
-          </div>
+          </Reveal>
 
-          <div className="grid grid-cols-2 gap-4">
+          <RevealGroup className="grid grid-cols-2 gap-4">
             {stats.map((stat) => (
-              <div
-                key={stat.label}
-                className="rounded-lg border border-border bg-card p-6 transition-transform hover:-translate-y-1.5 hover:scale-[1.02] hover:border-accent active:scale-95"
-                style={{ transitionTimingFunction: "var(--spring)" }}
-              >
-                <p className="mb-2 text-xs uppercase tracking-wider text-muted-foreground">
-                  {stat.label}
-                </p>
-                <p className="font-serif text-2xl">{stat.value}</p>
-                <p className="mt-1 text-sm text-muted-foreground">{stat.sub}</p>
-              </div>
+              <RevealItem key={stat.label}>
+                <div className="transition-spring paper-card rounded-lg p-6 hover:-translate-y-1.5 hover:scale-[1.02] hover:border-accent active:scale-95">
+                  <p className="mb-2 text-xs uppercase tracking-wider text-muted-foreground">
+                    {stat.label}
+                  </p>
+                  <p className="font-display text-2xl">{stat.value}</p>
+                  <p className="mt-1 text-sm text-muted-foreground">{stat.sub}</p>
+                </div>
+              </RevealItem>
             ))}
-          </div>
+          </RevealGroup>
         </div>
       </div>
     </section>

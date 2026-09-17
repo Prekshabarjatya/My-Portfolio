@@ -1,43 +1,44 @@
+import { CheckCircle } from "@phosphor-icons/react/dist/ssr";
 import { experience } from "@/data/portfolio";
+import { Reveal, RevealGroup, RevealItem } from "@/components/Reveal";
 
 export function Experience() {
   return (
-    <section id="experience" className="px-6 py-32">
-      <div className="mx-auto max-w-6xl">
-        <div className="mb-16">
-          <span className="text-sm font-medium tracking-wider text-muted-foreground">
-            03.
-          </span>
-          <h2 className="mt-2 font-serif text-4xl md:text-6xl">Experience</h2>
-        </div>
+    <section id="experience" className="bg-card px-6 py-32">
+      <div className="mx-auto max-w-[1400px]">
+        <Reveal>
+          <h2 className="mb-16 font-display text-4xl md:text-5xl">Experience</h2>
+        </Reveal>
 
-        <div className="flex flex-col gap-8">
+        <RevealGroup className="flex flex-col gap-8">
           {experience.map((item) => (
-            <div
-              key={item.role}
-              className="rounded-lg border border-border bg-card p-8 transition-all hover:-translate-y-1.5 hover:border-accent hover:shadow-xl"
-              style={{ transitionTimingFunction: "var(--spring-soft)" }}
-            >
-              <div className="mb-5 flex flex-col gap-1 sm:flex-row sm:items-start sm:justify-between">
-                <div>
-                  <h3 className="font-serif text-2xl">{item.role}</h3>
-                  <p className="mt-1 text-muted-foreground">{item.company}</p>
+            <RevealItem key={item.role}>
+              <div className="transition-spring-soft dotted-grid rounded-lg border border-border bg-background p-8 hover:-translate-y-1.5 hover:border-accent hover:shadow-xl">
+                <div className="mb-5 flex flex-col gap-1 sm:flex-row sm:items-start sm:justify-between">
+                  <div>
+                    <h3 className="font-display text-2xl">{item.role}</h3>
+                    <p className="mt-1 text-muted-foreground">{item.company}</p>
+                  </div>
+                  <span className="whitespace-nowrap font-mono text-sm text-muted-foreground">
+                    {item.date}
+                  </span>
                 </div>
-                <span className="whitespace-nowrap text-sm text-muted-foreground">
-                  {item.date}
-                </span>
+                <ul className="flex flex-col gap-3">
+                  {item.bullets.map((bullet) => (
+                    <li key={bullet} className="flex items-start gap-2.5 text-muted-foreground">
+                      <CheckCircle
+                        size={18}
+                        weight="fill"
+                        className="mt-0.5 flex-shrink-0 text-accent"
+                      />
+                      {bullet}
+                    </li>
+                  ))}
+                </ul>
               </div>
-              <ul className="flex flex-col gap-3">
-                {item.bullets.map((bullet) => (
-                  <li key={bullet} className="relative pl-5 text-muted-foreground">
-                    <span className="absolute left-0 top-2 h-1.5 w-1.5 rounded-full bg-accent" />
-                    {bullet}
-                  </li>
-                ))}
-              </ul>
-            </div>
+            </RevealItem>
           ))}
-        </div>
+        </RevealGroup>
       </div>
     </section>
   );

@@ -1,32 +1,31 @@
+import { EnvelopeSimple, GithubLogo, LinkedinLogo, ArrowRight } from "@phosphor-icons/react/dist/ssr";
 import { contact } from "@/data/portfolio";
+import { Reveal } from "@/components/Reveal";
 
 export function Contact() {
   return (
     <section id="contact" className="bg-card px-6 py-32">
-      <div className="mx-auto max-w-6xl">
-        <div className="mb-16">
-          <span className="text-sm font-medium tracking-wider text-muted-foreground">
-            05.
-          </span>
-          <h2 className="mt-2 font-serif text-4xl md:text-6xl lg:text-7xl">
+      <div className="mx-auto max-w-[1400px]">
+        <Reveal>
+          <h2 className="mb-16 font-display text-4xl md:text-5xl">
             Let&apos;s work
             <br />
-            <span className="italic">together</span>
+            <span className="italic pb-1 inline-block">together</span>
           </h2>
-        </div>
+        </Reveal>
 
-        <div className="grid gap-16 lg:grid-cols-2">
+        <Reveal delay={0.1} className="grid gap-16 lg:grid-cols-2">
           <div>
             <p className="mb-8 text-lg text-muted-foreground">
               I&apos;m actively looking for opportunities to grow as an AI engineer. If
-              you have a role or project in mind, let&apos;s connect!
+              you have a role or project in mind, let&apos;s connect.
             </p>
             <a
               href={`mailto:${contact.email}`}
-              className="inline-flex items-center gap-3 font-serif text-xl transition-transform hover:translate-x-2 md:text-2xl"
-              style={{ transitionTimingFunction: "var(--spring)" }}
+              className="transition-spring inline-flex items-center gap-3 font-display text-xl hover:translate-x-2 md:text-2xl"
             >
-              {contact.email} →
+              {contact.email}
+              <ArrowRight size={20} weight="bold" />
             </a>
             <p className="mt-4 text-muted-foreground">{contact.phone}</p>
             <p className="text-muted-foreground">{contact.address}</p>
@@ -39,35 +38,32 @@ export function Contact() {
             <div className="flex gap-4">
               <a
                 href={`mailto:${contact.email}`}
-                className="flex h-12 w-12 items-center justify-center rounded-full border border-border text-lg transition-transform hover:-translate-y-1 hover:scale-110 hover:rotate-[-6deg] hover:bg-foreground hover:text-background active:scale-90"
-                style={{ transitionTimingFunction: "var(--spring)" }}
+                className="transition-spring flex h-12 w-12 items-center justify-center rounded-full border border-border hover:-translate-y-1 hover:scale-110 hover:rotate-[-6deg] hover:bg-foreground hover:text-background active:scale-90"
                 aria-label="Email"
               >
-                ✉
+                <EnvelopeSimple size={20} weight="bold" />
               </a>
               <a
                 href={contact.github}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex h-12 w-12 items-center justify-center rounded-full border border-border text-lg transition-transform hover:-translate-y-1 hover:scale-110 hover:rotate-[-6deg] hover:bg-foreground hover:text-background active:scale-90"
-                style={{ transitionTimingFunction: "var(--spring)" }}
+                className="transition-spring flex h-12 w-12 items-center justify-center rounded-full border border-border hover:-translate-y-1 hover:scale-110 hover:rotate-[-6deg] hover:bg-foreground hover:text-background active:scale-90"
                 aria-label="GitHub"
               >
-                GH
+                <GithubLogo size={20} weight="bold" />
               </a>
               <a
                 href={contact.linkedin}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex h-12 w-12 items-center justify-center rounded-full border border-border text-lg transition-transform hover:-translate-y-1 hover:scale-110 hover:rotate-[-6deg] hover:bg-foreground hover:text-background active:scale-90"
-                style={{ transitionTimingFunction: "var(--spring)" }}
+                className="transition-spring flex h-12 w-12 items-center justify-center rounded-full border border-border hover:-translate-y-1 hover:scale-110 hover:rotate-[-6deg] hover:bg-foreground hover:text-background active:scale-90"
                 aria-label="LinkedIn"
               >
-                in
+                <LinkedinLogo size={20} weight="bold" />
               </a>
             </div>
           </div>
-        </div>
+        </Reveal>
       </div>
     </section>
   );
