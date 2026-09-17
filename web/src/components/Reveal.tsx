@@ -14,6 +14,14 @@ type RevealProps = {
   y?: number;
 };
 
+// Sections are position: sticky and slide over one another as you scroll
+// (see globals.css's z-index scale). Triggering a reveal as soon as a
+// section merely peeks into view would make its fade-in run WHILE it's
+// still sliding into its stuck position, fighting with the scroll motion.
+// Waiting until it's substantially in view (well after it's settled at
+// top: 0) keeps every section's reveal as smooth as the first one.
+const VIEWPORT = { once: true, margin: "-30% 0px -30% 0px" } as const;
+
 export function Reveal({ children, delay = 0, className, id, y = 20 }: RevealProps) {
   return (
     <motion.div
@@ -21,7 +29,7 @@ export function Reveal({ children, delay = 0, className, id, y = 20 }: RevealPro
       className={className}
       initial="hidden"
       whileInView="show"
-      viewport={{ once: true, margin: "-80px" }}
+      viewport={VIEWPORT}
       variants={{ hidden: { opacity: 0, y }, show: { opacity: 1, y: 0 } }}
       transition={{ duration: 0.6, delay, ease: EASE }}
     >
@@ -43,7 +51,7 @@ export function RevealGroup({ children, className, stagger = 0.08 }: RevealGroup
       className={className}
       initial="hidden"
       whileInView="show"
-      viewport={{ once: true, margin: "-80px" }}
+      viewport={VIEWPORT}
       variants={{ hidden: {}, show: { transition: { staggerChildren: stagger } } }}
     >
       {children}

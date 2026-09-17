@@ -29,7 +29,7 @@ export function Skills() {
   return (
     <section
       id="skills"
-      className="sticky top-0 z-[2] bg-background px-6 py-32 shadow-[0_-12px_30px_-12px_rgba(0,0,0,0.18)]"
+      className="sticky top-0 z-[2] bg-background px-6 py-20 shadow-[0_-12px_30px_-12px_rgba(0,0,0,0.18)]"
     >
       <div className="mx-auto max-w-[1400px]">
         <Reveal className="mb-16">

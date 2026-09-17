@@ -86,7 +86,7 @@ export function Hero() {
         className="mx-auto grid w-full max-w-[1400px] items-center gap-16 lg:grid-cols-2"
       >
         <Reveal className="text-center lg:text-left">
-          <p className="mb-4 text-2xl font-semibold md:text-3xl">
+          <p className="mb-6 text-2xl font-semibold md:text-3xl">
             Hi, I&apos;m <span className="text-accent">Preksha</span>{" "}
             <span className="inline-block" aria-hidden="true">👋</span>
           </p>
