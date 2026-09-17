@@ -92,8 +92,8 @@ export function Hero() {
           </p>
 
           <h1 className="mb-7 font-display text-5xl leading-[1.15] tracking-tight md:text-6xl">
-            I build <span className="italic pb-1 inline-block">intelligent systems</span> that
-            actually work.
+            Building systems that are{" "}
+            <span className="italic pb-1 inline-block">intelligent</span>.
           </h1>
 
           <div className="mb-6 inline-flex items-center gap-3">
