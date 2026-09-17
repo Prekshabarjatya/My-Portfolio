@@ -4,7 +4,10 @@ import { Reveal } from "@/components/Reveal";
 
 export function Contact() {
   return (
-    <section id="contact" className="bg-card px-6 py-32">
+    <section
+      id="contact"
+      className="sticky top-0 z-[6] bg-card px-6 py-32 shadow-[0_-12px_30px_-12px_rgba(0,0,0,0.18)]"
+    >
       <div className="mx-auto max-w-[1400px]">
         <Reveal>
           <h2 className="mb-16 font-display text-4xl md:text-5xl">
