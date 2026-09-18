@@ -20,11 +20,11 @@ export function HoverNameLetters() {
   }
 
   return (
-    <h1 className="flex w-full items-center justify-between font-display text-[clamp(3.5rem,14vw,14rem)] uppercase leading-none tracking-tight text-accent select-none">
+    <h1 className="flex w-full items-center font-display text-[clamp(3.5rem,11vw,9rem)] uppercase leading-[1.2] tracking-tight text-accent select-none">
       {NAME.map((letter, i) => (
         <span
           key={i}
-          className="group relative inline-block cursor-default overflow-hidden transition-transform duration-300 hover:scale-105"
+          className="group relative inline-block cursor-default overflow-hidden px-[0.06em] py-[0.08em] transition-transform duration-300 hover:scale-105"
           onMouseMove={(e) => handleMouseMove(e, i)}
         >
           {letter}
