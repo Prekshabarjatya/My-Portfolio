@@ -4,6 +4,7 @@ import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
 import { CaretLeft, CaretRight, ArrowRight } from "@phosphor-icons/react";
 import { Reveal } from "@/components/Reveal";
+import { HoverNameLetters } from "./HoverNameLetters";
 
 const TAGLINES = [
   "AI Engineer · RAG & Agentic Workflows",
@@ -86,9 +87,12 @@ export function Hero() {
         className="mx-auto grid w-full max-w-[1400px] items-center gap-16 lg:grid-cols-2"
       >
         <Reveal className="text-center">
-          <h1 className="mb-4 font-display text-6xl leading-[1.05] tracking-tight md:text-7xl">
-            <span className="text-accent">Preksha</span> Barjatya
-          </h1>
+          <div className="mb-4 inline-block text-left">
+            <HoverNameLetters />
+            <p className="-mt-1 pr-1 text-right font-display text-2xl text-muted-foreground md:-mt-2 md:pr-2 md:text-3xl">
+              Barjatya
+            </p>
+          </div>
 
           <p className="mb-7 font-display text-3xl leading-[1.15] tracking-tight md:text-4xl">
             Building <span className="italic pb-1 inline-block">intelligent</span> applications.
