@@ -78,36 +78,36 @@ export function TourGuidePanel() {
 
       {/* Panel */}
       <div
-        className={`fixed bottom-24 right-6 z-[90] max-h-[85vh] w-[min(440px,calc(100vw-3rem))] origin-bottom-right overflow-y-auto rounded-2xl border border-border bg-background p-4 shadow-2xl transition-all ${
+        className={`fixed bottom-24 right-6 z-[90] max-h-[85vh] w-[min(760px,calc(100vw-3rem))] origin-bottom-right overflow-y-auto rounded-2xl border border-border bg-background p-6 shadow-2xl transition-all ${
           open
             ? "scale-100 opacity-100"
             : "pointer-events-none scale-90 opacity-0"
         }`}
         style={{ transitionTimingFunction: "var(--spring-soft)", transitionDuration: "0.35s" }}
       >
-        <p className="font-display text-xl">Live Tour Guide</p>
-        <p className="mt-1 text-sm text-muted-foreground">
+        <p className="font-display text-3xl">Live Tour Guide</p>
+        <p className="mt-2 text-[28px] leading-snug text-muted-foreground">
           A LangGraph agent (running on Groq) reads your intent and drives this
           page for you. Every reasoning step below is real, not scripted.
         </p>
 
-        <form onSubmit={handleSubmit} className="mt-4 flex gap-2">
+        <form onSubmit={handleSubmit} className="mt-5 flex gap-3">
           <input
             value={query}
             onChange={(e) => setQuery(e.target.value)}
             placeholder="e.g. Show me her production-ready AI work"
-            className="flex-1 rounded-full border border-border bg-card px-4 py-2 text-sm outline-none focus:border-accent"
+            className="flex-1 rounded-full border border-border bg-card px-5 py-3 text-[28px] outline-none focus:border-accent"
           />
           <button
             type="submit"
-            className="rounded-full bg-foreground px-4 py-2 text-sm font-medium text-background transition-transform hover:scale-105 active:scale-90"
+            className="rounded-full bg-foreground px-6 py-3 text-[28px] font-medium text-background transition-transform hover:scale-105 active:scale-90"
             style={{ transitionTimingFunction: "var(--spring)" }}
           >
             Ask
           </button>
         </form>
 
-        <div className="mt-2 flex flex-wrap gap-1.5">
+        <div className="mt-3 flex flex-wrap gap-2.5">
           {EXAMPLE_PROMPTS.map((p) => (
             <button
               key={p}
@@ -115,7 +115,7 @@ export function TourGuidePanel() {
                 setQuery(p);
                 sendQuery(p);
               }}
-              className="rounded-full border border-border px-2.5 py-1 text-xs text-muted-foreground transition-transform hover:scale-105 hover:text-foreground active:scale-95"
+              className="rounded-full border border-border px-4 py-2 text-[24px] text-muted-foreground transition-transform hover:scale-105 hover:text-foreground active:scale-95"
               style={{ transitionTimingFunction: "var(--spring)" }}
             >
               {p}
@@ -124,7 +124,7 @@ export function TourGuidePanel() {
         </div>
 
         {errorMessage && (
-          <p className="mt-3 rounded-lg bg-red-500/10 p-2 text-sm text-red-500">
+          <p className="mt-3 rounded-lg bg-red-500/10 p-3 text-[28px] text-red-500">
             {errorMessage}
           </p>
         )}
@@ -133,7 +133,7 @@ export function TourGuidePanel() {
           <AgentGraphFlow activeNode={activeNode} visitedNodes={visitedNodes} />
         </div>
 
-        <p className="mb-2 mt-4 text-xs font-semibold uppercase tracking-wider text-muted-foreground">
+        <p className="mb-3 mt-5 text-[24px] font-semibold uppercase tracking-wider text-muted-foreground">
           Live reasoning
         </p>
         <ReasoningTrace steps={steps} activeNode={activeNode} />

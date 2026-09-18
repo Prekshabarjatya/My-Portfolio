@@ -13,17 +13,17 @@ export function HighlightedOutput({
 
   return (
     <div
-      className="rounded-xl border-l-4 bg-accent/10 p-4"
+      className="rounded-xl border-l-4 bg-accent/10 p-5"
       style={{ borderColor: "var(--accent)" }}
     >
-      <p className="mb-1.5 flex items-center gap-1.5 text-[11px] font-semibold uppercase tracking-wider text-accent">
-        <Sparkle size={12} weight="bold" /> Highlighted by the tour agent
+      <p className="mb-2 flex items-center gap-2 text-[22px] font-semibold uppercase tracking-wider text-accent">
+        <Sparkle size={20} weight="bold" /> Highlighted by the tour agent
       </p>
-      <p className="text-sm leading-relaxed">
+      <p className="text-[28px] leading-relaxed">
         {text}
         {isPitching && (
           <span
-            className="ml-0.5 inline-block h-4 w-[2px] align-middle"
+            className="ml-0.5 inline-block h-7 w-[3px] align-middle"
             style={{
               background: "var(--accent)",
               animation: "caret-blink 1s steps(1) infinite",

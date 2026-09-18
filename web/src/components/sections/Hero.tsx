@@ -85,16 +85,14 @@ export function Hero() {
         ref={parallaxBoxRef}
         className="mx-auto grid w-full max-w-[1400px] items-center gap-16 lg:grid-cols-2"
       >
-        <Reveal className="text-center lg:text-left">
-          <p className="mb-6 text-2xl font-semibold md:text-3xl">
-            Hi, I&apos;m <span className="text-accent">Preksha</span>{" "}
-            <span className="inline-block" aria-hidden="true">👋</span>
-          </p>
-
-          <h1 className="mb-7 font-display text-5xl leading-[1.15] tracking-tight md:text-6xl">
-            Building systems that are{" "}
-            <span className="italic pb-1 inline-block">intelligent</span>.
+        <Reveal className="text-center">
+          <h1 className="mb-4 font-display text-6xl leading-[1.05] tracking-tight md:text-7xl">
+            <span className="text-accent">Preksha</span> Barjatya
           </h1>
+
+          <p className="mb-7 font-display text-3xl leading-[1.15] tracking-tight md:text-4xl">
+            Building <span className="italic pb-1 inline-block">intelligent</span> applications.
+          </p>
 
           <div className="mb-6 inline-flex items-center gap-3">
             <button
@@ -122,7 +120,7 @@ export function Hero() {
             </button>
           </div>
 
-          <div className="mb-8 flex justify-center gap-12 lg:justify-start">
+          <div className="mb-8 flex justify-center gap-12">
             <div>
               <p className="mb-1.5 text-sm text-muted-foreground">Based in</p>
               <p className="font-medium">Indore, India</p>
@@ -148,7 +146,7 @@ export function Hero() {
         <Reveal
           delay={0.15}
           y={28}
-          className="relative mx-auto w-full max-w-sm [perspective:800px] lg:mx-0"
+          className="relative mx-auto w-full max-w-sm [perspective:800px]"
         >
           <div
             onMouseMove={handleMouseMove}
