@@ -34,7 +34,7 @@ export function Skills() {
       <div className="mx-auto max-w-[1400px]">
         <Reveal className="mb-16">
           <h2 className="font-display text-4xl md:text-5xl">Skills Console</h2>
-          <p className="mt-3 max-w-md text-sm text-muted-foreground">
+          <p className="mt-6 max-w-md text-sm text-muted-foreground">
             The core skills behind an AI engineer, building up from
             programming fundamentals to the AI/ML work that defines the role.
           </p>

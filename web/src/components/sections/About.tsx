@@ -36,7 +36,7 @@ export function About() {
             </p>
           </Reveal>
 
-          <RevealGroup className="grid grid-cols-2 gap-4">
+          <RevealGroup className="grid grid-cols-2 gap-6">
             {stats.map((stat) => (
               <RevealItem key={stat.label}>
                 <div className="transition-spring paper-card rounded-lg p-6 hover:-translate-y-1.5 hover:scale-[1.02] hover:border-accent active:scale-95">

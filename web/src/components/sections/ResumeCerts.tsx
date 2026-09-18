@@ -40,7 +40,7 @@ export function ResumeCerts() {
             <p className="mb-6 text-sm uppercase tracking-wider text-muted-foreground">
               Training &amp; Certifications
             </p>
-            <RevealGroup className="flex flex-col gap-4">
+            <RevealGroup className="flex flex-col gap-6">
               {certifications.map((cert) => {
                 const logo = ORG_LOGO[cert.org];
                 return (
