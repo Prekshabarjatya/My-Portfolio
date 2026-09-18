@@ -29,7 +29,7 @@ export function ResumeCerts() {
             <a
               href="/Preksha_Barjatya_Resume.docx"
               download
-              className="transition-spring inline-flex items-center gap-3 rounded-full bg-foreground px-7 py-3.5 text-sm font-medium text-background hover:scale-105 active:scale-95"
+              className="transition-spring inline-flex items-center gap-3 rounded-full bg-foreground px-8 py-4 text-base font-medium text-background hover:scale-105 active:scale-95"
             >
               <DownloadSimple size={16} weight="bold" />
               Download Resume
@@ -57,14 +57,14 @@ export function ResumeCerts() {
                         )}
                         <div className="flex-1">
                           <p className="font-medium">{cert.title}</p>
-                          <p className="mt-1 text-sm opacity-70">{cert.org}</p>
+                          <p className="mt-1 text-base opacity-70">{cert.org}</p>
                           {"credentialId" in cert && (
                             <p className="mt-2 font-mono text-xs opacity-50">
                               Issued {cert.issued} · Expires {cert.expires} · ID {cert.credentialId}
                             </p>
                           )}
                         </div>
-                        <span className="whitespace-nowrap text-sm opacity-70">
+                        <span className="whitespace-nowrap text-base opacity-70">
                           {cert.status}
                         </span>
                       </div>

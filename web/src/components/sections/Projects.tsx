@@ -25,7 +25,7 @@ function ProjectMeta({
         {project.tags.map((tag) => (
           <span
             key={tag}
-            className="rounded-full border border-border px-3 py-1 text-xs"
+            className="rounded-full border border-border px-3 py-1 text-sm"
           >
             {tag}
           </span>

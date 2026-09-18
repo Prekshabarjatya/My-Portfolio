@@ -1,7 +1,6 @@
 "use client";
 
-import { useState } from "react";
-import { AnimatePresence, motion } from "motion/react";
+import { useRef } from "react";
 import { TechIcon } from "@/components/TechIcon";
 
 const NAME = "Preksha".split("");
@@ -10,31 +9,34 @@ const NAME = "Preksha".split("");
 const TECH_FOR_LETTER = ["Python", "LangChain", "LangGraph", "RAG", "FastAPI", "Docker", "AWS"];
 
 export function HoverNameLetters() {
-  const [hovered, setHovered] = useState<number | null>(null);
+  const iconRefs = useRef<(HTMLDivElement | null)[]>([]);
+
+  function handleMouseMove(e: React.MouseEvent<HTMLSpanElement>, i: number) {
+    const icon = iconRefs.current[i];
+    if (!icon) return;
+    const rect = e.currentTarget.getBoundingClientRect();
+    icon.style.left = `${e.clientX - rect.left - 24}px`;
+    icon.style.top = `${e.clientY - rect.top - 24}px`;
+  }
 
   return (
-    <h1 className="flex font-display text-7xl leading-none tracking-tight text-accent md:text-8xl">
+    <h1 className="flex w-full items-center justify-between font-display text-[clamp(3.5rem,14vw,14rem)] uppercase leading-none tracking-tight text-accent select-none">
       {NAME.map((letter, i) => (
         <span
           key={i}
-          className="relative inline-block cursor-default"
-          onMouseEnter={() => setHovered(i)}
-          onMouseLeave={() => setHovered((h) => (h === i ? null : h))}
+          className="group relative inline-block cursor-default overflow-hidden transition-transform duration-300 hover:scale-105"
+          onMouseMove={(e) => handleMouseMove(e, i)}
         >
           {letter}
-          <AnimatePresence>
-            {hovered === i && (
-              <motion.span
-                initial={{ opacity: 0, y: 10, scale: 0.75 }}
-                animate={{ opacity: 1, y: 0, scale: 1 }}
-                exit={{ opacity: 0, y: 10, scale: 0.75 }}
-                transition={{ duration: 0.2, ease: [0.22, 1, 0.36, 1] }}
-                className="pointer-events-none absolute -top-3 left-1/2 z-10 flex h-12 w-12 -translate-x-1/2 -translate-y-full items-center justify-center rounded-full border border-border bg-card p-2.5 text-foreground shadow-xl md:h-16 md:w-16 md:p-3"
-              >
-                <TechIcon name={TECH_FOR_LETTER[i]} />
-              </motion.span>
-            )}
-          </AnimatePresence>
+          <div
+            ref={(el) => {
+              iconRefs.current[i] = el;
+            }}
+            className="pointer-events-none absolute h-12 w-12 opacity-0 transition-opacity duration-300 group-hover:opacity-80 md:h-16 md:w-16"
+            style={{ left: 0, top: 0 }}
+          >
+            <TechIcon name={TECH_FOR_LETTER[i]} />
+          </div>
         </span>
       ))}
     </h1>

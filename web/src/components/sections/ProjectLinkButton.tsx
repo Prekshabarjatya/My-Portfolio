@@ -13,7 +13,7 @@ type Props = {
 
 export function ProjectLinkButton({ label, icon: ItemIcon, onClick, href, expanded }: Props) {
   const className =
-    "transition-spring group flex items-center gap-2 rounded-full bg-foreground py-2 pl-2 pr-4 text-xs font-medium uppercase tracking-[0.1em] text-background hover:scale-105 active:scale-95";
+    "transition-spring group flex items-center gap-2 rounded-full bg-foreground py-2.5 pl-2.5 pr-5 text-sm font-medium uppercase tracking-[0.1em] text-background hover:scale-105 active:scale-95";
 
   const content = (
     <>

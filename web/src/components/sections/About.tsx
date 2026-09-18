@@ -44,7 +44,7 @@ export function About() {
                     {stat.label}
                   </p>
                   <p className="font-display text-2xl">{stat.value}</p>
-                  <p className="mt-1 text-sm text-muted-foreground">{stat.sub}</p>
+                  <p className="mt-1 text-base text-muted-foreground">{stat.sub}</p>
                 </div>
               </RevealItem>
             ))}

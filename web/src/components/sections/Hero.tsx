@@ -84,12 +84,12 @@ export function Hero() {
     >
       <div
         ref={parallaxBoxRef}
-        className="mx-auto grid w-full max-w-[1400px] items-center gap-16 lg:grid-cols-2"
+        className="mx-auto grid w-full max-w-[1400px] items-center gap-16 lg:grid-cols-2 lg:gap-24"
       >
         <Reveal className="text-center">
-          <div className="mb-4 inline-block text-left">
+          <div className="mb-4 inline-block w-full text-left">
             <HoverNameLetters />
-            <p className="-mt-1 pr-1 text-right font-display text-2xl text-muted-foreground md:-mt-2 md:pr-2 md:text-3xl">
+            <p className="-mt-1 pr-1 text-right font-display text-[clamp(1.75rem,7vw,7rem)] leading-none text-muted-foreground md:-mt-2 md:pr-2">
               Barjatya
             </p>
           </div>
@@ -107,7 +107,7 @@ export function Hero() {
               <CaretLeft size={14} weight="bold" />
             </button>
             <p
-              className="min-w-60 text-left text-sm font-semibold text-muted-foreground transition-all duration-300"
+              className="min-w-60 text-left text-base font-semibold text-muted-foreground transition-all duration-300"
               style={{
                 opacity: swap ? 0 : 1,
                 transform: swap ? "translateY(10px)" : "translateY(0)",
@@ -126,12 +126,12 @@ export function Hero() {
 
           <div className="mb-8 flex justify-center gap-12">
             <div>
-              <p className="mb-1.5 text-sm text-muted-foreground">Based in</p>
-              <p className="font-medium">Indore, India</p>
+              <p className="mb-1.5 text-base text-muted-foreground">Based in</p>
+              <p className="text-lg font-medium">Indore, India</p>
             </div>
             <div>
-              <p className="mb-1.5 text-sm text-muted-foreground">Status</p>
-              <p className="flex items-center gap-2 font-medium">
+              <p className="mb-1.5 text-base text-muted-foreground">Status</p>
+              <p className="flex items-center gap-2 text-lg font-medium">
                 <span className="h-2 w-2 animate-pulse rounded-full bg-green-500" />
                 Open to work
               </p>
@@ -140,7 +140,7 @@ export function Hero() {
 
           <a
             href="#projects"
-            className="transition-spring inline-flex items-center gap-2 rounded-full bg-foreground px-7 py-3.5 text-sm font-medium text-background hover:scale-105 active:scale-95"
+            className="transition-spring inline-flex items-center gap-2 rounded-full bg-foreground px-8 py-4 text-base font-medium text-background hover:scale-105 active:scale-95"
           >
             See my work
             <ArrowRight size={16} weight="bold" />
@@ -152,48 +152,65 @@ export function Hero() {
           y={28}
           className="relative mx-auto w-full max-w-sm [perspective:800px]"
         >
+          {/* Lanyard clip */}
           <div
-            onMouseMove={handleMouseMove}
-            onMouseLeave={handleMouseLeave}
-          >
+            aria-hidden="true"
+            className="absolute -top-5 left-1/2 z-10 h-8 w-16 -translate-x-1/2 rounded-t-xl border border-b-0 border-border bg-card"
+          />
+
+          <div onMouseMove={handleMouseMove} onMouseLeave={handleMouseLeave}>
             <div
               ref={tiltRef}
-              className="dotted-grid corner-brackets rounded-[1.75rem] border border-border p-6 shadow-2xl transition-transform duration-500"
+              className="dotted-grid relative overflow-hidden rounded-2xl border border-border shadow-2xl transition-transform duration-500"
               style={{
                 transformStyle: "preserve-3d",
                 transitionTimingFunction: "var(--spring-soft)",
                 background: "var(--card)",
               }}
             >
-              <p className="mb-5 font-mono text-[10px] uppercase tracking-[0.2em] text-muted-foreground">
-                AI Engineer · Indore
-              </p>
+              {/* Grommet hole */}
+              <div
+                aria-hidden="true"
+                className="absolute left-1/2 top-3 z-10 h-4 w-4 -translate-x-1/2 rounded-full border border-border bg-background"
+              />
 
-              <div className="relative">
-                <span
-                  aria-hidden="true"
-                  className="tape absolute -top-2.5 left-8 h-5 w-14 rounded-sm"
-                  style={{ transform: "rotate(-3deg)" }}
-                />
-                <div
-                  className="aspect-[4/5] overflow-hidden rounded-xl shadow-xl"
-                  style={{ transform: "rotate(-1deg)" }}
-                >
-                  <Image
-                    src="/preksha-illustration.jpg"
-                    alt="Illustrated portrait of Preksha Barjatya wearing round sunglasses"
-                    width={736}
-                    height={920}
-                    className="h-full w-full object-cover"
-                    style={{ objectPosition: "center 30%" }}
-                    priority
-                  />
-                </div>
+              {/* Badge header */}
+              <div className="bg-foreground px-5 pb-3 pt-9 text-center text-background">
+                <p className="font-mono text-[10px] uppercase tracking-[0.3em] opacity-60">
+                  All Access
+                </p>
+                <p className="mt-1 font-display text-xl uppercase tracking-wide">AI Engineer</p>
+                <p className="mt-0.5 text-sm opacity-70">Indore, India</p>
               </div>
 
-              <div className="mt-6 flex items-center justify-between border-t border-border pt-4">
-                <p className="text-sm text-muted-foreground">B.Tech CSE (AI &amp; ML)</p>
-                <p className="font-display text-lg">2023-27</p>
+              {/* ID photo */}
+              <div className="aspect-[4/5] overflow-hidden border-y border-border">
+                <Image
+                  src="/preksha-illustration.jpg"
+                  alt="Illustrated portrait of Preksha Barjatya wearing round sunglasses"
+                  width={736}
+                  height={920}
+                  className="h-full w-full object-cover"
+                  style={{ objectPosition: "center 30%" }}
+                  priority
+                />
+              </div>
+
+              {/* Badge footer */}
+              <div className="p-5">
+                <p className="font-display text-xl">Preksha Barjatya</p>
+                <p className="mt-0.5 text-base text-muted-foreground">
+                  B.Tech CSE (AI &amp; ML) · 2023-27
+                </p>
+                <div className="mt-4 flex items-end gap-[3px]" aria-hidden="true">
+                  {[3, 1, 2, 4, 1, 3, 2, 1, 4, 2, 1, 3, 2, 4, 1].map((h, i) => (
+                    <span
+                      key={i}
+                      className="w-[2.5px] bg-foreground/70"
+                      style={{ height: `${h * 5 + 6}px` }}
+                    />
+                  ))}
+                </div>
               </div>
             </div>
           </div>
