@@ -36,7 +36,7 @@ export function ReasoningTrace({
 
   if (steps.length === 0) {
     return (
-      <p className="rounded-xl border border-dashed border-border p-4 text-center text-xs text-muted-foreground">
+      <p className="rounded-xl border border-dashed border-border p-4 text-center text-sm text-muted-foreground">
         Ask something and watch the agent think, step by step.
       </p>
     );
@@ -72,11 +72,11 @@ export function ReasoningTrace({
               {!isLast && <span className="mt-1 h-full w-px flex-1 bg-border" />}
             </div>
             <div className="min-w-0 pb-1">
-              <p className="text-xs font-semibold">
+              <p className="text-sm font-semibold">
                 Step {i + 1} · {meta.label}
               </p>
               {step.thought && (
-                <p className="mt-0.5 text-xs leading-relaxed text-muted-foreground">
+                <p className="mt-0.5 text-sm leading-relaxed text-muted-foreground">
                   {step.thought}
                 </p>
               )}

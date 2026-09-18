@@ -86,7 +86,7 @@ export function TourGuidePanel() {
         style={{ transitionTimingFunction: "var(--spring-soft)", transitionDuration: "0.35s" }}
       >
         <p className="font-display text-xl">Live Tour Guide</p>
-        <p className="mt-1 text-xs text-muted-foreground">
+        <p className="mt-1 text-sm text-muted-foreground">
           A LangGraph agent (running on Groq) reads your intent and drives this
           page for you. Every reasoning step below is real, not scripted.
         </p>
@@ -115,7 +115,7 @@ export function TourGuidePanel() {
                 setQuery(p);
                 sendQuery(p);
               }}
-              className="rounded-full border border-border px-2.5 py-1 text-[11px] text-muted-foreground transition-transform hover:scale-105 hover:text-foreground active:scale-95"
+              className="rounded-full border border-border px-2.5 py-1 text-xs text-muted-foreground transition-transform hover:scale-105 hover:text-foreground active:scale-95"
               style={{ transitionTimingFunction: "var(--spring)" }}
             >
               {p}
@@ -124,7 +124,7 @@ export function TourGuidePanel() {
         </div>
 
         {errorMessage && (
-          <p className="mt-3 rounded-lg bg-red-500/10 p-2 text-xs text-red-500">
+          <p className="mt-3 rounded-lg bg-red-500/10 p-2 text-sm text-red-500">
             {errorMessage}
           </p>
         )}
@@ -133,7 +133,7 @@ export function TourGuidePanel() {
           <AgentGraphFlow activeNode={activeNode} visitedNodes={visitedNodes} />
         </div>
 
-        <p className="mb-2 mt-4 text-[11px] font-semibold uppercase tracking-wider text-muted-foreground">
+        <p className="mb-2 mt-4 text-xs font-semibold uppercase tracking-wider text-muted-foreground">
           Live reasoning
         </p>
         <ReasoningTrace steps={steps} activeNode={activeNode} />
