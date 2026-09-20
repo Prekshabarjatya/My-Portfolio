@@ -1,22 +1,30 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { ChatCircleDots } from "@phosphor-icons/react";
+import { ChatCircleDots, X } from "@phosphor-icons/react";
 import { useAgentTour } from "@/hooks/useAgentTour";
 import { AgentGraphFlow } from "./AgentGraphFlow";
 import { ReasoningTrace } from "./ReasoningTrace";
 import { HighlightedOutput } from "./HighlightedOutput";
 import { StackModal } from "./StackModal";
+import { WakeStatus } from "./WakeStatus";
 
+// The questions HR and recruiters ask most often in screening calls.
 const EXAMPLE_PROMPTS = [
-  "Show me her production-ready AI architecture work",
-  "What does her infrastructure stack look like?",
-  "What are her hobbies and long-term goals?",
+  "Tell me about her",
+  "Why should we hire her?",
+  "What are her key skills?",
+  "Walk me through her projects",
+  "What's her tech stack?",
+  "What are her career goals?",
+  "What are her hobbies and interests?",
 ];
 
 export function TourGuidePanel() {
   const {
     status,
+    serverState,
+    wakeElapsed,
     activeNode,
     visitedNodes,
     lastEvent,
@@ -25,11 +33,19 @@ export function TourGuidePanel() {
     isPitching,
     errorMessage,
     sendQuery,
+    wakeServer,
   } = useAgentTour();
 
   const [open, setOpen] = useState(false);
   const [query, setQuery] = useState("");
+  const [pendingQuery, setPendingQuery] = useState<string | null>(null);
   const [modalTarget, setModalTarget] = useState<string | null>(null);
+
+  // The backend sleeps when idle. Start waking it as soon as the page loads so
+  // it is usually ready by the time a visitor opens the guide.
+  useEffect(() => {
+    wakeServer().catch(() => {});
+  }, [wakeServer]);
 
   // The "Website Bridge": react to each node event by actually driving the DOM.
   useEffect(() => {
@@ -49,12 +65,33 @@ export function TourGuidePanel() {
     }
   }, [lastEvent]);
 
+  function ask(text: string) {
+    if (serverState !== "ready") setPendingQuery(text);
+    sendQuery(text).finally(() => setPendingQuery(null));
+  }
+
   function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
     const trimmed = query.trim();
     if (!trimmed) return;
-    sendQuery(trimmed);
+    ask(trimmed);
   }
+
+  const waking = serverState === "waking";
+  const dotClass =
+    status === "open"
+      ? "bg-green-400"
+      : waking
+        ? "animate-pulse bg-amber-400"
+        : "bg-amber-400";
+  const statusLabel =
+    serverState === "ready"
+      ? "Agent online"
+      : waking
+        ? "Waking up…"
+        : serverState === "unreachable"
+          ? "Asleep"
+          : "Connecting…";
 
   return (
     <>
@@ -63,59 +100,92 @@ export function TourGuidePanel() {
       {/* Launcher */}
       <button
         onClick={() => setOpen((v) => !v)}
-        className="fixed bottom-6 right-6 z-[90] flex items-center gap-2 rounded-full bg-foreground px-5 py-3.5 text-sm font-medium text-background shadow-xl transition-transform hover:scale-105 active:scale-95"
+        aria-expanded={open}
+        aria-controls="tour-guide-panel"
+        className={`fixed bottom-[max(1rem,env(safe-area-inset-bottom))] right-4 z-[90] items-center gap-2 rounded-full bg-foreground px-4 py-3 text-[13px] font-medium text-background shadow-xl transition-transform hover:scale-105 active:scale-95 sm:bottom-6 sm:right-6 sm:px-5 sm:py-3.5 sm:text-sm ${
+          open ? "hidden sm:flex" : "flex"
+        }`}
         style={{ transitionTimingFunction: "var(--spring)" }}
       >
         <ChatCircleDots size={16} weight="bold" />
-        {open ? "Close tour guide" : "Ask the AI tour guide"}
-        <span
-          className={`h-2 w-2 rounded-full ${
-            status === "open" ? "bg-green-400" : "bg-amber-400"
-          }`}
-          aria-hidden="true"
-        />
+        {open
+          ? "Close tour guide"
+          : waking
+            ? "Waking AI guide…"
+            : "Ask the AI tour guide"}
+        <span className={`h-2 w-2 rounded-full ${dotClass}`} aria-hidden="true" />
       </button>
 
-      {/* Panel */}
+      {/* Panel: bottom sheet on phones, floating card from sm up */}
       <div
-        className={`fixed bottom-24 right-6 z-[90] max-h-[85vh] w-[min(760px,calc(100vw-3rem))] origin-bottom-right overflow-y-auto rounded-2xl border border-border bg-background p-6 shadow-2xl transition-all ${
+        id="tour-guide-panel"
+        role="dialog"
+        aria-label="Live tour guide"
+        aria-hidden={!open}
+        className={`fixed inset-x-0 bottom-0 z-[90] max-h-[90dvh] overflow-y-auto overscroll-contain rounded-t-2xl border border-border bg-background p-4 pb-[max(1rem,env(safe-area-inset-bottom))] shadow-2xl transition-all sm:inset-x-auto sm:bottom-24 sm:right-6 sm:max-h-[85vh] sm:w-[min(760px,calc(100vw-3rem))] sm:origin-bottom-right sm:rounded-2xl sm:p-6 ${
           open
-            ? "scale-100 opacity-100"
-            : "pointer-events-none scale-90 opacity-0"
+            ? "translate-y-0 opacity-100 sm:scale-100"
+            : "pointer-events-none translate-y-full opacity-0 sm:translate-y-0 sm:scale-90"
         }`}
         style={{ transitionTimingFunction: "var(--spring-soft)", transitionDuration: "0.35s" }}
       >
-        <p className="font-display text-3xl">Live Tour Guide</p>
-        <p className="mt-2 text-[28px] leading-snug text-muted-foreground">
-          A LangGraph agent (running on Groq) reads your intent and drives this
-          page for you. Every reasoning step below is real, not scripted.
+        <div className="flex items-start justify-between gap-3">
+          <div className="min-w-0">
+            <p className="font-display text-2xl sm:text-3xl">Live Tour Guide</p>
+            <p className="mt-1 inline-flex items-center gap-2 text-[12px] text-muted-foreground sm:text-sm">
+              <span className={`h-2 w-2 rounded-full ${dotClass}`} aria-hidden="true" />
+              {statusLabel}
+            </p>
+          </div>
+          <button
+            onClick={() => setOpen(false)}
+            aria-label="Close tour guide"
+            className="-mr-1 -mt-1 flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-full text-muted-foreground transition-colors hover:text-foreground sm:hidden"
+          >
+            <X size={20} weight="bold" />
+          </button>
+        </div>
+
+        <p className="mt-2 text-[14px] leading-snug text-muted-foreground sm:text-lg lg:text-[28px]">
+          A LangGraph agent (running on Groq) reads your question and drives
+          this page to the answer. Every reasoning step below is real, not
+          scripted.
         </p>
 
-        <form onSubmit={handleSubmit} className="mt-5 flex gap-3">
+        <WakeStatus
+          state={serverState}
+          elapsed={wakeElapsed}
+          pendingQuery={pendingQuery}
+          onRetry={() => wakeServer().catch(() => {})}
+        />
+
+        <form onSubmit={handleSubmit} className="mt-4 flex gap-2 sm:mt-5 sm:gap-3">
+          {/* 16px on phones stops iOS Safari zooming the page on focus */}
           <input
             value={query}
             onChange={(e) => setQuery(e.target.value)}
-            placeholder="e.g. Show me her production-ready AI work"
-            className="flex-1 rounded-full border border-border bg-card px-5 py-3 text-[28px] outline-none focus:border-accent"
+            placeholder="Ask anything, e.g. Why should we hire her?"
+            enterKeyHint="send"
+            className="min-w-0 flex-1 rounded-full border border-border bg-card px-4 py-2.5 text-base outline-none focus:border-accent sm:px-5 sm:py-3 lg:text-[28px]"
           />
           <button
             type="submit"
-            className="rounded-full bg-foreground px-6 py-3 text-[28px] font-medium text-background transition-transform hover:scale-105 active:scale-90"
+            className="flex-shrink-0 rounded-full bg-foreground px-5 py-2.5 text-base font-medium text-background transition-transform hover:scale-105 active:scale-90 sm:px-6 sm:py-3 lg:text-[28px]"
             style={{ transitionTimingFunction: "var(--spring)" }}
           >
             Ask
           </button>
         </form>
 
-        <div className="mt-3 flex flex-wrap gap-2.5">
+        <div className="mt-3 flex flex-wrap gap-2 sm:gap-2.5">
           {EXAMPLE_PROMPTS.map((p) => (
             <button
               key={p}
               onClick={() => {
                 setQuery(p);
-                sendQuery(p);
+                ask(p);
               }}
-              className="rounded-full border border-border px-4 py-2 text-[24px] text-muted-foreground transition-transform hover:scale-105 hover:text-foreground active:scale-95"
+              className="rounded-full border border-border px-3 py-1.5 text-left text-[12px] leading-snug text-muted-foreground transition-transform hover:scale-105 hover:text-foreground active:scale-95 sm:px-4 sm:py-2 sm:text-sm lg:text-[24px]"
               style={{ transitionTimingFunction: "var(--spring)" }}
             >
               {p}
@@ -123,8 +193,8 @@ export function TourGuidePanel() {
           ))}
         </div>
 
-        {errorMessage && (
-          <p className="mt-3 rounded-lg bg-red-500/10 p-3 text-[28px] text-red-500">
+        {errorMessage && serverState !== "unreachable" && (
+          <p className="mt-3 rounded-lg bg-red-500/10 p-3 text-[14px] text-red-500 sm:text-lg lg:text-[28px]">
             {errorMessage}
           </p>
         )}
@@ -133,7 +203,7 @@ export function TourGuidePanel() {
           <AgentGraphFlow activeNode={activeNode} visitedNodes={visitedNodes} />
         </div>
 
-        <p className="mb-3 mt-5 text-[24px] font-semibold uppercase tracking-wider text-muted-foreground">
+        <p className="mb-3 mt-5 text-[12px] font-semibold uppercase tracking-wider text-muted-foreground sm:text-sm lg:text-[24px]">
           Live reasoning
         </p>
         <ReasoningTrace steps={steps} activeNode={activeNode} />

@@ -80,15 +80,26 @@ export function Projects() {
                       onToggleTechStack={toggle}
                     />
                   </div>
-                  <div className="transition-spring corner-brackets aspect-[4/3] overflow-hidden rounded-lg bg-card hover:scale-[0.98]">
-                    <Image
-                      src={project.image}
-                      alt={project.title}
-                      width={800}
-                      height={600}
-                      className="h-full w-full object-cover"
-                      unoptimized
-                    />
+                  <div
+                    className={`transition-spring corner-brackets overflow-hidden rounded-lg bg-card hover:scale-[0.98] ${
+                      "image2" in project ? "grid grid-cols-2 gap-1" : "aspect-[4/3]"
+                    }`}
+                  >
+                    {([project.image, "image2" in project ? project.image2 : ""] as string[])
+                      .filter(Boolean)
+                      .map((src, n) => (
+                        <Image
+                          key={src}
+                          src={src}
+                          alt={`${project.title} screenshot ${n + 1}`}
+                          width={800}
+                          height={600}
+                          className={`w-full object-cover ${
+                            "image2" in project ? "aspect-[3/4] object-top" : "h-full"
+                          }`}
+                          unoptimized
+                        />
+                      ))}
                   </div>
                 </div>
 

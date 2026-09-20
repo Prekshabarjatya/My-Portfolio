@@ -29,10 +29,10 @@ export function Skills() {
   return (
     <section
       id="skills"
-      className="relative -mt-8 rounded-t-[2.5rem] bg-background px-6 py-20 shadow-[0_-12px_30px_-12px_rgba(0,0,0,0.18)]"
+      className="relative -mt-8 rounded-t-[2.5rem] bg-background px-5 py-14 shadow-[0_-12px_30px_-12px_rgba(0,0,0,0.18)] md:px-6 md:py-20"
     >
       <div className="mx-auto max-w-[1400px]">
-        <Reveal className="mb-16">
+        <Reveal className="mb-10 md:mb-16">
           <h2 className="font-display text-4xl md:text-5xl">Skills Console</h2>
           <p className="mt-6 max-w-md text-base text-muted-foreground">
             The core skills behind an AI engineer, building up from
@@ -42,10 +42,11 @@ export function Skills() {
 
         <Reveal
           delay={0.1}
-          className="corner-brackets grid overflow-hidden rounded-2xl border border-border md:grid-cols-[260px_1fr]"
+          className="corner-brackets grid grid-cols-1 overflow-hidden rounded-2xl border border-border md:grid-cols-[260px_1fr]"
         >
-          {/* Sidebar tab list */}
-          <div className="flex flex-row overflow-x-auto border-b border-border bg-card md:flex-col md:overflow-visible md:border-b-0 md:border-r">
+          {/* Category tabs: wrapping pills on phones so every category is visible
+              without hidden horizontal scrolling; a vertical sidebar from md up. */}
+          <div className="flex min-w-0 flex-row flex-wrap gap-2 border-b border-border bg-card p-3 md:flex-col md:flex-nowrap md:gap-0 md:border-b-0 md:border-r md:p-0">
             {skillCategories.map((category) => {
               const Icon = CATEGORY_ICONS[category.id] ?? Code;
               const isActive = category.id === activeId;
@@ -55,14 +56,15 @@ export function Skills() {
                   key={category.id}
                   id={category.id}
                   onClick={() => setActiveId(category.id)}
-                  className={`transition-spring-soft flex shrink-0 items-center gap-3 border-b border-border px-5 py-4 text-left text-base font-medium last:border-b-0 md:shrink md:w-full ${
+                  aria-pressed={isActive}
+                  className={`transition-spring-soft flex items-center gap-2 rounded-full border border-border px-3.5 py-2.5 text-left text-[14px] font-medium md:w-full md:gap-3 md:rounded-none md:border-0 md:border-b md:px-5 md:py-4 md:text-base md:last:border-b-0 ${
                     isActive
                       ? "bg-foreground text-background"
-                      : "text-muted-foreground hover:bg-background hover:text-foreground"
+                      : "bg-background text-muted-foreground hover:text-foreground md:bg-transparent md:hover:bg-background"
                   }`}
                 >
-                  <Icon size={18} weight="bold" />
-                  <span className="whitespace-nowrap">{category.title}</span>
+                  <Icon size={16} weight="bold" className="shrink-0" />
+                  <span>{category.title}</span>
                   {isCore && (
                     <span
                       className={`ml-auto hidden rounded-full px-1.5 py-0.5 text-[9px] font-semibold uppercase tracking-wider md:inline ${
@@ -78,7 +80,7 @@ export function Skills() {
           </div>
 
           {/* Content panel */}
-          <div className="dotted-grid min-h-[420px] overflow-hidden bg-background p-10">
+          <div className="dotted-grid min-h-[200px] min-w-0 overflow-hidden bg-background p-5 md:min-h-[420px] md:p-10">
             <AnimatePresence mode="wait">
               <motion.div
                 key={activeId}
@@ -87,14 +89,14 @@ export function Skills() {
                 exit={{ opacity: 0, x: -10 }}
                 transition={{ duration: 0.25, ease: [0.22, 1, 0.36, 1] }}
               >
-                <p className="mb-6 text-xs uppercase tracking-wider text-muted-foreground">
+                <p className="mb-4 text-xs uppercase tracking-wider text-muted-foreground md:mb-6">
                   {active.title} · {active.items.length} skills
                 </p>
-                <div className="flex flex-wrap gap-3">
+                <div className="flex flex-wrap gap-2 md:gap-3">
                   {active.items.map((item) => (
                     <span
                       key={item}
-                      className="transition-spring rounded-full border border-border bg-card px-5 py-2.5 text-base hover:-translate-y-1 hover:scale-105 hover:border-foreground hover:bg-foreground hover:text-background active:scale-95"
+                      className="transition-spring rounded-full border border-border bg-card px-4 py-2 text-[15px] hover:-translate-y-1 md:px-5 md:py-2.5 md:text-base hover:scale-105 hover:border-foreground hover:bg-foreground hover:text-background active:scale-95"
                     >
                       {item}
                     </span>

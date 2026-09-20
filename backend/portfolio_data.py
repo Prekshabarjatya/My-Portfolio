@@ -27,37 +27,41 @@ PROJECTS = [
         ],
     },
     {
-        "id": "project-ecommerce-optimizer",
-        "target_element": "#project-ecommerce-optimizer",
-        "title": "AI E-Commerce Listing Optimizer",
-        "tags": ["Agentic AI", "RAG", "LLM", "Automation"],
+        "id": "project-research-paper-agents",
+        "target_element": "#project-research-paper-agents",
+        "title": "Multi-Agent Research Paper Writer",
+        "tags": ["LangGraph", "Multi-Agent", "Citation Verification", "Human-in-the-loop"],
         "summary": (
-            "A knowledge-base-grounded AI listing optimizer for e-commerce using RAG "
-            "and multi-agent workflows, combining knowledge retrieval, attribute-aware "
-            "content generation, keyword optimization, and critic-based quality scoring."
+            "A LangGraph workflow of seven specialist agents (brief analyst, topic "
+            "strategist, source scout, thesis writer, outliner, drafter, critic) that "
+            "turns an assignment brief into a cited, literature-based research paper."
         ),
         "architecture_notes": (
-            "Deterministic fact-validation layer plus a human review workflow keeps "
-            "generated content grounded in a curated brand knowledge base and prevents "
-            "unsupported claims from shipping."
+            "A fixed graph with deterministic routing, not an LLM supervisor. Every "
+            "citation is verified against Crossref in code, a human approves the topic "
+            "and thesis before drafting, a critic loop rewrites or finds more sources, "
+            "and runs are checkpointed in Postgres so they survive crashes and deploys."
         ),
         "keywords": [
-            "rag", "retrieval", "grounding", "e-commerce", "automation", "content",
-            "production", "real-world", "impact",
+            "multi-agent", "agents", "agentic", "langgraph", "research", "paper",
+            "citations", "human-in-the-loop", "orchestration", "architecture",
+            "production", "real-world", "impact", "postgres", "reliability",
         ],
     },
     {
-        "id": "project-research-assistant",
-        "target_element": "#project-research-assistant",
-        "title": "AI Research Assistant",
+        "id": "project-document-qa",
+        "target_element": "#project-document-qa",
+        "title": "Document Q&A",
         "tags": ["FastAPI", "LangChain", "RAG", "Vector Search"],
         "summary": (
-            "A Retrieval-Augmented Generation (RAG) application built with FastAPI and "
-            "LangChain for intelligent document querying."
+            "A Retrieval-Augmented Generation (RAG) document Q&A service built with "
+            "FastAPI and LangChain: answers are grounded in retrieved passages and "
+            "cite the passage they came from."
         ),
         "architecture_notes": (
-            "End-to-end pipeline: document ingestion, chunking, embeddings generation, "
-            "vector retrieval, and response synthesis, served behind a FastAPI backend."
+            "End-to-end pipeline: document ingestion, chunking, vectorization, "
+            "cosine-similarity retrieval, and response synthesis, served behind a "
+            "FastAPI backend."
         ),
         "keywords": [
             "fastapi", "backend", "api", "rag", "architecture", "system design",

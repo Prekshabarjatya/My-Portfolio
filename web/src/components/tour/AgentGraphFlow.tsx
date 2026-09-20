@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo } from "react";
+import { useEffect, useMemo, useRef, useSyncExternalStore } from "react";
 import ReactFlow, {
   Background,
   BackgroundVariant,
@@ -8,6 +8,7 @@ import ReactFlow, {
   MarkerType,
   Node,
   Position,
+  ReactFlowInstance,
 } from "reactflow";
 import "reactflow/dist/style.css";
 
@@ -22,12 +23,125 @@ const NODE_LABELS: Record<string, string> = {
 
 const BASE_POSITIONS: Record<string, { x: number; y: number }> = {
   route_recruiter: { x: 210, y: 0 },
-  scroll_projects: { x: -30, y: 140 },
-  highlight_stack: { x: 210, y: 140 },
-  answer_personal: { x: 450, y: 140 },
-  evaluate_pitch: { x: 210, y: 280 },
-  terminal_output: { x: 210, y: 420 },
+  scroll_projects: { x: -70, y: 150 },
+  highlight_stack: { x: 210, y: 150 },
+  answer_personal: { x: 490, y: 150 },
+  evaluate_pitch: { x: 210, y: 300 },
+  terminal_output: { x: 210, y: 450 },
 };
+
+// Plain-language captions for the phone layout, matching ReasoningTrace.
+const NODE_CAPTIONS: Record<string, string> = {
+  route_recruiter: "Reads your intent",
+  scroll_projects: "Projects",
+  highlight_stack: "Tech stack",
+  answer_personal: "About her",
+  evaluate_pitch: "Checks if that's enough, or loops back for more context",
+  terminal_output: "Writes the answer",
+};
+
+const MOBILE_QUERY = "(max-width: 639px)";
+
+function useIsMobile() {
+  return useSyncExternalStore(
+    (onChange) => {
+      const mq = window.matchMedia(MOBILE_QUERY);
+      mq.addEventListener("change", onChange);
+      return () => mq.removeEventListener("change", onChange);
+    },
+    () => window.matchMedia(MOBILE_QUERY).matches,
+    () => false
+  );
+}
+
+// React Flow scales the whole diagram to fit, which makes labels unreadably
+// small on a phone. This stacks the same graph vertically at real text size.
+function MobileFlow({
+  activeNode,
+  visitedNodes,
+}: {
+  activeNode: string | null;
+  visitedNodes: string[];
+}) {
+  const stateOf = (id: string) =>
+    id === activeNode ? "active" : visitedNodes.includes(id) ? "visited" : "idle";
+
+  const nodeCard = (id: string, label: string) => {
+    const state = stateOf(id);
+    return (
+      <div
+        className={`rounded-xl border px-3 py-2.5 text-center transition-colors ${
+          state === "active"
+            ? "node-active-glow border-accent bg-foreground text-background"
+            : state === "visited"
+              ? "border-foreground bg-background"
+              : "border-border bg-background"
+        }`}
+      >
+        <p className="text-[14px] font-semibold leading-tight">{label}</p>
+        <p
+          className={`mt-0.5 text-[12px] leading-snug ${
+            state === "active" ? "text-background/80" : "text-muted-foreground"
+          }`}
+        >
+          {NODE_CAPTIONS[id]}
+        </p>
+      </div>
+    );
+  };
+
+  const connector = (lit: boolean) => (
+    <div className="flex justify-center" aria-hidden="true">
+      <span
+        className={`h-5 w-0.5 rounded-full ${lit ? "bg-accent" : "bg-border"}`}
+      />
+    </div>
+  );
+
+  const branchIds = ["scroll_projects", "highlight_stack", "answer_personal"];
+  const branchTaken = branchIds.some((id) => visitedNodes.includes(id));
+
+  return (
+    <div className="rounded-xl border border-border bg-card p-3">
+      {nodeCard("route_recruiter", NODE_LABELS.route_recruiter)}
+      {connector(branchTaken)}
+      <div className="grid grid-cols-3 gap-1.5">
+        {branchIds.map((id) => {
+          const state = stateOf(id);
+          return (
+            <div
+              key={id}
+              className={`flex flex-col justify-center rounded-xl border px-1 py-2.5 text-center transition-colors ${
+                state === "active"
+                  ? "node-active-glow border-accent bg-foreground text-background"
+                  : state === "visited"
+                    ? "border-foreground bg-background"
+                    : "border-border bg-background"
+              }`}
+            >
+              <p className="text-[11px] font-semibold leading-tight tracking-tight">
+                {NODE_LABELS[id]}
+              </p>
+              <p
+                className={`mt-1 text-[12px] leading-snug ${
+                  state === "active"
+                    ? "text-background/80"
+                    : "text-muted-foreground"
+                }`}
+              >
+                {NODE_CAPTIONS[id]}
+              </p>
+            </div>
+          );
+        })}
+      </div>
+      {connector(visitedNodes.includes("evaluate_pitch"))}
+      {nodeCard("evaluate_pitch", NODE_LABELS.evaluate_pitch)}
+      {connector(visitedNodes.includes("terminal_output"))}
+      {nodeCard("terminal_output", NODE_LABELS.terminal_output)}
+    </div>
+  );
+}
 
 export function AgentGraphFlow({
   activeNode,
@@ -36,6 +150,7 @@ export function AgentGraphFlow({
   activeNode: string | null;
   visitedNodes: string[];
 }) {
+  const isMobile = useIsMobile();
   const nodes: Node[] = useMemo(
     () =>
       Object.entries(NODE_LABELS).map(([id, label]) => {
@@ -57,10 +172,10 @@ export function AgentGraphFlow({
             background: isActive ? "var(--foreground)" : "var(--card)",
             color: isActive ? "var(--background)" : "var(--foreground)",
             borderRadius: 10,
-            fontSize: 11,
+            fontSize: 15,
             fontWeight: 600,
-            padding: "8px 10px",
-            width: 190,
+            padding: "10px 12px",
+            width: 230,
             textAlign: "center",
             transition: "all 0.3s var(--spring-soft, ease)",
           },
@@ -112,7 +227,7 @@ export function AgentGraphFlow({
         source: "route_recruiter",
         target: "route_recruiter",
         label: "unclear intent",
-        labelStyle: { fill: "var(--muted-foreground)", fontSize: 9 },
+        labelStyle: { fill: "var(--muted-foreground)", fontSize: 13 },
         style: edgeStyle,
         type: "default",
       },
@@ -157,7 +272,7 @@ export function AgentGraphFlow({
         source: "evaluate_pitch",
         target: "route_recruiter",
         label: "needs more context",
-        labelStyle: { fill: "var(--muted-foreground)", fontSize: 9 },
+        labelStyle: { fill: "var(--muted-foreground)", fontSize: 13 },
         style: { ...edgeStyle, strokeDasharray: "4 3" },
         type: "smoothstep",
       },
@@ -166,9 +281,33 @@ export function AgentGraphFlow({
     [activeNode, visitedNodes]
   );
 
+  // fitView only runs once on mount, so re-fit when the container changes size
+  // (window resize, switching layouts).
+  const wrapperRef = useRef<HTMLDivElement>(null);
+  const flowRef = useRef<ReactFlowInstance | null>(null);
+  useEffect(() => {
+    const el = wrapperRef.current;
+    if (!el) return;
+    const observer = new ResizeObserver(() => {
+      flowRef.current?.fitView({ padding: 0.2 });
+    });
+    observer.observe(el);
+    return () => observer.disconnect();
+  }, [isMobile]);
+
+  if (isMobile) {
+    return <MobileFlow activeNode={activeNode} visitedNodes={visitedNodes} />;
+  }
+
   return (
-    <div className="h-[400px] w-full rounded-xl border border-border bg-card overflow-hidden">
+    <div
+      ref={wrapperRef}
+      className="h-[460px] w-full overflow-hidden rounded-xl border border-border bg-card"
+    >
       <ReactFlow
+        onInit={(instance) => {
+          flowRef.current = instance;
+        }}
         nodes={nodes}
         edges={edges}
         fitView
@@ -178,7 +317,9 @@ export function AgentGraphFlow({
         nodesConnectable={false}
         elementsSelectable={false}
         zoomOnScroll={false}
-        panOnDrag={true}
+        zoomOnPinch={false}
+        preventScrolling={false}
+        panOnDrag={false}
       >
         <Background variant={BackgroundVariant.Dots} gap={16} size={1} color="var(--border)" />
       </ReactFlow>

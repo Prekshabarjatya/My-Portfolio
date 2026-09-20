@@ -36,14 +36,14 @@ export function ReasoningTrace({
 
   if (steps.length === 0) {
     return (
-      <p className="rounded-xl border border-dashed border-border p-4 text-center text-[28px] text-muted-foreground">
+      <p className="rounded-xl border border-dashed border-border p-3 text-center text-[14px] text-muted-foreground sm:p-4 sm:text-lg lg:text-[28px]">
         Ask something and watch the agent think, step by step.
       </p>
     );
   }
 
   return (
-    <div className="max-h-[420px] space-y-0 overflow-y-auto rounded-xl border border-border bg-card p-4">
+    <div className="max-h-[260px] space-y-0 overflow-y-auto rounded-xl border border-border bg-card p-3 sm:max-h-[420px] sm:p-4">
       {steps.map((step, i) => {
         const meta = STEP_META[step.node] ?? { icon: Sparkle, label: step.node };
         const StepIcon = meta.icon;
@@ -52,7 +52,7 @@ export function ReasoningTrace({
         return (
           <div
             key={step.id}
-            className="flex gap-4 pb-4 last:pb-0"
+            className="flex gap-3 pb-4 last:pb-0 sm:gap-4"
             style={{
               animation: "trace-in 0.35s var(--spring-soft, ease) both",
             }}
@@ -72,11 +72,11 @@ export function ReasoningTrace({
               {!isLast && <span className="mt-1 h-full w-px flex-1 bg-border" />}
             </div>
             <div className="min-w-0 pb-1">
-              <p className="text-[28px] font-semibold leading-snug">
+              <p className="text-[14px] font-semibold leading-snug sm:text-lg lg:text-[28px]">
                 Step {i + 1} · {meta.label}
               </p>
               {step.thought && (
-                <p className="mt-1 text-[28px] leading-relaxed text-muted-foreground">
+                <p className="mt-1 text-[13px] leading-relaxed text-muted-foreground sm:text-base lg:text-[28px]">
                   {step.thought}
                 </p>
               )}

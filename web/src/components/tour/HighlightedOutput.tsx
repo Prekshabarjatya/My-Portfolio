@@ -13,13 +13,13 @@ export function HighlightedOutput({
 
   return (
     <div
-      className="rounded-xl border-l-4 bg-accent/10 p-5"
+      className="rounded-xl border-l-4 bg-accent/10 p-4 sm:p-5"
       style={{ borderColor: "var(--accent)" }}
     >
-      <p className="mb-2 flex items-center gap-2 text-[22px] font-semibold uppercase tracking-wider text-accent">
+      <p className="mb-2 flex items-center gap-2 text-[11px] font-semibold uppercase sm:text-sm lg:text-[22px] tracking-wider text-accent">
         <Sparkle size={20} weight="bold" /> Highlighted by the tour agent
       </p>
-      <p className="text-[28px] leading-relaxed">
+      <p className="text-[15px] leading-relaxed sm:text-lg lg:text-[28px]">
         {text}
         {isPitching && (
           <span

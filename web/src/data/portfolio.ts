@@ -14,7 +14,7 @@ export const projects = [
     description:
       "A LangGraph-orchestrated multi-agent pipeline that validates, extracts, and scores resumes against job descriptions (PDF/DOCX/text) using specialized agents with tool calling and Pydantic-structured LLM outputs, backed by a hybrid scoring engine combining deterministic ATS checks with grounded LLM judgment.",
     image:
-      "https://images.unsplash.com/photo-1518770660439-4636190af475?w=800&h=600&fit=crop",
+      "/projects/resume-optimizer.jpg",
     techStack: {
       Languages: ["Python"],
       "AI/ML": ["LangGraph", "Agentic AI", "Tool Calling"],
@@ -22,32 +22,33 @@ export const projects = [
     },
   },
   {
-    id: "project-ecommerce-optimizer",
+    id: "project-research-paper-agents",
     number: "02",
-    title: "AI E-Commerce Listing Optimizer",
-    tags: ["Agentic AI", "RAG", "LLM", "Automation"],
+    title: "Multi-Agent Research Paper Writer",
+    tags: ["LangGraph", "Multi-Agent", "Citation Verification", "Human-in-the-loop"],
     description:
-      "Built a knowledge-base-grounded AI listing optimizer for e-commerce using RAG and multi-agent workflows, combining knowledge retrieval, attribute-aware content generation, keyword optimization, and critic-based quality scoring with deterministic fact-validation and a human review workflow.",
-    image:
-      "https://images.unsplash.com/photo-1555066931-4365d14bab8c?w=800&h=600&fit=crop",
-    github: "https://github.com/Prekshabarjatya",
-    liveUrl: "",
+      "Built a LangGraph workflow of seven specialist agents (brief analyst, topic strategist, source scout, thesis writer, outliner, drafter, critic) that turns an assignment brief into a cited, literature-based research paper. Every citation is verified against Crossref in code, a human approves the topic and thesis before drafting, and runs are checkpointed in Postgres so they survive crashes and deploys. Its write-up examines how the \"lost in the middle\" long-context problem relates to its context decisions, such as ranking sources and trimming abstracts before prompting.",
+    image: "/projects/research-paper-agents-progress.jpg",
+    image2: "/projects/research-paper-agents-paper.jpg",
+    github: "https://github.com/Prekshabarjatya/research-paper-agents",
+    liveUrl: "https://research-paper-agents.vercel.app/",
     techStack: {
       Languages: ["Python"],
-      "AI/ML": ["Agentic AI", "RAG", "LLM", "Automation"],
+      Backend: ["FastAPI", "Docker"],
+      "AI/ML": ["LangGraph", "Agentic AI", "Groq API"],
     },
   },
   {
-    id: "project-research-assistant",
+    id: "project-document-qa",
     number: "03",
-    title: "AI Research Assistant",
+    title: "Document Q&A",
     github: "https://github.com/Prekshabarjatya/ai-research-assistant",
-    liveUrl: "https://ai-research-assistant-nidu.onrender.com/#notes",
+    liveUrl: "https://ai-research-assistant-nidu.onrender.com/#ask",
     tags: ["FastAPI", "LangChain", "RAG", "Vector Search"],
     description:
-      "Engineered a Retrieval-Augmented Generation (RAG) application using FastAPI and LangChain for intelligent document querying, implementing ingestion, chunking, embeddings generation, vector retrieval, and response synthesis pipelines.",
+      "Engineered a Retrieval-Augmented Generation (RAG) document Q&A service using FastAPI and LangChain: upload or paste documents, chunk and vectorize them, retrieve the most relevant passages by cosine similarity, and answer with a Groq-hosted model that cites the passage it used.",
     image:
-      "https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?w=800&h=600&fit=crop",
+      "/projects/document-qa.jpg",
     techStack: {
       Languages: ["Python"],
       Backend: ["FastAPI"],

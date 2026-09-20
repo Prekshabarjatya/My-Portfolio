@@ -80,7 +80,7 @@ export function Hero() {
     <section
       id="hero"
       ref={sectionRef}
-      className="relative flex min-h-[100dvh] items-center overflow-hidden px-6 pb-20 pt-16"
+      className="relative flex min-h-[100dvh] items-center overflow-hidden px-6 pb-20 pt-28 md:pt-16"
     >
       <div
         ref={parallaxBoxRef}
