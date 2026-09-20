@@ -52,7 +52,7 @@ def route_recruiter(state: AgentState) -> AgentState:
         "system/agent architecture, or a specific built project.\n"
         "- STACK: they want to see the engineering toolset / infrastructure / "
         "technologies used (backend, cloud, AI/ML libraries, data tools).\n"
-        "- PERSONAL: they're asking about her as a person — hobbies, interests, "
+        "- PERSONAL: they're asking about her as a person, hobbies, interests, "
         "strongest skills/qualities, short-term or long-term goals, why AI, values, "
         "personality, or general \"tell me about her\" questions.\n"
         "- UNCLEAR: the request is too vague to classify confidently.\n\n"
@@ -67,16 +67,16 @@ def route_recruiter(state: AgentState) -> AgentState:
 
     if "PERSONAL" in result:
         decision = "personal"
-        thought = f'Read "{query}" — this is a personal question about her as a person, not the tech. Routing to answer_personal.'
+        thought = f'Read "{query}", this is a personal question about her as a person, not the tech. Routing to answer_personal.'
     elif "STACK" in result:
         decision = "stack"
-        thought = f'Read "{query}" — this is asking about the engineering stack, not a specific project. Routing to highlight_stack.'
+        thought = f'Read "{query}", this is asking about the engineering stack, not a specific project. Routing to highlight_stack.'
     elif "UNCLEAR" in result and loop_count < MAX_LOOPS:
         decision = "unclear"
-        thought = f'Read "{query}" — intent isn\'t clear enough to route confidently yet. Looping back to re-evaluate.'
+        thought = f'Read "{query}", intent isn\'t clear enough to route confidently yet. Looping back to re-evaluate.'
     else:
         decision = "projects"
-        thought = f'Read "{query}" — this is asking about real work / architecture. Routing to scroll_projects.'
+        thought = f'Read "{query}", this is asking about real work / architecture. Routing to scroll_projects.'
 
     return {
         "active_node": "route_recruiter",
@@ -105,7 +105,7 @@ def scroll_projects(state: AgentState) -> AgentState:
     project = find_best_project(state["recruiter_query"])
     context = list(state.get("pitch_context", []))
     context.append(
-        f"PROJECT — {project['title']}: {project['summary']} "
+        f"PROJECT: {project['title']}: {project['summary']} "
         f"Architecture: {project['architecture_notes']} "
         f"Stack: {', '.join(project['tags'])}."
     )
@@ -122,14 +122,14 @@ def highlight_stack(state: AgentState) -> AgentState:
     category = find_best_skill_category(state["recruiter_query"])
     context = list(state.get("pitch_context", []))
     context.append(
-        f"STACK — {category['title']}: {', '.join(category['items'])}."
+        f"STACK: {category['title']}: {', '.join(category['items'])}."
     )
     return {
         "active_node": "highlight_stack",
         "ui_action": "open_modal",
         "ui_target_element": category["target_element"],
         "pitch_context": context,
-        "thought": f"Best match: \"{category['title']}\" — {', '.join(category['items'])}. Opening that on screen now.",
+        "thought": f"Best match: \"{category['title']}\", {', '.join(category['items'])}. Opening that on screen now.",
     }
 
 
@@ -137,7 +137,7 @@ def answer_personal(state: AgentState) -> AgentState:
     topics = find_best_personal_topics(state["recruiter_query"])
     context = list(state.get("pitch_context", []))
     for topic in topics:
-        context.append(f"PERSONAL — {topic['title']}: {topic['content']}")
+        context.append(f"PERSONAL: {topic['title']}: {topic['content']}")
     titles = ", ".join(f'"{t["title"]}"' for t in topics)
     return {
         "active_node": "answer_personal",
@@ -153,9 +153,9 @@ def evaluate_pitch(state: AgentState) -> AgentState:
     loop_count = state.get("loop_count", 0)
     enough = len(context) >= 2 or loop_count >= MAX_LOOPS
     if enough:
-        thought = f"Gathered {len(context)} grounded data point(s) — that's enough to write a confident pitch."
+        thought = f"Gathered {len(context)} grounded data point(s), that's enough to write a confident pitch."
     else:
-        thought = f"Only {len(context)} data point so far — going back to gather more before writing the pitch."
+        thought = f"Only {len(context)} data point so far, going back to gather more before writing the pitch."
     return {
         "active_node": "evaluate_pitch",
         "ui_action": "idle",
@@ -176,13 +176,22 @@ def build_pitch_prompt(state: AgentState) -> str:
     context = "\n".join(state.get("pitch_context", []))
     return (
         "You are answering a visitor's question about Preksha Barjatya on her "
-        "portfolio. Always write in THIRD PERSON — refer to her as \"she\"/\"her\"/"
-        "\"Preksha\", never as \"I\"/\"me\"/\"my\" and never as \"you\"/\"your\". "
-        "Ground the answer ONLY in the facts below. If the facts are about her "
-        "work, write it as a tight, confident pitch. If the facts are personal "
-        "(hobbies, goals, values, motivations), answer warmly and naturally, "
-        "still in third person — not as a sales pitch. 3-5 sentences, no fluff, "
-        "no generic buzzwords, be specific.\n\n"
+        "portfolio. Write the way a sensible person would reply in a chat: plain, "
+        "direct and specific. Always use THIRD PERSON: refer to her as \"she\", "
+        "\"her\" or \"Preksha\", never \"I\", \"me\", \"my\", \"you\" or \"your\". "
+        "Use ONLY the facts below and do not invent anything.\n\n"
+        "Style rules:\n"
+        "- 2 to 4 short sentences of plain prose. No lists, headings, bold, "
+        "emojis or quotation marks around phrases.\n"
+        "- Never use em dashes or en dashes. Use commas or full stops instead. "
+        "Avoid semicolons and colons.\n"
+        "- Do not open by repeating the question or with praise. Do not end by "
+        "offering more help or summing up.\n"
+        "- Avoid these words and patterns: passionate, leverage, cutting-edge, "
+        "robust, seamless, delve, testament, showcase, dynamic, innovative, "
+        "\"not just X but Y\", \"whether it's X or Y\".\n"
+        "- Prefer concrete details (project names, tools, numbers) over "
+        "adjectives. If the facts are personal, sound relaxed, not like a pitch.\n\n"
         f"Candidate summary: {CANDIDATE_SUMMARY}\n\n"
         f"What was just found for this question:\n{context}\n\n"
         f'Original visitor request: "{state["recruiter_query"]}"'
@@ -197,7 +206,7 @@ def terminal_output(state: AgentState) -> AgentState:
         "active_node": "terminal_output",
         "ui_action": "stream_pitch",
         "ui_target_element": "",
-        "thought": "Writing a pitch grounded only in what was just found — streaming it now.",
+        "thought": "Writing a pitch grounded only in what was just found, streaming it now.",
     }
 
 

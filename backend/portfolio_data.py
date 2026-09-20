@@ -121,7 +121,7 @@ PERSONAL_KB = [
             "Outside engineering, Preksha reads dark-academia-styled novels, "
             "listens to music (Taylor Swift on regular rotation), and has been "
             "learning new languages. She's also deliberately working on her "
-            "communication and people skills — she enjoys hosting and putting "
+            "communication and people skills, she enjoys hosting and putting "
             "herself in situations where she has to communicate, coordinate, and "
             "interact with people, treating it as an active skill she's building, "
             "not something already finished."
@@ -135,7 +135,7 @@ PERSONAL_KB = [
             "best quality", "biggest strength", "superpower", "what makes her",
         ],
         "content": (
-            "Her strongest quality is that she genuinely likes learning — when she "
+            "Her strongest quality is that she genuinely likes learning, when she "
             "hits something she doesn't understand, she goes deep into it instead of "
             "stopping at the surface: breaking complex problems down, understanding "
             "how the pieces connect, then actually building with what she learned. "
@@ -155,7 +155,7 @@ PERSONAL_KB = [
         "content": (
             "Her immediate goal is to get hands-on experience working in AI and "
             "strengthen her engineering skills through real projects and real-world "
-            "problem solving — moving beyond learning concepts in isolation and "
+            "problem solving, moving beyond learning concepts in isolation and "
             "spending more time actually building, experimenting, and debugging. "
             "Alongside AI, she's continuing to strengthen her software engineering "
             "foundations: backend development, APIs, system design, databases, and "
@@ -172,7 +172,7 @@ PERSONAL_KB = [
         ],
         "content": (
             "Long term, she wants to grow into a strong technical professional who "
-            "can operate at both the engineering and management level — building deep "
+            "can operate at both the engineering and management level, building deep "
             "technical expertise, working on meaningful AI-powered systems, and "
             "eventually combining technical understanding with people leadership, "
             "strategy, and decision-making. Her path into management runs through "
@@ -192,7 +192,7 @@ PERSONAL_KB = [
         "content": (
             "AI excites her because learning and building are happening "
             "simultaneously in this field. She doesn't want to learn AI as a "
-            "collection of models or frameworks — she wants hands-on experience with "
+            "collection of models or frameworks, she wants hands-on experience with "
             "how AI systems are actually built, integrated, evaluated, and made "
             "useful in real products. She's particularly drawn to the engineering "
             "side: agents, APIs, tools, context, memory, backend systems, and the "
@@ -210,7 +210,7 @@ PERSONAL_KB = [
         ],
         "content": (
             "She values curiosity, continuous improvement, clear communication, and "
-            "being open to feedback. She doesn't expect to know everything — she "
+            "being open to feedback. She doesn't expect to know everything, she "
             "cares more about learning quickly, asking better questions, and "
             "accepting when something can be improved. She believes technical growth "
             "and personal growth should happen together: being able to build "
@@ -262,7 +262,7 @@ def find_best_personal_topics(query: str, limit: int = 2):
     matched = [t for score, t in scored if score > 0][:limit]
     if matched:
         return matched
-    # No keyword matched anything — fall back to broadly-safe general topics
+    # No keyword matched anything, fall back to broadly-safe general topics
     # (strongest_skills, values) instead of guessing a narrow, possibly
     # unrelated one, so the LLM never has to stretch unrelated facts.
     fallback = [t for t in PERSONAL_KB if t["id"] in ("strongest_skills", "values")]

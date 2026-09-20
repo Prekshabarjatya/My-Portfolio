@@ -1,5 +1,6 @@
 import asyncio
 import os
+import re
 
 from dotenv import load_dotenv
 
@@ -11,7 +12,22 @@ from groq import Groq
 
 from graph import build_graph, build_pitch_prompt
 
-app = FastAPI(title="Preksha Barjatya — Portfolio Tour Guide Agent")
+_TRAILING = re.compile(r"[\s—–]*$")
+_DASH = re.compile(r"\s*[—–]\s*")
+_QUOTES = str.maketrans(
+    {
+        "‘": "'", "’": "'", "“": '"', "”": '"', "…": "...",
+        "‐": "-", "‑": "-", " ": " ", " ": " ",
+    }
+)
+
+
+def _plain(text: str) -> str:
+    """Replace em/en dashes with commas and curly punctuation with plain ASCII."""
+    return _DASH.sub(", ", text).translate(_QUOTES)
+
+
+app = FastAPI(title="Preksha Barjatya, Portfolio Tour Guide Agent")
 
 ALLOWED_ORIGINS = [
     origin.strip()
@@ -84,7 +100,7 @@ async def run_agent_tour(websocket: WebSocket):
                     {
                         "type": "pitch_chunk",
                         "chunk": (
-                            "[No GROQ_API_KEY configured on the backend — set one in "
+                            "[No GROQ_API_KEY configured on the backend, set one in "
                             "backend/.env to hear the agent's real pitch. The graph "
                             "routing above is live and unaffected.]"
                         ),
@@ -99,10 +115,26 @@ async def run_agent_tour(websocket: WebSocket):
                         temperature=0.2,
                         stream=True,
                     )
+                    # Backstop for the prompt rules: never let em/en dashes or
+                    # curly punctuation reach the visitor. Trailing spaces and
+                    # dashes are held back so a dash split across chunks is
+                    # still caught.
+                    pending = ""
                     for chunk in stream:
                         delta = chunk.choices[0].delta.content
-                        if delta:
-                            await websocket.send_json({"type": "pitch_chunk", "chunk": delta})
+                        if not delta:
+                            continue
+                        pending += delta
+                        hold = _TRAILING.search(pending).start()
+                        safe, pending = pending[:hold], pending[hold:]
+                        if safe:
+                            await websocket.send_json(
+                                {"type": "pitch_chunk", "chunk": _plain(safe)}
+                            )
+                    if pending:
+                        await websocket.send_json(
+                            {"type": "pitch_chunk", "chunk": _plain(pending)}
+                        )
                 except Exception as exc:
                     await websocket.send_json(
                         {"type": "pitch_chunk", "chunk": f"[Groq API error: {exc}]"}

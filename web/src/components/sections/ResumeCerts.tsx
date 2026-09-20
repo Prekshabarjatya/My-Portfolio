@@ -1,4 +1,4 @@
-import { DownloadSimple, Medal } from "@phosphor-icons/react/dist/ssr";
+import { Medal } from "@phosphor-icons/react/dist/ssr";
 import { certifications } from "@/data/portfolio";
 import { Reveal, RevealGroup, RevealItem } from "@/components/Reveal";
 
@@ -11,29 +11,15 @@ const ORG_LOGO: Record<string, string> = {
 export function ResumeCerts() {
   return (
     <section
-      id="resume"
+      id="certifications"
       className="relative -mt-8 rounded-t-[2.5rem] bg-background px-6 py-20 shadow-[0_-12px_30px_-12px_rgba(0,0,0,0.18)]"
     >
       <div className="mx-auto max-w-[1400px]">
         <Reveal className="grid gap-16 lg:grid-cols-2">
           <div>
             <h2 className="mb-6 font-display text-4xl md:text-5xl">
-              Resume &amp;
-              <br />
               <span className="italic pb-1 inline-block">Certifications</span>
             </h2>
-            <p className="mb-8 text-muted-foreground">
-              Download my resume to learn more about my education, skills, and
-              experience.
-            </p>
-            <a
-              href="/Preksha_Barjatya_Resume.docx"
-              download
-              className="transition-spring inline-flex items-center gap-3 rounded-full bg-foreground px-8 py-4 text-base font-medium text-background hover:scale-105 active:scale-95"
-            >
-              <DownloadSimple size={16} weight="bold" />
-              Download Resume
-            </a>
           </div>
 
           <div>
