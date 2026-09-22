@@ -25,7 +25,8 @@ PROJECTS = [
             "architecture", "production", "system design", "agents", "multi-agent",
             "orchestration", "real-world", "impact", "application", "resume",
         ],
-    },
+    },  # noqa: keep generic "project(s)" terms out of per-project lists on purpose,
+    # see GENERIC_PROJECT_TERMS below and the overview fallback in find_best_project.
     {
         "id": "project-research-paper-agents",
         "target_element": "#project-research-paper-agents",
@@ -37,15 +38,25 @@ PROJECTS = [
             "turns an assignment brief into a cited, literature-based research paper."
         ),
         "architecture_notes": (
-            "A fixed graph with deterministic routing, not an LLM supervisor. Every "
-            "citation is verified against Crossref in code, a human approves the topic "
-            "and thesis before drafting, a critic loop rewrites or finds more sources, "
-            "and runs are checkpointed in Postgres so they survive crashes and deploys."
+            "A fixed graph with deterministic routing, not an LLM supervisor, across "
+            "seven specialist agents (brief analyst, topic strategist, source scout, "
+            "thesis writer, outliner, drafter, critic). Every citation is verified in "
+            "code against Crossref by DOI, title and year match, not by the model, a "
+            "human approves the topic and thesis before any drafting tokens are spent, "
+            "a critic loop rewrites or finds more sources for up to four rounds, and "
+            "runs are checkpointed in Postgres after every step so they survive crashes "
+            "and deploys. A dedicated case study write-up covers about six live runs, "
+            "roughly 3 to 4 minutes and 35,000 to 39,000 tokens per paper, and real "
+            "failures caught along the way: a prompt going over the token cap, an "
+            "invented statistic, and a word-count miscount."
         ),
         "keywords": [
             "multi-agent", "agents", "agentic", "langgraph", "research", "paper",
-            "citations", "human-in-the-loop", "orchestration", "architecture",
+            "citations", "citation", "human-in-the-loop", "orchestration", "architecture",
             "production", "real-world", "impact", "postgres", "reliability",
+            "case study", "crossref", "verify", "verification", "checkpoint",
+            "checkpointing", "seven agents", "7 agents", "lost in the middle",
+            "hallucination", "critic", "reviewer",
         ],
     },
     {
@@ -219,6 +230,23 @@ PERSONAL_KB = [
             "makes the skill valuable."
         ),
     },
+    {
+        "id": "certifications",
+        "title": "Certifications",
+        "keywords": [
+            "certification", "certifications", "certified", "certificate",
+            "certificates", "credential", "credentials", "oracle",
+            "agentic ai certified foundations", "navigate labs", "acropolis",
+        ],
+        "content": (
+            "She holds the Oracle Agentic AI Certified Foundations Associate "
+            "certification, issued September 2026 and valid through September "
+            "2028 (credential ID 103539377AAI26OFA). She also completed a "
+            "Generative AI, RAG, Multimodal & Agentic AI certification run by "
+            "her CSE (AI & ML) department at Acropolis Institute of Technology "
+            "and Research with Navigate Labs."
+        ),
+    },
 ]
 
 
@@ -232,6 +260,33 @@ CANDIDATE_SUMMARY = (
 )
 
 
+# Generic asks ("walk me through her projects", "what has she built") don't
+# name any one project, so they shouldn't silently collapse onto whichever
+# project happens to be first in the list. find_best_project returns None for
+# these, and scroll_projects (graph.py) treats None as "summarize all of them".
+GENERIC_PROJECT_TERMS = [
+    "project", "projects", "portfolio", "built", "shipped", "work she's done",
+    "her work", "applications", "what has she made", "what does she build",
+]
+
+PROJECTS_OVERVIEW = (
+    "She has three shipped projects: a Multi-Agent Resume Optimizer that "
+    "scores resumes against job descriptions with LangGraph and tool calling, "
+    "a Multi-Agent Research Paper Writer with seven agents that verifies "
+    "every citation against Crossref and checkpoints runs in Postgres "
+    "(covered in a dedicated case study with real numbers from live runs), "
+    "and a Document Q&A service that answers questions from retrieved "
+    "passages using FastAPI, LangChain and RAG."
+)
+
+
+def other_projects_summary(current_id: str) -> str:
+    """One-line-per-project summary of every project except current_id, so a
+    pitch about one project can still show she's shipped more than one."""
+    others = [p["title"] for p in PROJECTS if p["id"] != current_id]
+    return "She has also built " + " and ".join(others) + "."
+
+
 def find_best_project(query: str):
     q = query.lower()
     scored = [
@@ -239,7 +294,16 @@ def find_best_project(query: str):
         for p in PROJECTS
     ]
     scored.sort(key=lambda pair: pair[0], reverse=True)
-    return scored[0][1] if scored[0][0] > 0 else PROJECTS[0]
+    if scored[0][0] > 0:
+        return scored[0][1]
+    if any(term in q for term in GENERIC_PROJECT_TERMS):
+        return None
+    return PROJECTS[0]
+
+
+def other_skill_categories_summary(current_id: str) -> str:
+    others = [c["title"] for c in SKILL_CATEGORIES if c["id"] != current_id]
+    return "Her other main areas are " + ", ".join(others) + "."
 
 
 def find_best_skill_category(query: str):

@@ -16,9 +16,12 @@ from langgraph.graph import StateGraph, START, END
 
 from portfolio_data import (
     CANDIDATE_SUMMARY,
+    PROJECTS_OVERVIEW,
     find_best_project,
     find_best_skill_category,
     find_best_personal_topics,
+    other_projects_summary,
+    other_skill_categories_summary,
 )
 
 GROQ_MODEL = os.environ.get("GROQ_MODEL", "openai/gpt-oss-120b")
@@ -54,7 +57,8 @@ def route_recruiter(state: AgentState) -> AgentState:
         "technologies used (backend, cloud, AI/ML libraries, data tools).\n"
         "- PERSONAL: they're asking about her as a person, hobbies, interests, "
         "strongest skills/qualities, short-term or long-term goals, why AI, values, "
-        "personality, or general \"tell me about her\" questions.\n"
+        "certifications/credentials, personality, or general \"tell me about her\" "
+        "questions.\n"
         "- UNCLEAR: the request is too vague to classify confidently.\n\n"
         f'Visitor request: "{query}"\n\n'
         "Reply with exactly one word: PROJECTS, STACK, PERSONAL, or UNCLEAR."
@@ -104,17 +108,33 @@ def route_after_router(
 def scroll_projects(state: AgentState) -> AgentState:
     project = find_best_project(state["recruiter_query"])
     context = list(state.get("pitch_context", []))
-    context.append(
-        f"PROJECT: {project['title']}: {project['summary']} "
-        f"Architecture: {project['architecture_notes']} "
-        f"Stack: {', '.join(project['tags'])}."
-    )
+
+    if project is None:
+        # No single project named in the query (e.g. "walk me through her
+        # projects") — summarize all of them instead of silently defaulting
+        # to whichever project happens to be first in the list.
+        context.append(f"PROJECTS OVERVIEW: {PROJECTS_OVERVIEW}")
+        target = "#projects"
+        thought = "No single project was named, summarizing all three shipped projects and scrolling to the projects section."
+    else:
+        context.append(
+            f"PROJECT: {project['title']}: {project['summary']} "
+            f"Architecture: {project['architecture_notes']} "
+            f"Stack: {', '.join(project['tags'])}."
+        )
+        # A second, distinct fact so evaluate_pitch doesn't have to loop back
+        # and re-find this exact same project again, and so the final pitch
+        # can show she's shipped more than just this one.
+        context.append(f"OTHER PROJECTS: {other_projects_summary(project['id'])}")
+        target = project["target_element"]
+        thought = f"Best match: \"{project['title']}\" ({', '.join(project['tags'])}). Scrolling the page there now."
+
     return {
         "active_node": "scroll_projects",
         "ui_action": "scroll_to",
-        "ui_target_element": project["target_element"],
+        "ui_target_element": target,
         "pitch_context": context,
-        "thought": f"Best match: \"{project['title']}\" ({', '.join(project['tags'])}). Scrolling the page there now.",
+        "thought": thought,
     }
 
 
@@ -123,6 +143,11 @@ def highlight_stack(state: AgentState) -> AgentState:
     context = list(state.get("pitch_context", []))
     context.append(
         f"STACK: {category['title']}: {', '.join(category['items'])}."
+    )
+    # Same reasoning as scroll_projects: give the pitch a second fact up
+    # front instead of looping back and finding the identical category twice.
+    context.append(
+        f"OTHER SKILL AREAS: {other_skill_categories_summary(category['id'])}"
     )
     return {
         "active_node": "highlight_stack",
