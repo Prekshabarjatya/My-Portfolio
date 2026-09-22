@@ -9,6 +9,7 @@ Next.js frontend after every node finishes.
 """
 
 import os
+import random
 from typing import Literal, TypedDict
 
 from langchain_groq import ChatGroq
@@ -197,8 +198,27 @@ def route_after_evaluate(state: AgentState) -> Literal["terminal_output", "route
     return "route_recruiter"
 
 
+# Retrieval (find_best_project/skill/personal) is deterministic on purpose,
+# and temperature stays low so facts don't drift. But that means the same
+# question asked twice hands the LLM the exact same fact list both times, so
+# with nothing else varying, the phrasing converges to near-identical answers
+# run after run. Rotating a harmless style instruction gives it something
+# genuinely different to do with the wording each time, without touching
+# which facts get retrieved or how faithful it has to stay to them.
+PITCH_STYLE_VARIANTS = [
+    "Lead with the most concrete detail below (a tool name, a number, or a "
+    "project/topic name), not with a general statement.",
+    "Keep it especially tight this time: 2 short sentences, no more.",
+    "If more than one fact is listed below, lead with the second one first.",
+    "Vary your sentence opening, do not start the answer with the word \"She\".",
+    "Write it slightly more casually this time, like a quick reply, while "
+    "keeping every rule above.",
+]
+
+
 def build_pitch_prompt(state: AgentState) -> str:
     context = "\n".join(state.get("pitch_context", []))
+    style_variant = random.choice(PITCH_STYLE_VARIANTS)
     return (
         "You are answering a visitor's question about Preksha Barjatya on her "
         "portfolio. Write the way a sensible person would reply in a chat: plain, "
@@ -216,7 +236,8 @@ def build_pitch_prompt(state: AgentState) -> str:
         "robust, seamless, delve, testament, showcase, dynamic, innovative, "
         "\"not just X but Y\", \"whether it's X or Y\".\n"
         "- Prefer concrete details (project names, tools, numbers) over "
-        "adjectives. If the facts are personal, sound relaxed, not like a pitch.\n\n"
+        "adjectives. If the facts are personal, sound relaxed, not like a pitch.\n"
+        f"- {style_variant}\n\n"
         f"Candidate summary: {CANDIDATE_SUMMARY}\n\n"
         f"What was just found for this question:\n{context}\n\n"
         f'Original visitor request: "{state["recruiter_query"]}"'
