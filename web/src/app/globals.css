@@ -1,34 +1,66 @@
 @import "tailwindcss";
 
-/* ThemeProvider toggles a `.dark` class on <html> — make Tailwind's `dark:`
+/* ThemeProvider toggles a `.dark` class on <html>. Make Tailwind's `dark:`
    variant follow that class instead of the OS prefers-color-scheme media
    query (Tailwind v4's default), so the in-app toggle actually controls it. */
 @custom-variant dark (&:where(.dark, .dark *));
 
-:root {
-  /* Warm paper, not pink-tinted grey — the tactile "desk" base. */
-  --background: hsl(40, 30%, 97%);
-  --foreground: hsl(30, 12%, 10%);
-  --card: hsl(38, 26%, 93%);
-  --muted-foreground: hsl(30, 8%, 42%);
-  /* Rose stays rose in both themes — one accent, locked (Section 4.2). */
-  --accent: hsl(350, 72%, 52%);
-  --accent-foreground: hsl(0, 0%, 100%);
-  --border: hsl(35, 18%, 84%);
+/* ==========================================================================
+   Design system. References: uwwa (colour panels, pill dock, glyph chips) and
+   Auren (giant tight type, overlap, flat surfaces). One rule per property.
 
-  --spring: cubic-bezier(0.34, 1.56, 0.64, 1);
-  --spring-soft: cubic-bezier(0.22, 1.4, 0.36, 1);
-  --spring-fast: cubic-bezier(0.34, 1.75, 0.4, 1);
+   Type     One family (Space Grotesk). Sizes: hero / display / title / body /
+            small. Tight tracking on everything large.
+   Colour   Paper base + FOUR panel surfaces (blush, sage, lilac, ink) that
+            share one saturation and lightness band, and ONE accent (rose).
+   Shape    Panels 2rem, inner frames 1.25rem, controls are full pills.
+   Depth    No shadows. Colour blocks and hairlines carry the structure.
+   Marks    Glyph chips (asterisk, sparkle in a circle), (parentheses) on
+            metadata, and a pill dock. Nothing else decorative.
+   Motion   One easing curve, no overshoot. A sliding dock indicator, letter
+            hover on the name, scroll reveals.
+   ========================================================================== */
+
+:root {
+  --background: hsl(60, 8%, 95%);
+  --foreground: hsl(0, 0%, 9%);
+  --card: hsl(0, 0%, 100%);
+  --muted-foreground: hsl(0, 0%, 33%);
+  --border: hsl(0, 0%, 82%);
+
+  --accent: hsl(350, 74%, 46%);
+  --accent-foreground: hsl(0, 0%, 100%);
+
+  /* Panel surfaces */
+  --blush: hsl(350, 42%, 89%);
+  --sage: hsl(96, 15%, 84%);
+  --lilac: hsl(300, 10%, 85%);
+  --ink: hsl(0, 0%, 11%);
+  --on-ink: hsl(60, 8%, 95%);
+  --on-ink-muted: hsl(0, 0%, 70%);
+  --accent-on-ink: hsl(350, 80%, 68%);
+
+  --ease: cubic-bezier(0.16, 1, 0.3, 1);
+  /* Legacy names, kept so existing utility classes inherit the calm curve. */
+  --spring: var(--ease);
+  --spring-soft: var(--ease);
+  --spring-fast: var(--ease);
 }
 
 .dark {
-  --background: hsl(30, 8%, 7%);
-  --foreground: hsl(38, 20%, 93%);
-  --card: hsl(30, 8%, 12%);
-  --muted-foreground: hsl(30, 6%, 58%);
+  --background: hsl(0, 0%, 6%);
+  --foreground: hsl(60, 8%, 94%);
+  --card: hsl(0, 0%, 12%);
+  --muted-foreground: hsl(0, 0%, 68%);
+  --border: hsl(0, 0%, 22%);
+
   --accent: hsl(350, 78%, 62%);
   --accent-foreground: hsl(0, 0%, 8%);
-  --border: hsl(30, 8%, 20%);
+
+  --blush: hsl(350, 20%, 17%);
+  --sage: hsl(96, 9%, 15%);
+  --lilac: hsl(300, 7%, 16%);
+  --ink: hsl(0, 0%, 15%);
 }
 
 @theme inline {
@@ -39,23 +71,81 @@
   --color-accent: var(--accent);
   --color-accent-foreground: var(--accent-foreground);
   --color-border: var(--border);
-  --font-sans: var(--font-body);
-  --font-body: var(--font-body);
+  --color-blush: var(--blush);
+  --color-sage: var(--sage);
+  --color-lilac: var(--lilac);
+  --color-ink: var(--ink);
+  --color-on-ink: var(--on-ink);
+  --color-on-ink-muted: var(--on-ink-muted);
+  --color-accent-on-ink: var(--accent-on-ink);
+  /* One family everywhere. The mono face is loaded only for the agent's
+     terminal panel, where a console needs fixed-width type. */
+  --font-sans: var(--font-display);
+  --font-body: var(--font-display);
   --font-display: var(--font-display);
   --font-mono: var(--font-mono);
 }
 
-/* z-index scale (Section 6.F) — nothing outside this list uses z-*.
-   The stack marquee sits sticky at z-0 right below the nav, pinned in
-   place until About scrolls up and covers it. Main sections themselves
-   are NOT sticky (that pinned scrolling for a whole section's height,
-   which read as "scroll stopped working" on long sections) — they just
-   use a small negative top margin, rounded top corners, and a soft
-   shadow so each one still reads as slightly overlapping the one above
-   while scrolling stays completely native. */
+/* Type scale */
+@utility t-hero {
+  font-size: clamp(3.5rem, 14vw, 12.5rem);
+  line-height: 1.15;
+  letter-spacing: -0.055em;
+}
+
+@utility t-display {
+  font-size: clamp(2.5rem, 6.5vw, 5.75rem);
+  line-height: 0.98;
+  letter-spacing: -0.05em;
+  font-weight: 500;
+}
+
+@utility t-title {
+  font-size: clamp(1.5rem, 2.6vw, 2.25rem);
+  line-height: 1.08;
+  letter-spacing: -0.035em;
+  font-weight: 500;
+}
+
+@utility t-body {
+  font-size: 1.125rem;
+  line-height: 1.55;
+}
+
+@utility t-small {
+  font-size: 0.875rem;
+  line-height: 1.45;
+}
+
+/* Shape scale */
+@utility r-panel {
+  border-radius: clamp(1.5rem, 3vw, 2rem);
+}
+
+@utility r-inner {
+  border-radius: 1.25rem;
+}
+
+/* Section rhythm */
+@utility section-y {
+  padding-block: clamp(3.5rem, 8vw, 6.5rem);
+}
+
+/* Pill chips sit on any panel colour. */
+@utility chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  border-radius: 9999px;
+  padding: 0.4rem 0.9rem;
+  font-size: 0.875rem;
+  line-height: 1.3;
+  background: color-mix(in srgb, var(--background) 72%, transparent);
+}
+
+/* z-index scale. Nothing outside this list uses z-*. */
 :root {
   --z-nav: 50;
-  --z-mobile-menu: 40;
   --z-tour-launcher: 90;
   --z-tour-panel: 90;
   --z-modal: 100;
@@ -65,44 +155,49 @@ html {
   scroll-behavior: smooth;
 }
 
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+}
+
 body {
   background: var(--background);
   color: var(--foreground);
   transition: background-color 0.3s, color 0.3s;
 }
 
-/* ========== Tour-guide DOM bridge effects ========== */
+::selection {
+  background: var(--accent);
+  color: var(--accent-foreground);
+}
+
+/* Keyboard focus: one visible ring everywhere. */
+:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+}
+
+/* ========== Tour-guide DOM bridge effects (no shadows: outline only) ========== */
 @keyframes highlight-pulse {
-  0% {
-    box-shadow: 0 0 0 0 color-mix(in srgb, var(--accent) 55%, transparent);
+  from {
+    outline-color: var(--accent);
+    outline-offset: 4px;
   }
-  70% {
-    box-shadow: 0 0 0 18px color-mix(in srgb, var(--accent) 0%, transparent);
-  }
-  100% {
-    box-shadow: 0 0 0 0 color-mix(in srgb, var(--accent) 0%, transparent);
+  to {
+    outline-color: transparent;
+    outline-offset: 18px;
   }
 }
 
 .highlight-pulse-ring {
-  animation: highlight-pulse 1.1s var(--spring-soft) 2;
   outline: 2px solid var(--accent);
   outline-offset: 4px;
-  border-radius: 0.75rem;
-}
-
-@keyframes node-glow {
-  0%,
-  100% {
-    filter: drop-shadow(0 0 0 color-mix(in srgb, var(--accent) 0%, transparent));
-  }
-  50% {
-    filter: drop-shadow(0 0 10px color-mix(in srgb, var(--accent) 85%, transparent));
-  }
+  animation: highlight-pulse 1.1s var(--ease) 2;
 }
 
 .node-active-glow {
-  animation: node-glow 1.4s ease-in-out infinite;
+  animation: none;
 }
 
 @keyframes caret-blink {
@@ -127,87 +222,24 @@ body {
   animation: caret-blink 1s steps(1) infinite;
 }
 
-/* ========== Paper / desk motif (Section 4.4 materiality) ========== */
-.paper-card {
-  position: relative;
-  background: var(--card);
-  border: 1px solid var(--border);
-  box-shadow: 0 1px 0 color-mix(in srgb, var(--foreground) 4%, transparent);
-}
-
-/* Consistent hover/active motion — overrides Tailwind's default 150ms
-   linear transition so every micro-interaction shares the same feel. */
-.transition-spring {
-  transition-duration: 300ms;
-  transition-timing-function: var(--spring);
-}
-
+.transition-spring,
 .transition-spring-soft {
-  transition-duration: 450ms;
-  transition-timing-function: var(--spring-soft);
+  transition-duration: 350ms;
+  transition-timing-function: var(--ease);
 }
 
-.tape {
-  position: absolute;
-  background: color-mix(in srgb, var(--accent) 16%, var(--card) 84%);
-  border: 1px solid color-mix(in srgb, var(--accent) 25%, transparent);
-  opacity: 0.9;
-  pointer-events: none;
+/* Slow turn on the asterisk glyphs. */
+@keyframes mark-turn {
+  to {
+    transform: rotate(360deg);
+  }
 }
 
-/* Fixed grain layer, never on a scrolling container (Section 6.E). */
-.grain-overlay {
-  position: fixed;
-  inset: 0;
-  z-index: 1;
-  pointer-events: none;
-  opacity: 0.035;
-  mix-blend-mode: overlay;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+.mark-turn {
+  animation: mark-turn 14s linear infinite;
 }
 
-/* Dotted-grid card background — the recurring "desk / graph paper" texture. */
-.dotted-grid {
-  background-image: radial-gradient(
-    color-mix(in srgb, var(--foreground) 18%, transparent) 1px,
-    transparent 1px
-  );
-  background-size: 18px 18px;
-}
-
-/* Camera-viewfinder corner brackets framing a card. */
-.corner-brackets {
-  position: relative;
-}
-
-.corner-brackets::before,
-.corner-brackets::after,
-.corner-brackets > .bracket-tr,
-.corner-brackets > .bracket-br {
-  content: "";
-  position: absolute;
-  width: 18px;
-  height: 18px;
-  border-color: var(--foreground);
-  opacity: 0.55;
-  pointer-events: none;
-}
-
-.corner-brackets::before {
-  top: 10px;
-  left: 10px;
-  border-top: 2px solid;
-  border-left: 2px solid;
-}
-
-.corner-brackets::after {
-  bottom: 10px;
-  right: 10px;
-  border-bottom: 2px solid;
-  border-right: 2px solid;
-}
-
-/* Marquee strip — used exactly once on the page (Section 9.F). */
+/* The one marquee on the page. */
 @keyframes marquee-scroll {
   from {
     transform: translateX(0);
@@ -218,11 +250,13 @@ body {
 }
 
 .marquee-track {
-  animation: marquee-scroll 28s linear infinite;
+  animation: marquee-scroll 45s linear infinite;
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .marquee-track {
+  .marquee-track,
+  .mark-turn,
+  .terminal-caret::after {
     animation: none;
   }
 }

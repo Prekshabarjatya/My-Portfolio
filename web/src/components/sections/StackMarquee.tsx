@@ -1,3 +1,5 @@
+import { Asterisk } from "@phosphor-icons/react/dist/ssr";
+
 const ITEMS = [
   "Python",
   "FastAPI",
@@ -11,23 +13,21 @@ const ITEMS = [
   "Pandas",
 ];
 
-// The one marquee on the page (Section 9.F): shows the breadth of her stack
-// at a glance as a bold banner strip right after the hero, before the reader
-// scrolls into the detailed sections below.
+// The one marquee on the page. Small type, glyph separators, so it stays
+// quiet under the giant name.
 export function StackMarquee() {
-  const track = [...ITEMS, ...ITEMS];
-
   return (
-    <div className="sticky top-16 z-0 flex h-24 items-center overflow-hidden border-y border-border bg-foreground">
-      <div className="marquee-track flex w-max items-center gap-8">
+    <div
+      className="t-small mx-4 flex h-14 items-center overflow-hidden rounded-full border border-border md:mx-6"
+      aria-label="Technologies used"
+    >
+      <div className="marquee-track flex w-max items-center">
         {[0, 1].map((copy) => (
-          <div key={copy} className="flex shrink-0 items-center gap-8">
-            {track.map((item, i) => (
-              <span
-                key={`${copy}-${item}-${i}`}
-                className="font-display text-xl uppercase tracking-tight text-background/70 md:text-3xl"
-              >
-                {item}
+          <div key={copy} className="flex shrink-0 items-center" aria-hidden={copy === 1}>
+            {[...ITEMS, ...ITEMS].map((item, i) => (
+              <span key={`${copy}-${item}-${i}`} className="flex items-center">
+                <span className="px-5 font-medium">{item}</span>
+                <Asterisk size={14} weight="bold" className="text-accent" aria-hidden="true" />
               </span>
             ))}
           </div>

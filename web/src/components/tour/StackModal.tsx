@@ -19,7 +19,7 @@ export function StackModal({
       onClick={onClose}
     >
       <div
-        className="w-full max-w-md rounded-2xl border border-border bg-background p-6 shadow-2xl transition-transform"
+        className="w-full max-w-md rounded-[2rem] border border-border bg-background p-6 transition-transform"
         style={{ animation: "modal-pop 0.35s var(--spring)" }}
         onClick={(e) => e.stopPropagation()}
       >

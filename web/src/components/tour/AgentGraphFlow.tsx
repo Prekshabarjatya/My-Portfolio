@@ -70,7 +70,7 @@ function MobileFlow({
     const state = stateOf(id);
     return (
       <div
-        className={`rounded-xl border px-3 py-2.5 text-center transition-colors ${
+        className={`rounded-[0.875rem] border px-3 py-2.5 text-center transition-colors ${
           state === "active"
             ? "node-active-glow border-accent bg-foreground text-background"
             : state === "visited"
@@ -102,7 +102,7 @@ function MobileFlow({
   const branchTaken = branchIds.some((id) => visitedNodes.includes(id));
 
   return (
-    <div className="rounded-xl border border-border bg-card p-3">
+    <div className="rounded-[1.25rem] border border-border bg-card p-3">
       {nodeCard("route_recruiter", NODE_LABELS.route_recruiter)}
       {connector(branchTaken)}
       <div className="grid grid-cols-3 gap-1.5">
@@ -111,7 +111,7 @@ function MobileFlow({
           return (
             <div
               key={id}
-              className={`flex flex-col justify-center rounded-xl border px-1 py-2.5 text-center transition-colors ${
+              className={`flex flex-col justify-center rounded-[0.875rem] border px-1 py-2.5 text-center transition-colors ${
                 state === "active"
                   ? "node-active-glow border-accent bg-foreground text-background"
                   : state === "visited"
@@ -171,7 +171,7 @@ export function AgentGraphFlow({
                 : "1px solid var(--border)",
             background: isActive ? "var(--foreground)" : "var(--card)",
             color: isActive ? "var(--background)" : "var(--foreground)",
-            borderRadius: 10,
+            borderRadius: 14,
             fontSize: 15,
             fontWeight: 600,
             padding: "10px 12px",
@@ -302,7 +302,7 @@ export function AgentGraphFlow({
   return (
     <div
       ref={wrapperRef}
-      className="h-[460px] w-full overflow-hidden rounded-xl border border-border bg-card"
+      className="h-[460px] w-full overflow-hidden rounded-[1.25rem] border border-border bg-card"
     >
       <ReactFlow
         onInit={(instance) => {

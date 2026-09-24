@@ -7,43 +7,64 @@ import { projects } from "@/data/portfolio";
 import { ProjectLinkButton } from "./ProjectLinkButton";
 import { ProjectTechStack } from "./ProjectTechStack";
 import { Reveal } from "@/components/Reveal";
+import { GlyphChip } from "@/components/GlyphChip";
 
-function ProjectMeta({
+const TONES = ["bg-blush", "bg-sage", "bg-lilac"];
+
+type Project = (typeof projects)[number];
+
+function Shots({ project, tall }: { project: Project; tall?: boolean }) {
+  const images = [project.image, "image2" in project ? project.image2 : ""].filter(
+    Boolean
+  ) as string[];
+  return (
+    <div className={`grid gap-3 ${images.length > 1 ? "grid-cols-2" : "grid-cols-1"}`}>
+      {images.map((src, n) => (
+        <Image
+          key={src}
+          src={src}
+          alt={`${project.title} screenshot ${n + 1}`}
+          width={1200}
+          height={900}
+          className={`r-inner w-full bg-background/60 object-cover object-top ${
+            images.length > 1 ? "aspect-[3/4]" : tall ? "aspect-[4/5]" : "aspect-[4/3]"
+          }`}
+          unoptimized
+        />
+      ))}
+    </div>
+  );
+}
+
+function Details({
   project,
-  isTechStackOpen,
-  onToggleTechStack,
+  isOpen,
+  onToggle,
 }: {
-  project: (typeof projects)[number];
-  isTechStackOpen: boolean;
-  onToggleTechStack: () => void;
+  project: Project;
+  isOpen: boolean;
+  onToggle: () => void;
 }) {
   return (
-    <>
-      <h3 className="mb-4 font-display text-3xl md:text-4xl">{project.title}</h3>
-      <p className="mb-6 text-muted-foreground">{project.description}</p>
-      <div className="mb-8 flex flex-wrap gap-2">
-        {project.tags.map((tag) => (
-          <span
-            key={tag}
-            className="rounded-full border border-border px-3 py-1 text-sm"
-          >
-            {tag}
-          </span>
-        ))}
+    <div className="flex h-full flex-col justify-between gap-8">
+      <div>
+        <ul className="flex flex-wrap gap-2">
+          {project.tags.map((tag) => (
+            <li key={tag} className="chip">
+              {tag}
+            </li>
+          ))}
+        </ul>
+        <p className="t-body mt-6 max-w-[60ch] text-muted-foreground">{project.description}</p>
       </div>
-      <div className="flex flex-wrap gap-3">
-        <ProjectLinkButton label="GitHub" icon={GithubLogo} href={project.github} />
+      <div className="flex flex-wrap gap-2">
         {project.liveUrl && (
-          <ProjectLinkButton label="Live Site" icon={ArrowSquareOut} href={project.liveUrl} />
+          <ProjectLinkButton solid label="Live Site" icon={ArrowSquareOut} href={project.liveUrl} />
         )}
-        <ProjectLinkButton
-          label="Tech Stack"
-          icon={Wrench}
-          expanded={isTechStackOpen}
-          onClick={onToggleTechStack}
-        />
+        <ProjectLinkButton label="GitHub" icon={GithubLogo} href={project.github} />
+        <ProjectLinkButton label="Tech Stack" icon={Wrench} expanded={isOpen} onClick={onToggle} />
       </div>
-    </>
+    </div>
   );
 }
 
@@ -51,64 +72,69 @@ export function Projects() {
   const [openTechStack, setOpenTechStack] = useState<string | null>(null);
 
   return (
-    <section
-      id="projects"
-      className="relative -mt-8 rounded-t-[2.5rem] bg-background px-6 py-20 shadow-[0_-12px_30px_-12px_rgba(0,0,0,0.18)]"
-    >
+    <section id="projects" className="section-y px-4 md:px-6">
       <div className="mx-auto max-w-[1400px]">
         <Reveal>
-          <h2 className="mb-16 font-display text-4xl md:text-5xl">Selected Work</h2>
+          <h2 className="t-display mb-12 md:mb-16">
+            Selected
+            <GlyphChip glyph="sparkle" tint="blush" />
+            Work
+          </h2>
         </Reveal>
 
-        <div className="flex flex-col gap-24">
+        <div className="flex flex-col gap-3">
           {projects.map((project, i) => {
-            const isTechStackOpen = openTechStack === project.id;
-            const toggle = () =>
-              setOpenTechStack(isTechStackOpen ? null : project.id);
+            const isOpen = openTechStack === project.id;
+            const toggle = () => setOpenTechStack(isOpen ? null : project.id);
+            const layout = i % 3;
 
             return (
-              <Reveal key={project.id} id={project.id} className="rounded-2xl p-2">
-                <div
-                  className={`grid items-center gap-12 lg:grid-cols-2 ${
-                    i % 2 === 1 ? "lg:[&>*:first-child]:order-2" : ""
-                  }`}
-                >
-                  <div>
-                    <ProjectMeta
-                      project={project}
-                      isTechStackOpen={isTechStackOpen}
-                      onToggleTechStack={toggle}
-                    />
-                  </div>
-                  <div
-                    className={`transition-spring corner-brackets overflow-hidden rounded-lg bg-card hover:scale-[0.98] ${
-                      "image2" in project ? "grid grid-cols-2 gap-1" : "aspect-[4/3]"
-                    }`}
-                  >
-                    {([project.image, "image2" in project ? project.image2 : ""] as string[])
-                      .filter(Boolean)
-                      .map((src, n) => (
-                        <Image
-                          key={src}
-                          src={src}
-                          alt={`${project.title} screenshot ${n + 1}`}
-                          width={800}
-                          height={600}
-                          className={`w-full object-cover ${
-                            "image2" in project ? "aspect-[3/4] object-top" : "h-full"
-                          }`}
-                          unoptimized
-                        />
-                      ))}
-                  </div>
+              <Reveal
+                key={project.id}
+                id={project.id}
+                className={`r-panel p-5 md:p-8 ${TONES[i % TONES.length]}`}
+              >
+                <div className="flex items-start justify-between gap-6">
+                  <h3 className="t-display max-w-[14ch]">{project.title}</h3>
+                  <span className="chip shrink-0">({String(i + 1).padStart(2, "0")})</span>
                 </div>
+
+                {/* Three compositions: image right, images below, image left. */}
+                {layout === 0 && (
+                  <div className="mt-10 grid gap-6 lg:grid-cols-12">
+                    <div className="lg:col-span-5">
+                      <Details project={project} isOpen={isOpen} onToggle={toggle} />
+                    </div>
+                    <div className="lg:col-span-7">
+                      <Shots project={project} />
+                    </div>
+                  </div>
+                )}
+                {layout === 1 && (
+                  <div className="mt-10 grid gap-6">
+                    <div className="max-w-3xl">
+                      <Details project={project} isOpen={isOpen} onToggle={toggle} />
+                    </div>
+                    <Shots project={project} />
+                  </div>
+                )}
+                {layout === 2 && (
+                  <div className="mt-10 grid gap-6 lg:grid-cols-12">
+                    <div className="lg:col-span-7 lg:order-1">
+                      <Shots project={project} />
+                    </div>
+                    <div className="lg:order-2 lg:col-span-5">
+                      <Details project={project} isOpen={isOpen} onToggle={toggle} />
+                    </div>
+                  </div>
+                )}
 
                 <div
                   className="grid transition-all duration-500 ease-out"
-                  style={{ gridTemplateRows: isTechStackOpen ? "1fr" : "0fr" }}
+                  style={{ gridTemplateRows: isOpen ? "1fr" : "0fr" }}
                 >
                   <div className="overflow-hidden">
-                    <div className="mt-8">
+                    <div className="pt-8">
                       <ProjectTechStack techStack={project.techStack} />
                     </div>
                   </div>

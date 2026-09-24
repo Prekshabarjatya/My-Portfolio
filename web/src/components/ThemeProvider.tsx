@@ -1,6 +1,7 @@
 "use client";
 
 import { createContext, useContext, useEffect, useState } from "react";
+import { MotionConfig } from "motion/react";
 
 type ThemeContextValue = {
   isDark: boolean;
@@ -36,7 +37,8 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
     <ThemeContext.Provider
       value={{ isDark, toggleTheme: () => setIsDark((prev) => !prev) }}
     >
-      {children}
+      {/* Honour prefers-reduced-motion for every motion component. */}
+      <MotionConfig reducedMotion="user">{children}</MotionConfig>
     </ThemeContext.Provider>
   );
 }

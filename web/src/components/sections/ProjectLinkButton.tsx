@@ -9,21 +9,32 @@ type Props = {
   onClick?: () => void;
   href?: string;
   expanded?: boolean;
+  /** The one primary action in a group is filled. */
+  solid?: boolean;
 };
 
-export function ProjectLinkButton({ label, icon: ItemIcon, onClick, href, expanded }: Props) {
-  const className =
-    "transition-spring group flex items-center gap-2 rounded-full bg-foreground py-2.5 pl-2.5 pr-5 text-sm font-medium uppercase tracking-[0.1em] text-background hover:scale-105 active:scale-95";
+// Interactive controls are always full pills.
+export function ProjectLinkButton({
+  label,
+  icon: ItemIcon,
+  onClick,
+  href,
+  expanded,
+  solid,
+}: Props) {
+  const className = `transition-spring t-small inline-flex items-center gap-2 rounded-full px-5 py-3 font-medium ${
+    solid
+      ? "bg-foreground text-background hover:bg-accent hover:text-accent-foreground"
+      : "bg-background/70 hover:bg-foreground hover:text-background"
+  }`;
 
   const content = (
     <>
-      <span className="flex h-6 w-6 flex-shrink-0 items-center justify-center rounded-full bg-background text-foreground">
-        <ItemIcon size={13} weight="bold" />
-      </span>
+      <ItemIcon size={16} weight="bold" />
       {label}
       {onClick && (
         <CaretRight
-          size={11}
+          size={12}
           weight="bold"
           className="transition-spring"
           style={{ transform: expanded ? "rotate(90deg)" : "none" }}
@@ -41,7 +52,7 @@ export function ProjectLinkButton({ label, icon: ItemIcon, onClick, href, expand
   }
 
   return (
-    <button type="button" onClick={onClick} className={className}>
+    <button type="button" onClick={onClick} aria-expanded={expanded} className={className}>
       {content}
     </button>
   );

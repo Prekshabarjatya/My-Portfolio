@@ -36,14 +36,14 @@ export function ReasoningTrace({
 
   if (steps.length === 0) {
     return (
-      <p className="rounded-xl border border-dashed border-border p-3 text-center text-[14px] text-muted-foreground sm:p-4 sm:text-lg lg:text-[28px]">
+      <p className="rounded-[1.25rem] border border-dashed border-border p-3 text-center text-[14px] text-muted-foreground sm:p-4 sm:text-lg lg:text-[28px]">
         Ask something and watch the agent think, step by step.
       </p>
     );
   }
 
   return (
-    <div className="max-h-[260px] space-y-0 overflow-y-auto rounded-xl border border-border bg-card p-3 sm:max-h-[420px] sm:p-4">
+    <div className="max-h-[260px] space-y-0 overflow-y-auto rounded-[1.25rem] border border-border bg-card p-3 sm:max-h-[420px] sm:p-4">
       {steps.map((step, i) => {
         const meta = STEP_META[step.node] ?? { icon: Sparkle, label: step.node };
         const StepIcon = meta.icon;
@@ -73,7 +73,7 @@ export function ReasoningTrace({
             </div>
             <div className="min-w-0 pb-1">
               <p className="text-[14px] font-semibold leading-snug sm:text-lg lg:text-[28px]">
-                Step {i + 1} · {meta.label}
+                ({i + 1}) {meta.label}
               </p>
               {step.thought && (
                 <p className="mt-1 text-[13px] leading-relaxed text-muted-foreground sm:text-base lg:text-[28px]">
@@ -99,10 +99,10 @@ export function ReasoningTrace({
         @keyframes trace-pulse {
           0%,
           100% {
-            box-shadow: 0 0 0 0 color-mix(in srgb, var(--accent) 50%, transparent);
+            outline: 2px solid var(--accent); outline-offset: 0;
           }
           50% {
-            box-shadow: 0 0 0 5px color-mix(in srgb, var(--accent) 0%, transparent);
+            outline: 2px solid transparent; outline-offset: 5px;
           }
         }
       `}</style>

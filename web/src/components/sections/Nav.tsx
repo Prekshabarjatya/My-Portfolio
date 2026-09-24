@@ -1,85 +1,106 @@
 "use client";
 
-import { useState } from "react";
-import { AnimatePresence, motion } from "motion/react";
-import { MoonStars, SunDim, List, X } from "@phosphor-icons/react";
+import { useEffect, useState } from "react";
+import { motion } from "motion/react";
+import {
+  House,
+  User,
+  Wrench,
+  Briefcase,
+  FolderOpen,
+  Article,
+  MoonStars,
+  SunDim,
+} from "@phosphor-icons/react";
 import { useTheme } from "@/components/ThemeProvider";
 
-const LINKS = [
-  { href: "#about", label: "About" },
-  { href: "#skills", label: "Skills" },
-  { href: "#experience", label: "Experience" },
-  { href: "#projects", label: "Projects" },
-  { href: "#case-study", label: "Case Study" },
-  { href: "#contact", label: "Contact" },
+const ITEMS = [
+  { id: "hero", href: "#", label: "Home", Icon: House },
+  { id: "about", href: "#about", label: "About", Icon: User },
+  { id: "skills", href: "#skills", label: "Skills", Icon: Wrench },
+  { id: "experience", href: "#experience", label: "Experience", Icon: Briefcase },
+  { id: "projects", href: "#projects", label: "Projects", Icon: FolderOpen },
+  { id: "case-study", href: "#case-study", label: "Case Study", Icon: Article },
 ];
 
 export function Nav() {
   const { isDark, toggleTheme } = useTheme();
-  const [mobileOpen, setMobileOpen] = useState(false);
+  const [active, setActive] = useState("hero");
+
+  // Highlight the section that crosses the middle of the viewport.
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) setActive(entry.target.id);
+        });
+      },
+      { rootMargin: "-45% 0px -50% 0px" }
+    );
+    ITEMS.forEach(({ id }) => {
+      const el = document.getElementById(id);
+      if (el) observer.observe(el);
+    });
+    return () => observer.disconnect();
+  }, []);
 
   return (
     <>
-      <nav className="fixed inset-x-0 top-0 z-50 border-b border-border bg-background/85 backdrop-blur-sm">
-        <div className="mx-auto flex h-16 max-w-[1400px] items-center justify-between px-6">
-          <a href="#" className="font-display text-xl font-semibold">
-            P.
-          </a>
-
-          <div className="hidden items-center gap-7 md:flex">
-            {LINKS.map((link) => (
-              <a
-                key={link.href}
-                href={link.href}
-                className="transition-spring group relative text-sm uppercase tracking-wider text-muted-foreground hover:text-foreground"
-              >
-                {link.label}
-                <span className="transition-spring absolute -bottom-1 left-0 h-px w-full origin-left scale-x-0 bg-foreground group-hover:scale-x-100" />
-              </a>
-            ))}
-          </div>
-
-          <div className="flex items-center gap-3">
-            <button
-              onClick={toggleTheme}
-              className="transition-spring flex h-9 w-9 items-center justify-center rounded-full hover:scale-110 hover:bg-card active:scale-90"
-              aria-label="Toggle theme"
-            >
-              {isDark ? <SunDim size={18} weight="bold" /> : <MoonStars size={18} weight="bold" />}
-            </button>
-            <button
-              onClick={() => setMobileOpen((v) => !v)}
-              className="flex h-9 w-9 items-center justify-center md:hidden"
-              aria-label="Toggle menu"
-            >
-              {mobileOpen ? <X size={20} weight="bold" /> : <List size={20} weight="bold" />}
-            </button>
-          </div>
-        </div>
-      </nav>
-
-      <AnimatePresence>
-        {mobileOpen && (
-          <motion.div
-            initial={{ opacity: 0, y: -12 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -12 }}
-            transition={{ duration: 0.25, ease: [0.22, 1, 0.36, 1] }}
-            className="fixed inset-0 z-40 bg-background pt-24 px-6 md:hidden"
+      {/* Top bar: two small pills, nothing else. */}
+      <header className="pointer-events-none fixed inset-x-0 top-0 z-50 flex items-center justify-between px-4 pt-4 md:px-6">
+        <a
+          href="#"
+          className="chip pointer-events-auto bg-background/85 py-2.5 font-medium backdrop-blur"
+        >
+          Preksha<span className="text-accent">*</span>
+        </a>
+        <div className="pointer-events-auto flex items-center gap-2">
+          <button
+            onClick={toggleTheme}
+            className="transition-spring flex h-10 w-10 items-center justify-center rounded-full bg-background/85 backdrop-blur hover:bg-foreground hover:text-background"
+            aria-label="Toggle theme"
           >
-            {LINKS.map((link) => (
-              <a
-                key={link.href}
-                href={link.href}
-                onClick={() => setMobileOpen(false)}
-                className="block py-4 text-2xl uppercase tracking-wider"
-              >
-                {link.label}
-              </a>
-            ))}
-          </motion.div>
-        )}
-      </AnimatePresence>
+            {isDark ? <SunDim size={18} weight="bold" /> : <MoonStars size={18} weight="bold" />}
+          </button>
+          <a
+            href="#contact"
+            className="transition-spring t-small rounded-full bg-foreground px-5 py-2.5 font-medium text-background hover:bg-accent hover:text-accent-foreground"
+          >
+            Contact
+          </a>
+        </div>
+      </header>
+
+      {/* Bottom dock. The active pill slides between items. */}
+      <nav
+        aria-label="Sections"
+        className="fixed bottom-4 left-1/2 z-50 flex -translate-x-1/2 items-center gap-1 rounded-full border border-border bg-background/85 p-1.5 backdrop-blur"
+      >
+        {ITEMS.map(({ id, href, label, Icon }) => {
+          const isActive = active === id;
+          return (
+            <a
+              key={id}
+              href={href}
+              aria-label={label}
+              aria-current={isActive ? "true" : undefined}
+              className={`transition-spring t-small relative flex items-center gap-2 rounded-full px-3 py-2.5 font-medium lg:px-4 ${
+                isActive ? "text-background" : "text-muted-foreground hover:text-foreground"
+              }`}
+            >
+              {isActive && (
+                <motion.span
+                  layoutId="dock-pill"
+                  className="absolute inset-0 rounded-full bg-foreground"
+                  transition={{ type: "tween", duration: 0.35, ease: [0.16, 1, 0.3, 1] }}
+                />
+              )}
+              <Icon size={18} weight="bold" className="relative" />
+              <span className="relative hidden lg:inline">{label}</span>
+            </a>
+          );
+        })}
+      </nav>
     </>
   );
 }

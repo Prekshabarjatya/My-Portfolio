@@ -1,25 +1,37 @@
 import { stats } from "@/data/portfolio";
-import { Reveal, RevealGroup, RevealItem } from "@/components/Reveal";
+import { Reveal } from "@/components/Reveal";
+import { GlyphChip } from "@/components/GlyphChip";
+
+// Four tiles for four stats: a wide one, two singles, a wide one.
+const TILE_STYLES = [
+  "col-span-2 bg-blush",
+  "bg-sage",
+  "bg-lilac",
+  "col-span-2 bg-ink text-on-ink",
+];
 
 export function About() {
   return (
-    <section
-      id="about"
-      className="relative -mt-8 rounded-t-[2.5rem] bg-background px-6 py-20 shadow-[0_-12px_30px_-12px_rgba(0,0,0,0.18)]"
-    >
+    <section id="about" className="section-y px-4 md:px-6">
       <div className="mx-auto max-w-[1400px]">
         <Reveal>
-          <h2 className="mb-12 font-display text-4xl md:text-5xl">About Me</h2>
+          <h2 className="t-display max-w-[22ch]">
+            I turn language models into
+            <GlyphChip glyph="asterisk" tint="blush" />
+            dependable,
+            <GlyphChip glyph="sparkle" tint="sage" />
+            production-ready tools.
+          </h2>
         </Reveal>
 
-        <div className="grid gap-16 lg:grid-cols-2">
-          <Reveal delay={0.1} className="space-y-6 text-muted-foreground">
-            <p className="text-xl">
+        <div className="mt-14 grid gap-10 lg:mt-20 lg:grid-cols-12 lg:gap-6">
+          <Reveal delay={0.1} className="t-body space-y-6 text-muted-foreground lg:col-span-5 lg:pr-10">
+            <p>
               I&apos;m <span className="font-medium text-foreground">Preksha Barjatya</span>, a
               B.Tech CSE (AI &amp; ML) student at Acropolis Institute of Technology and
               Research, Indore (affiliated to RGPV Bhopal), graduating in 2027.
             </p>
-            <p className="text-lg">
+            <p>
               I build{" "}
               <span className="font-medium text-foreground">
                 Retrieval-Augmented Generation (RAG)
@@ -28,7 +40,7 @@ export function About() {
               AI solutions, data pipelines, and SQL-driven analytics systems, turning
               language models into dependable, production-ready tools.
             </p>
-            <p className="text-lg">
+            <p>
               Currently interning as an{" "}
               <span className="font-medium text-foreground">AI Engineer</span> at Santerra
               Hygiene Pvt. Ltd., building agentic automation workflows, after previously
@@ -36,19 +48,32 @@ export function About() {
             </p>
           </Reveal>
 
-          <RevealGroup className="grid grid-cols-2 gap-6">
-            {stats.map((stat) => (
-              <RevealItem key={stat.label}>
-                <div className="transition-spring paper-card rounded-lg p-6 hover:-translate-y-1.5 hover:scale-[1.02] hover:border-accent active:scale-95">
-                  <p className="mb-2 text-xs uppercase tracking-wider text-muted-foreground">
-                    {stat.label}
-                  </p>
-                  <p className="font-display text-2xl">{stat.value}</p>
-                  <p className="mt-1 text-base text-muted-foreground">{stat.sub}</p>
-                </div>
-              </RevealItem>
+          <Reveal delay={0.15} className="grid grid-cols-2 gap-3 lg:col-span-7">
+            {stats.map((stat, i) => (
+              <div
+                key={stat.label}
+                className={`r-panel flex min-h-40 flex-col justify-between p-6 md:p-8 ${TILE_STYLES[i]}`}
+              >
+                <p
+                  className={`t-small ${
+                    i === 3 ? "text-on-ink-muted" : "text-muted-foreground"
+                  }`}
+                >
+                  {stat.label}
+                </p>
+                <p className="t-title mt-8">
+                  {stat.value}{" "}
+                  <span
+                    className={`t-small font-normal ${
+                      i === 3 ? "text-on-ink-muted" : "text-muted-foreground"
+                    }`}
+                  >
+                    ({stat.sub})
+                  </span>
+                </p>
+              </div>
             ))}
-          </RevealGroup>
+          </Reveal>
         </div>
       </div>
     </section>

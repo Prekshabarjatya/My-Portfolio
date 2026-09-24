@@ -4,14 +4,12 @@ import { ArrowUp } from "@phosphor-icons/react";
 
 export function Footer() {
   return (
-    <footer className="border-t border-border px-6 py-8">
-      <div className="mx-auto flex max-w-[1400px] flex-col items-center justify-between gap-4 md:flex-row">
-        <p className="text-base text-muted-foreground">
-          © 2026 Preksha Barjatya. All rights reserved.
-        </p>
+    <footer className="px-4 pb-28 pt-6 md:px-6">
+      <div className="t-small mx-auto flex max-w-[1400px] flex-col items-center justify-between gap-4 text-muted-foreground md:flex-row">
+        <p>(2026) Preksha Barjatya. All rights reserved.</p>
         <button
           onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
-          className="transition-spring flex items-center gap-2 text-base text-muted-foreground hover:-translate-y-1 hover:text-foreground active:scale-95"
+          className="transition-spring chip hover:bg-foreground hover:text-background"
         >
           Back to top
           <ArrowUp size={14} weight="bold" />

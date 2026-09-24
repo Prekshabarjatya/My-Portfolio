@@ -138,7 +138,7 @@ export const stats = [
   { label: "Degree", value: "B.Tech CSE", sub: "AI & ML" },
   { label: "CGPA", value: "8.0 / 10", sub: "2023 - 2027" },
   { label: "Internships", value: "2", sub: "AI & Data" },
-  { label: "Focus", value: "Agentic AI", sub: "RAG · LLMs" },
+  { label: "Focus", value: "Agentic AI", sub: "RAG, LLMs" },
 ] as const;
 
 export const contact = {

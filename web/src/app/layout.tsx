@@ -1,18 +1,12 @@
 import type { Metadata } from "next";
-import { Space_Grotesk, Inter_Tight, JetBrains_Mono } from "next/font/google";
+import { Space_Grotesk, JetBrains_Mono } from "next/font/google";
 import "./globals.css";
 import { ThemeProvider } from "@/components/ThemeProvider";
 
 const spaceGrotesk = Space_Grotesk({
   variable: "--font-display",
   subsets: ["latin"],
-  weight: ["500", "600", "700"],
-});
-
-const interTight = Inter_Tight({
-  variable: "--font-body",
-  subsets: ["latin"],
-  weight: ["400", "500", "600", "700"],
+  weight: ["400", "500", "700"],
 });
 
 const jetbrainsMono = JetBrains_Mono({
@@ -39,11 +33,10 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
     <html
       lang="en"
-      className={`${spaceGrotesk.variable} ${interTight.variable} ${jetbrainsMono.variable} antialiased`}
+      className={`${spaceGrotesk.variable} ${jetbrainsMono.variable} antialiased`}
       suppressHydrationWarning
     >
       <body className="min-h-screen bg-background text-foreground font-body">
-        <div className="grain-overlay" aria-hidden="true" />
         <ThemeProvider>{children}</ThemeProvider>
       </body>
     </html>

@@ -19,7 +19,7 @@ export function WakeStatus({
       <div
         role="status"
         aria-live="polite"
-        className="mt-4 rounded-xl border border-border bg-card p-4"
+        className="mt-4 rounded-[1.25rem] border border-border bg-card p-4"
       >
         <div className="flex items-start gap-3">
           <span className="mt-0.5 flex h-9 w-9 flex-shrink-0 items-center justify-center rounded-full bg-accent/15 text-accent">
@@ -31,7 +31,7 @@ export function WakeStatus({
             </p>
             <p className="mt-1 text-[13px] leading-relaxed text-muted-foreground sm:text-base lg:text-[22px]">
               It runs on a free server that naps when nobody&apos;s around. The
-              first wake-up usually takes 30–60 seconds. After that it&apos;s
+              first wake-up usually takes 30 to 60 seconds. After that it&apos;s
               instant.
             </p>
           </div>
@@ -79,10 +79,10 @@ export function WakeStatus({
     return (
       <div
         role="alert"
-        className="mt-4 rounded-xl border border-border bg-card p-4"
+        className="mt-4 rounded-[1.25rem] border border-border bg-card p-4"
       >
         <div className="flex items-start gap-3">
-          <span className="mt-0.5 flex h-9 w-9 flex-shrink-0 items-center justify-center rounded-full bg-amber-500/15 text-amber-500">
+          <span className="mt-0.5 flex h-9 w-9 flex-shrink-0 items-center justify-center rounded-full bg-card text-muted-foreground">
             <Moon size={20} weight="bold" />
           </span>
           <div className="min-w-0">

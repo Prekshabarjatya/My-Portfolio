@@ -80,10 +80,10 @@ export function TourGuidePanel() {
   const waking = serverState === "waking";
   const dotClass =
     status === "open"
-      ? "bg-green-400"
+      ? "bg-accent"
       : waking
-        ? "animate-pulse bg-amber-400"
-        : "bg-amber-400";
+        ? "animate-pulse bg-muted-foreground"
+        : "bg-muted-foreground";
   const statusLabel =
     serverState === "ready"
       ? "Agent online"
@@ -102,7 +102,7 @@ export function TourGuidePanel() {
         onClick={() => setOpen((v) => !v)}
         aria-expanded={open}
         aria-controls="tour-guide-panel"
-        className={`fixed bottom-[max(1rem,env(safe-area-inset-bottom))] right-4 z-[90] items-center gap-2 rounded-full bg-foreground px-4 py-3 text-[13px] font-medium text-background shadow-xl transition-transform hover:scale-105 active:scale-95 sm:bottom-6 sm:right-6 sm:px-5 sm:py-3.5 sm:text-sm ${
+        className={`fixed bottom-24 right-4 z-[90] items-center gap-2 rounded-full bg-foreground px-4 py-3 text-[13px] font-medium text-background transition-transform hover:scale-105 active:scale-95 sm:right-6 lg:bottom-6 sm:px-5 sm:py-3.5 sm:text-sm ${
           open ? "hidden sm:flex" : "flex"
         }`}
         style={{ transitionTimingFunction: "var(--spring)" }}
@@ -122,7 +122,7 @@ export function TourGuidePanel() {
         role="dialog"
         aria-label="Live tour guide"
         aria-hidden={!open}
-        className={`fixed inset-x-0 bottom-0 z-[90] max-h-[90dvh] overflow-y-auto overscroll-contain rounded-t-2xl border border-border bg-background p-4 pb-[max(1rem,env(safe-area-inset-bottom))] shadow-2xl transition-all sm:inset-x-auto sm:bottom-24 sm:right-6 sm:max-h-[85vh] sm:w-[min(760px,calc(100vw-3rem))] sm:origin-bottom-right sm:rounded-2xl sm:p-6 ${
+        className={`fixed inset-x-0 bottom-0 z-[90] max-h-[90dvh] overflow-y-auto overscroll-contain rounded-t-[1.5rem] border border-border bg-background sm:rounded-[2rem] p-4 pb-[max(1rem,env(safe-area-inset-bottom))] transition-all sm:inset-x-auto sm:bottom-40 sm:right-6 sm:max-h-[78vh] lg:bottom-24 lg:max-h-[85vh] sm:w-[min(760px,calc(100vw-3rem))] sm:origin-bottom-right sm:sm:p-6 ${
           open
             ? "translate-y-0 opacity-100 sm:scale-100"
             : "pointer-events-none translate-y-full opacity-0 sm:translate-y-0 sm:scale-90"
@@ -166,7 +166,7 @@ export function TourGuidePanel() {
             onChange={(e) => setQuery(e.target.value)}
             placeholder="Ask anything, e.g. Why should we hire her?"
             enterKeyHint="send"
-            className="min-w-0 flex-1 rounded-full border border-border bg-card px-4 py-2.5 text-base outline-none focus:border-accent sm:px-5 sm:py-3 lg:text-[28px]"
+            className="min-w-0 flex-1 rounded-full border border-border bg-card placeholder:text-muted-foreground px-4 py-2.5 text-base outline-none focus:border-accent sm:px-5 sm:py-3 lg:text-[28px]"
           />
           <button
             type="submit"
@@ -194,7 +194,7 @@ export function TourGuidePanel() {
         </div>
 
         {errorMessage && serverState !== "unreachable" && (
-          <p className="mt-3 rounded-lg bg-red-500/10 p-3 text-[14px] text-red-500 sm:text-lg lg:text-[28px]">
+          <p className="mt-3 border-l-2 border-accent p-3 text-[14px] text-accent sm:text-lg lg:text-[28px]">
             {errorMessage}
           </p>
         )}
