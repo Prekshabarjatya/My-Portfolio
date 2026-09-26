@@ -20,7 +20,7 @@ export function HoverNameLetters() {
   }
 
   return (
-    <h1 className="t-hero flex w-full items-center justify-between font-display font-medium uppercase text-foreground select-none">
+    <div role="img" aria-label="Preksha Barjatya" className="t-hero flex w-full items-center justify-between font-display font-medium uppercase text-foreground select-none">
       {NAME.map((letter, i) => (
         <span
           key={i}
@@ -40,7 +40,6 @@ export function HoverNameLetters() {
           </div>
         </span>
       ))}
-      <span className="sr-only">Preksha Barjatya</span>
-    </h1>
+    </div>
   );
 }

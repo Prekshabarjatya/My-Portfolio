@@ -1,5 +1,6 @@
 import { stats } from "@/data/portfolio";
 import { Reveal } from "@/components/Reveal";
+import Image from "next/image";
 import { GlyphChip } from "@/components/GlyphChip";
 
 // Four tiles for four stats: a wide one, two singles, a wide one.
@@ -25,7 +26,17 @@ export function About() {
         </Reveal>
 
         <div className="mt-14 grid gap-10 lg:mt-20 lg:grid-cols-12 lg:gap-6">
-          <Reveal delay={0.1} className="t-body space-y-6 text-muted-foreground lg:col-span-5 lg:pr-10">
+          <Reveal delay={0.1} className="lg:col-span-5 lg:pr-10">
+            <div className="r-panel relative mb-8 aspect-[4/3] overflow-hidden bg-blush">
+              <Image
+                src="/preksha-illustration.jpg"
+                alt="Illustrated portrait of Preksha Barjatya wearing round sunglasses"
+                fill
+                sizes="(min-width: 1024px) 40vw, 100vw"
+                className="object-contain p-4 mix-blend-multiply [filter:contrast(1.25)_brightness(1.08)] dark:mix-blend-screen dark:[filter:invert(1)_contrast(1.25)]"
+              />
+            </div>
+            <div className="t-body space-y-6 text-muted-foreground">
             <p>
               I&apos;m <span className="font-medium text-foreground">Preksha Barjatya</span>, a
               B.Tech CSE (AI &amp; ML) student at Acropolis Institute of Technology and
@@ -46,6 +57,7 @@ export function About() {
               Hygiene Pvt. Ltd., building agentic automation workflows, after previously
               working as a Data Analyst Intern at Think AI Corporation.
             </p>
+            </div>
           </Reveal>
 
           <Reveal delay={0.15} className="grid grid-cols-2 gap-3 lg:col-span-7">

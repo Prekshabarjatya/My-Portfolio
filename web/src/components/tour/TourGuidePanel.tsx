@@ -47,6 +47,13 @@ export function TourGuidePanel() {
     wakeServer().catch(() => {});
   }, [wakeServer]);
 
+  // The opening scene asks the guide to open with a window event.
+  useEffect(() => {
+    const openGuide = () => setOpen(true);
+    window.addEventListener("open-tour-guide", openGuide);
+    return () => window.removeEventListener("open-tour-guide", openGuide);
+  }, []);
+
   // The "Website Bridge": react to each node event by actually driving the DOM.
   useEffect(() => {
     if (!lastEvent) return;

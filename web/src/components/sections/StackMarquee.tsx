@@ -18,7 +18,7 @@ const ITEMS = [
 export function StackMarquee() {
   return (
     <div
-      className="t-small mx-4 flex h-14 items-center overflow-hidden rounded-full border border-border md:mx-6"
+      className="t-small mx-4 mt-4 flex h-14 items-center overflow-hidden rounded-full border border-border md:mx-6"
       aria-label="Technologies used"
     >
       <div className="marquee-track flex w-max items-center">

@@ -84,6 +84,7 @@
   --font-body: var(--font-display);
   --font-display: var(--font-display);
   --font-mono: var(--font-mono);
+  --font-serif: var(--font-serif);
 }
 
 /* Type scale */
