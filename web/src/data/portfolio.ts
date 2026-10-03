@@ -156,6 +156,8 @@ export const contact = {
   address: "New Palasiya, Indore, India, 452001",
   github: "https://github.com/Prekshabarjatya",
   linkedin: "https://www.linkedin.com/in/preksha-barjatya-pb2024/",
+  // Canonical address of this site; the vercel.app URL is only an alias.
+  website: "https://www.prekshaa.tech",
 };
 
 export const certifications = [

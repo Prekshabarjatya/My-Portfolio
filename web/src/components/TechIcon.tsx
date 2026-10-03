@@ -98,7 +98,7 @@ export function TechIcon({ name }: { name: string }) {
   const src = BRAND_ICON_SRC[name];
   if (src) {
     // eslint-disable-next-line @next/next/no-img-element
-    return <img src={src} alt="" className="h-full w-full object-contain" />;
+    return <img src={src} alt="" loading="lazy" decoding="async" className="h-full w-full object-contain" />;
   }
   return <ConceptGlyph name={name} />;
 }

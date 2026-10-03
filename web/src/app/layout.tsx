@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Space_Grotesk, JetBrains_Mono, Playfair_Display } from "next/font/google";
 import "./globals.css";
 import { ThemeProvider } from "@/components/ThemeProvider";
+import { contact } from "@/data/portfolio";
 
 const spaceGrotesk = Space_Grotesk({
   variable: "--font-display",
@@ -24,18 +25,35 @@ const jetbrainsMono = JetBrains_Mono({
   weight: ["400", "500", "600"],
 });
 
+const TITLE = "Preksha Barjatya – AI Engineer in Indore | RAG & LangGraph";
+const DESCRIPTION =
+  "Preksha Barjatya is an AI engineer in Indore building RAG apps, multi-agent LangGraph workflows and FastAPI backends. Projects, case study and resume.";
+
+// The social preview image comes from app/opengraph-image.tsx.
 export const metadata: Metadata = {
-  title: "Preksha Barjatya | AI Engineer",
-  description:
-    "Portfolio of Preksha Barjatya - AI Engineer specializing in Retrieval-Augmented Generation (RAG), LangChain/LangGraph agentic workflows, and FastAPI backend systems. Featuring a live LangGraph agent that tours the site for you.",
-  openGraph: {
-    title: "Preksha Barjatya | AI Engineer",
-    description:
-      "AI Engineer building RAG applications, LangGraph agents, and FastAPI backends.",
-    url: "https://www.prekshaa.tech",
-    siteName: "Preksha Barjatya",
-    type: "website",
+  metadataBase: new URL(contact.website),
+  title: TITLE,
+  description: DESCRIPTION,
+  applicationName: "Preksha Barjatya",
+  authors: [{ name: "Preksha Barjatya", url: contact.website }],
+  creator: "Preksha Barjatya",
+  alternates: { canonical: "/" },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: { index: true, follow: true, "max-image-preview": "large", "max-snippet": -1 },
   },
+  openGraph: {
+    title: TITLE,
+    description: DESCRIPTION,
+    url: "/",
+    siteName: "Preksha Barjatya",
+    locale: "en_IN",
+    type: "profile",
+    firstName: "Preksha",
+    lastName: "Barjatya",
+  },
+  twitter: { card: "summary_large_image", title: TITLE, description: DESCRIPTION },
 };
 
 export default function RootLayout({ children }: LayoutProps<"/">) {

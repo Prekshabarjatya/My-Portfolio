@@ -34,7 +34,7 @@ export function ResumeCerts() {
                 <div className="flex items-start justify-between gap-4">
                   {logo ? (
                     // eslint-disable-next-line @next/next/no-img-element
-                    <img src={logo} alt={cert.org} className="h-6 w-28 object-contain object-left" />
+                    <img src={logo} alt={cert.org} loading="lazy" decoding="async" className="h-6 w-28 object-contain object-left" />
                   ) : (
                     <span className="t-small max-w-[28ch] text-muted-foreground">{cert.org}</span>
                   )}

@@ -1,0 +1,30 @@
+# Preksha Barjatya – AI Engineer (Indore, India)
+
+> AI engineer building RAG applications, multi-agent LangGraph workflows and FastAPI backends. B.Tech CSE (AI & ML), Acropolis Institute of Technology and Research, 2023–2027. AI Engineer Intern at Santerra Hygiene Pvt. Ltd. (Jul 2026 – present); previously Data Analyst Intern at Think AI Corporation.
+
+## Links
+
+- [Portfolio](https://www.prekshaa.tech/): projects, case study, skills, experience and certifications
+- [Resume (PDF)](https://www.prekshaa.tech/Preksha_Barjatya_Resume.pdf)
+- [GitHub](https://github.com/Prekshabarjatya)
+- [LinkedIn](https://www.linkedin.com/in/preksha-barjatya-pb2024/)
+
+## Projects
+
+- [Multi-Agent Research Paper Writer](https://research-paper-agents.vercel.app/): LangGraph workflow of seven specialist agents that writes a cited research paper; citations verified against Crossref in code, human approval gates, Postgres checkpoints.
+- [Multi-Agent Resume Optimizer](https://github.com/Prekshabarjatya/resume-intelligence-ai): LangGraph pipeline that validates, extracts and scores resumes against job descriptions with deterministic ATS checks and grounded LLM judgment.
+- [AI Research Assistant](https://github.com/Prekshabarjatya/ai-research-assistant): FastAPI + LangChain RAG service that answers only from retrieved passages and cites them.
+
+## Skills
+
+Python, JavaScript, SQL · LangChain, LangGraph, RAG, embeddings, vector search, prompt engineering, Groq API · FastAPI, REST APIs, Pydantic · Docker, Kubernetes, AWS (ECR, ECS) · Pandas, NumPy, EDA, Power BI, Tableau
+
+## Certifications
+
+- Oracle Agentic AI Certified Foundations Associate (2026)
+- Programming with Python Professional Certificate – OpenEDG Python Institute
+- Generative AI, RAG, Multimodal & Agentic AI – Acropolis Institute with Navigate Labs
+
+## Contact
+
+prekshabarjatya2105@gmail.com

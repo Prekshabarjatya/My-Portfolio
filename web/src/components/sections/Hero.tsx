@@ -130,19 +130,21 @@ export function Hero() {
         animate="show"
         className="relative mx-auto flex min-h-[100dvh] w-full max-w-4xl flex-col items-center justify-center px-6 pb-44 pt-24 text-center md:pb-28"
       >
-        <motion.p variants={item} className="t-small text-white/60">
-          Preksha Barjatya (AI engineer, Indore)
-        </motion.p>
-
-        <motion.h1
-          variants={item}
-          className="mt-5 font-serif text-[clamp(2.5rem,7vw,4.75rem)] font-bold leading-[1.02] tracking-tight"
-        >
-          Curious by default.
-          <em className="block pb-1 font-medium italic text-accent-on-ink">
-            Careful by design.
-          </em>
-        </motion.h1>
+        {/* One h1 that carries the name for search engines; the two lines keep their own look and stagger. */}
+        <h1 className="flex flex-col items-center">
+          <motion.span variants={item} className="t-small font-normal text-white/60">
+            Preksha Barjatya (AI engineer, Indore)
+          </motion.span>
+          <motion.span
+            variants={item}
+            className="mt-5 font-serif text-[clamp(2.5rem,7vw,4.75rem)] font-bold leading-[1.02] tracking-tight"
+          >
+            Curious by default.
+            <em className="block pb-1 font-medium italic text-accent-on-ink">
+              Careful by design.
+            </em>
+          </motion.span>
+        </h1>
 
         <motion.p variants={item} className="t-small mt-5 max-w-xs text-white/60">
           Choose where to start. Everything is one scroll away.
