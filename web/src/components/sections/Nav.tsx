@@ -9,6 +9,7 @@ import {
   Briefcase,
   FolderOpen,
   Article,
+  DownloadSimple,
   MoonStars,
   SunDim,
 } from "@phosphor-icons/react";
@@ -62,6 +63,15 @@ export function Nav() {
           >
             {isDark ? <SunDim size={18} weight="bold" /> : <MoonStars size={18} weight="bold" />}
           </button>
+          <a
+            href="/Preksha_Barjatya_Resume.pdf"
+            download
+            aria-label="Download resume (PDF)"
+            className="transition-spring t-small flex items-center gap-2 rounded-full bg-background/85 px-3 py-2.5 font-medium backdrop-blur hover:bg-foreground hover:text-background sm:px-4"
+          >
+            <DownloadSimple size={16} weight="bold" />
+            <span className="hidden sm:inline">Resume</span>
+          </a>
           <a
             href="#contact"
             className="transition-spring t-small rounded-full bg-foreground px-5 py-2.5 font-medium text-background hover:bg-accent hover:text-accent-foreground"

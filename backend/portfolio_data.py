@@ -113,8 +113,14 @@ SKILL_CATEGORIES = [
         "id": "skill-data-bi",
         "target_element": "#skill-data-bi",
         "title": "Data & BI",
-        "items": ["Pandas", "NumPy", "Matplotlib", "Power BI", "Tableau"],
-        "keywords": ["data", "analytics", "bi", "dashboards", "pandas", "tools"],
+        "items": [
+            "Pandas", "NumPy", "Matplotlib", "EDA", "Feature Engineering",
+            "Data Pipelines", "Power BI", "Tableau",
+        ],
+        "keywords": [
+            "data", "analytics", "bi", "dashboards", "pandas", "tools", "eda",
+            "feature engineering", "pipelines",
+        ],
     },
 ]
 
@@ -237,6 +243,7 @@ PERSONAL_KB = [
             "certification", "certifications", "certified", "certificate",
             "certificates", "credential", "credentials", "oracle",
             "agentic ai certified foundations", "navigate labs", "acropolis",
+            "python institute", "openedg", "python certificate",
         ],
         "content": (
             "She holds the Oracle Agentic AI Certified Foundations Associate "
@@ -244,7 +251,8 @@ PERSONAL_KB = [
             "2028 (credential ID 103539377AAI26OFA). She also completed a "
             "Generative AI, RAG, Multimodal & Agentic AI certification run by "
             "her CSE (AI & ML) department at Acropolis Institute of Technology "
-            "and Research with Navigate Labs."
+            "and Research with Navigate Labs, and holds the Programming with "
+            "Python Professional Certificate from the OpenEDG Python Institute."
         ),
     },
 ]
@@ -252,7 +260,7 @@ PERSONAL_KB = [
 
 CANDIDATE_SUMMARY = (
     "Preksha Barjatya is a B.Tech CSE (AI & ML) student at Acropolis Institute of "
-    "Technology and Research, Indore (2023-2027, CGPA 8.0), currently interning as an "
+    "Technology and Research, Indore (2023-2027, CGPA 7.94), currently interning as an "
     "AI Engineer at Santerra Hygiene Pvt. Ltd. building agentic automation workflows, "
     "after previously working as a Data Analyst Intern at Think AI Corporation. She "
     "builds RAG applications, FastAPI backends, and LangGraph-orchestrated multi-agent "

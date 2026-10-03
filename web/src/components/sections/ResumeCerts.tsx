@@ -8,8 +8,8 @@ const ORG_LOGO: Record<string, string> = {
   Oracle: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/oracle/oracle-original.svg",
 };
 
-// Two certifications, two cells: a wide one and a narrow one.
-const CELL = ["lg:col-span-7 bg-blush", "lg:col-span-5 bg-sage"];
+// Three certifications, three equal cells on one row.
+const CELL = ["lg:col-span-4 bg-blush", "lg:col-span-4 bg-sage", "lg:col-span-4 bg-lilac"];
 
 export function ResumeCerts() {
   return (

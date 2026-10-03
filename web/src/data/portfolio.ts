@@ -109,7 +109,16 @@ export const skillCategories = [
   {
     id: "skill-data-bi",
     title: "Data & BI",
-    items: ["Pandas", "NumPy", "Matplotlib", "Power BI", "Tableau"],
+    items: [
+      "Pandas",
+      "NumPy",
+      "Matplotlib",
+      "EDA",
+      "Feature Engineering",
+      "Data Pipelines",
+      "Power BI",
+      "Tableau",
+    ],
   },
 ] as const;
 
@@ -117,7 +126,7 @@ export const experience = [
   {
     role: "AI Engineer Intern",
     company: "Santerra Hygiene Pvt. Ltd.",
-    date: "Jul 2026 - Sep 2026",
+    date: "Jul 2026 - Present",
     bullets: [
       "Build AI-powered automation workflows and practical AI applications using Python, prompt engineering, and model integration to streamline a startup's business operations.",
       "Support business data and finance-related processes, applying automation to improve efficiency and scalability of daily operational workflows.",
@@ -136,7 +145,7 @@ export const experience = [
 
 export const stats = [
   { label: "Degree", value: "B.Tech CSE", sub: "AI & ML" },
-  { label: "CGPA", value: "8.0 / 10", sub: "2023 - 2027" },
+  { label: "CGPA", value: "7.94 / 10", sub: "2023 - 2027" },
   { label: "Internships", value: "2", sub: "AI & Data" },
   { label: "Focus", value: "Agentic AI", sub: "RAG, LLMs" },
 ] as const;
@@ -161,6 +170,11 @@ export const certifications = [
   {
     title: "Generative AI, RAG, Multimodal & Agentic AI",
     org: "CSE (AI & ML) Dept., Acropolis Institute of Technology and Research, with Navigate Labs",
+    status: "Certified",
+  },
+  {
+    title: "Programming with Python Professional Certificate",
+    org: "OpenEDG Python Institute",
     status: "Certified",
   },
 ] as const;
