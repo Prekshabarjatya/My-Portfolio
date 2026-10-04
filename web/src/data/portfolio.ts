@@ -5,54 +5,42 @@
 // or a generic concept glyph for things that aren't a single branded tool.
 export const projects = [
   {
-    id: "project-resume-optimizer",
+    id: "project-resume-analyzer",
     number: "01",
-    title: "Multi-Agent Resume Optimizer",
+    title: "Resume-to-JD Gap Analyzer",
     github: "https://github.com/Prekshabarjatya/resume-intelligence-ai",
     liveUrl: "https://resume-intelligence-platform-pmdw.onrender.com/",
-    tags: ["LangGraph", "Tool Calling", "Pydantic", "Agentic AI"],
+    tags: ["LangGraph", "Tool Calling", "Pydantic", "Gap Analysis"],
     description:
-      "A LangGraph-orchestrated multi-agent pipeline that validates, extracts, and scores resumes against job descriptions (PDF/DOCX/text) using specialized agents with tool calling and Pydantic-structured LLM outputs, backed by a hybrid scoring engine combining deterministic ATS checks with grounded LLM judgment.",
+      "A multi-agent pipeline that extracts structured profiles from resumes and job descriptions, matches skills and experience, and generates explainable gap analysis with actionable recommendations. Validates both documents, performs semantic matching, identifies missing qualifications. Instrumented to track: analysis runtime, token usage, skill matches, gaps found. Deploy live to gather metrics on real resumes.",
     image:
       "/projects/resume-optimizer.jpg",
     techStack: {
       Languages: ["Python"],
-      "AI/ML": ["LangGraph", "Agentic AI", "Tool Calling"],
-      Backend: ["Pydantic"],
+      "AI/ML": ["LangGraph", "Tool Calling", "Semantic Matching"],
+      Backend: ["Pydantic", "FastAPI"],
     },
   },
   {
     id: "project-research-paper-agents",
     number: "02",
-    title: "Multi-Agent Research Paper Writer",
-    tags: ["LangGraph", "Multi-Agent", "Citation Verification", "Human-in-the-loop"],
+    title: "Research & Document Intelligence Platform",
+    tags: ["LangGraph", "Multi-Agent", "RAG", "FastAPI", "PostgreSQL"],
     description:
-      "Built a LangGraph workflow of seven specialist agents (brief analyst, topic strategist, source scout, thesis writer, outliner, drafter, critic) that turns an assignment brief into a cited, literature-based research paper. Every citation is verified against Crossref in code, a human approves the topic and thesis before drafting, and runs are checkpointed in Postgres so they survive crashes and deploys. Its write-up examines how the \"lost in the middle\" long-context problem relates to its context decisions, such as ranking sources and trimming abstracts before prompting.",
-    image: "/projects/research-paper-agents-progress.jpg",
-    image2: "/projects/research-paper-agents-paper.jpg",
+      "A unified platform with two capabilities: a seven-agent LangGraph workflow that turns an assignment brief into a cited research paper (every citation verified against Crossref in code, human approves topic and thesis, runs checkpointed in Postgres for crash recovery), and a FastAPI-powered RAG service for document Q&A with pgvector storage and LLM answers grounded in retrieved passages with source citations. Research workflow: [X] min avg runtime, [X] tokens/run, [X] citations verified. Q&A evaluation: ragas score [X] on [X] questions, Dockerized.",
+    image: "/projects/document-qa.jpg",
+    video: "/projects/research-paper-agents-demo.mp4",
+    videoPoster: "/projects/research-paper-agents-demo-poster.jpg",
     github: "https://github.com/Prekshabarjatya/research-paper-agents",
     liveUrl: "https://research-paper-agents.vercel.app/",
+    extraLinks: [
+      { label: "Q&A Live", href: "https://ai-research-assistant-nidu.onrender.com/#ask", kind: "live" },
+      { label: "Q&A GitHub", href: "https://github.com/Prekshabarjatya/ai-research-assistant", kind: "github" },
+    ],
     techStack: {
       Languages: ["Python"],
-      Backend: ["FastAPI", "Docker"],
-      "AI/ML": ["LangGraph", "Agentic AI", "Groq API"],
-    },
-  },
-  {
-    id: "project-document-qa",
-    number: "03",
-    title: "Document Q&A",
-    github: "https://github.com/Prekshabarjatya/ai-research-assistant",
-    liveUrl: "https://ai-research-assistant-nidu.onrender.com/#ask",
-    tags: ["FastAPI", "LangChain", "RAG", "Vector Search"],
-    description:
-      "Engineered a Retrieval-Augmented Generation (RAG) document Q&A service using FastAPI and LangChain: upload or paste documents, chunk and vectorize them, retrieve the most relevant passages by cosine similarity, and answer with a Groq-hosted model that cites the passage it used.",
-    image:
-      "/projects/document-qa.jpg",
-    techStack: {
-      Languages: ["Python"],
-      Backend: ["FastAPI"],
-      "AI/ML": ["LangChain", "RAG", "Vector Search"],
+      Backend: ["FastAPI", "PostgreSQL", "Docker"],
+      "AI/ML": ["LangGraph", "RAG", "pgvector", "LangChain"],
     },
   },
 ] as const;
