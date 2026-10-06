@@ -45,6 +45,31 @@ export const projects = [
   },
 ] as const;
 
+// Hackathon and open-source builds: shipped in public, with a write-up.
+export const openSource = [
+  {
+    id: "oss-dharohar",
+    title: "Dharohar",
+    titleNative: "धरोहर",
+    event: "Hacktoberfest 2026 · DEV Open-Source AI Challenge, Week 1: Touch Grass",
+    tagline: "An AI audio guide that tells you the story of the places you walk into, while your phone stays in your pocket.",
+    description:
+      "Tap “Walk where I am” and it finds the heritage around you, writes a short grounded script for every stop with open-weight Gemma, voices it with ElevenLabs, then turns the screen black. GPS geofences play each story as you arrive, every stop is cached for dead zones, and it speaks English plus nine Indian languages.",
+    highlights: [
+      "Mastra agent: SerpApi facts → Gemma script → ElevenLabs voice, held to 13 evals",
+      "Caught Gemma inventing a balcony that doesn't exist; fixed by grounding every script in search results",
+      "Open-weight model swapped in one line when a provider retired the deployed version",
+    ],
+    tags: ["Gemma", "Mastra", "ElevenLabs", "SerpApi", "Render", "Open source"],
+    image: "/projects/dharohar-banner.jpg",
+    links: [
+      { label: "Live App", href: "https://dharohar-agent.onrender.com", kind: "live" },
+      { label: "GitHub", href: "https://github.com/Prekshabarjatya/dharohar-agent", kind: "github" },
+      { label: "Write-up on DEV", href: "https://dev.to/preksha_barjatya/dharohar-an-open-source-ai-audio-guide-that-makes-you-put-your-phone-in-your-pocket-1451", kind: "article" },
+    ],
+  },
+] as const;
+
 // Core skills for an AI engineer: programming fundamentals first, then
 // AI/ML & Generative AI right after backend (the role-defining category),
 // followed by the supporting infra/data categories.

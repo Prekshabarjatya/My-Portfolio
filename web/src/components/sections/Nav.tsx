@@ -9,6 +9,7 @@ import {
   Briefcase,
   FolderOpen,
   Article,
+  Trophy,
   DownloadSimple,
   MoonStars,
   SunDim,
@@ -21,6 +22,7 @@ const ITEMS = [
   { id: "skills", href: "#skills", label: "Skills", Icon: Wrench },
   { id: "experience", href: "#experience", label: "Experience", Icon: Briefcase },
   { id: "projects", href: "#projects", label: "Projects", Icon: FolderOpen },
+  { id: "open-source", href: "#open-source", label: "Open Source", Icon: Trophy },
   { id: "case-study", href: "#case-study", label: "Case Study", Icon: Article },
 ];
 

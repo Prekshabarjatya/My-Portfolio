@@ -79,6 +79,39 @@ PROJECTS = [
             "production", "infrastructure",
         ],
     },
+    {
+        "id": "oss-dharohar",
+        "target_element": "#oss-dharohar",
+        "title": "Dharohar (Hacktoberfest 2026)",
+        "tags": ["Gemma", "Mastra", "ElevenLabs", "SerpApi", "Open Source", "Hackathon"],
+        "summary": (
+            "Dharohar is an open-source AI audio guide she built for the Hacktoberfest "
+            "2026 DEV Open-Source AI Challenge, Week 1: Touch Grass. You tap Walk where "
+            "I am, it finds the heritage sites around you, writes a short spoken guide "
+            "for each stop with open-weight Gemma, voices it with ElevenLabs, then turns "
+            "the screen black so your phone stays in your pocket. GPS plays each story "
+            "as you arrive, in English and nine Indian languages."
+        ),
+        "architecture_notes": (
+            "A Mastra agent runs a fixed pipeline: SerpApi fetches live facts, Gemma "
+            "writes a script under 100 words using only those facts, and ElevenLabs "
+            "voices it. Small Gemma models don't call tools reliably, so the pipeline "
+            "calls the tools in order instead. Thirteen evals enforce the rules: word "
+            "limit, no screen words, graceful fallback when the voice fails, caching, "
+            "and geofences that never replay. Her first version passed every check "
+            "while Gemma invented a carved wooden balcony that doesn't exist; grounding "
+            "every script in search results fixed it. When the deployed Gemma version "
+            "was retired by a provider, switching to Gemma 4 took one line because the "
+            "model is open-weight. It runs on Render and has a public write-up on DEV."
+        ),
+        "keywords": [
+            "dharohar", "hackathon", "hacktoberfest", "open source", "open-source",
+            "dev challenge", "touch grass", "gemma", "open-weight", "elevenlabs",
+            "voice", "audio", "text to speech", "tts", "heritage", "walking", "tour",
+            "gps", "geofence", "mastra", "serpapi", "indian languages", "hindi",
+            "kanch mandir", "indore", "evals", "write-up", "dev.to",
+        ],
+    },
 ]
 
 SKILL_CATEGORIES = [
@@ -284,7 +317,9 @@ PROJECTS_OVERVIEW = (
     "every citation against Crossref and checkpoints runs in Postgres "
     "(covered in a dedicated case study with real numbers from live runs), "
     "and a Document Q&A service that answers questions from retrieved "
-    "passages using FastAPI, LangChain and RAG."
+    "passages using FastAPI, LangChain and RAG. For Hacktoberfest 2026 she also "
+    "shipped Dharohar, an open-source AI audio guide for heritage walks built on "
+    "Gemma, Mastra and ElevenLabs, with a public write-up on DEV."
 )
 
 
